@@ -2,9 +2,9 @@ package server;
 
 import java.rmi.RemoteException;
 
-import common.GameServer;
+import common.GameManager;
 
-public class GameServerImpl implements GameServer {
+public class GameManagerImpl implements GameManager {
 
 	@Override
 	public String tmpMsg(String msg) throws RemoteException {

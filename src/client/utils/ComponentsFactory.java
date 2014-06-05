@@ -3,6 +3,7 @@ package client.utils;
 import client.controllers.MainController;
 import client.controllers.NewGameController;
 import client.models.MainModel;
+import client.network.NetworkManager;
 import client.views.MainWindow;
 import client.views.NewGameDialog;
 
@@ -13,7 +14,8 @@ import client.views.NewGameDialog;
 public class ComponentsFactory {
 	private MainWindow mainView;
 	private MainController mainController;
-	
+	private NetworkManager netManager;
+
 	/**
 	 * Creates the NewGame component.
 	 * 
@@ -36,7 +38,8 @@ public class ComponentsFactory {
 		if (mainView == null) {
 			mainView = new MainWindow();
 			MainModel mainModel = new MainModel();
-			mainController = new MainController(mainView, mainModel, this);
+			netManager = new NetworkManager();
+			mainController = new MainController(mainView, mainModel, netManager, this);
 		}
 		return mainController;
 	}

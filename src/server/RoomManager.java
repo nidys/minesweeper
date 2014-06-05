@@ -1,13 +1,13 @@
 package server;
 
 import java.rmi.Naming;
-import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 
-import common.GameServer;
+import common.GameManager;
+import common.ServerAddress;
 
-public class Server {
+public class RoomManager {
 
 	/**
 	 * @param args
@@ -15,10 +15,10 @@ public class Server {
 	public static void main(String[] args) {
 		try {
 			LocateRegistry.createRegistry(1099);
-			GameServer gs = new GameServerImpl();
+			GameManager gs = new GameManagerImpl();
 			UnicastRemoteObject.exportObject(gs, 0);
 
-			Naming.rebind("rmi://localhost:1099/note", gs);
+			Naming.rebind("rmi://" + ServerAddress.LOCALHOST.getValue() + "/note", gs);
 			System.out.println("Server started...");
 		} catch (Exception e) {
 			e.printStackTrace();
