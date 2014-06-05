@@ -16,7 +16,8 @@ public class NewGameButtonListener extends BaseListenerWithMVCAccess {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String serverAddr = view.getServerAddress();
-		netManager.connectToServer(serverAddr);
+		String userNick = view.getUserNick();
+		netManager.connectToServer(serverAddr, userNick);
 		viewController.createNewGameComponents();
 	}
 

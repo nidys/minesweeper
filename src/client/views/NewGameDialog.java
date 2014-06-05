@@ -5,11 +5,17 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import common.gameRules.GameMode;
+
 /**
  * View for the NewGame component (view with the game board). A dialog.
  */
 public class NewGameDialog extends DialogBase {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8080261200762371915L;
 	private final JPanel contentPanel = new JPanel();
 	private JButton classicGameButton;
 	private JButton sharedGameButton;
@@ -30,15 +36,15 @@ public class NewGameDialog extends DialogBase {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel);
 		{
-			classicGameButton = new JButton("CLASSIC");
+			classicGameButton = new JButton(GameMode.CLASSIC.toString());
 			classicGameButton.setBounds(10, 10, 75, 75);
 		}
 		{
-			sharedGameButton = new JButton("SHARED");
+			sharedGameButton = new JButton(GameMode.SHARED.toString());
 			sharedGameButton.setBounds(95, 10, 75, 75);
 		}
 		{
-			perksGameButton = new JButton("PERKS");
+			perksGameButton = new JButton(GameMode.PERKS.toString());
 			perksGameButton.setBounds(180, 10, 75, 75);
 		}
 		contentPanel.setLayout(null);

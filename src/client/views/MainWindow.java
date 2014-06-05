@@ -3,6 +3,7 @@ package client.views;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Random;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -10,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.GroupLayout.Alignment;
 
-import common.ServerAddress;
+import common.network.ServerAddress;
 
 /**
  * View for the Main component (view with the game board). Standard window.
@@ -20,6 +21,7 @@ public class MainWindow extends WindowBase implements Observer {
 
 	private JButton newGameBtn;
 	private JTextField serverAddress;
+	private JTextField userNick;
 
 	/**
 	 * Create the frame.
@@ -32,14 +34,32 @@ public class MainWindow extends WindowBase implements Observer {
 		serverAddress.setText(ServerAddress.LOCALHOST.getValue());
 		serverAddress.setColumns(10);
 
+		userNick = new JTextField();
+		// generate random user name so that user don't always have to write
+		userNick.setText("user" + String.valueOf(new Random().nextInt(100)));
+		userNick.setColumns(10);
+
 		newGameBtn = new JButton("New game");
+
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
-				groupLayout.createSequentialGroup().addGap(158)
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING).addComponent(newGameBtn).addComponent(serverAddress, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(176, Short.MAX_VALUE)));
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(
+						groupLayout
+								.createSequentialGroup()
+								.addGap(158)
+								.addGroup(
+										groupLayout
+												.createParallelGroup(Alignment.LEADING)
+												.addComponent(userNick, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(newGameBtn)
+												.addComponent(serverAddress, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE)).addContainerGap(176, Short.MAX_VALUE)));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
-				groupLayout.createSequentialGroup().addGap(83).addComponent(serverAddress, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addGap(18).addComponent(newGameBtn).addContainerGap(126, Short.MAX_VALUE)));
+				groupLayout.createSequentialGroup().addGap(83)
+						.addComponent(serverAddress, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addGap(18)
+						.addComponent(userNick, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addGap(29)
+						.addComponent(newGameBtn).addContainerGap(78, Short.MAX_VALUE)));
 		getContentPane().setLayout(groupLayout);
 	}
 
@@ -54,6 +74,10 @@ public class MainWindow extends WindowBase implements Observer {
 
 	public String getServerAddress() {
 		return serverAddress.getText();
+	}
+
+	public String getUserNick() {
+		return userNick.getText();
 	}
 
 	/**

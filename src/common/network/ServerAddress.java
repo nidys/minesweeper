@@ -1,4 +1,4 @@
-package common;
+package common.network;
 
 public enum ServerAddress {
 	LOCALHOST("127.0.0.1:1099");

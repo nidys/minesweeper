@@ -4,8 +4,8 @@ import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.server.UnicastRemoteObject;
 
-import common.GameManager;
-import common.ServerAddress;
+import common.network.GameManager;
+import common.network.ServerAddress;
 
 public class RoomManager {
 

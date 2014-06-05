@@ -2,15 +2,15 @@ package client.network;
 
 import java.rmi.Naming;
 
-import common.GameManager;
+import common.network.GameManager;
 
 public class NetworkManager {
 	GameManager remoteGamemanager;
 
-	public boolean connectToServer(String serverAddr) {
+	public boolean connectToServer(String serverAddr, String userNick) {
 		try {
 			remoteGamemanager = (GameManager) Naming.lookup("rmi://" + serverAddr + "/note");
-			remoteGamemanager.tmpMsg("Some msg");
+			remoteGamemanager.tmpMsg(userNick);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

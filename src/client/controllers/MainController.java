@@ -1,5 +1,6 @@
 package client.controllers;
 
+import client.gameRules.GameState;
 import client.models.MainModel;
 import client.network.NetworkManager;
 import client.utils.ComponentsFactory;
@@ -15,6 +16,7 @@ public class MainController extends ControllerBase {
 	private MainModel mainModel;
 	private NetworkManager netManager;
 	private ComponentsFactory componentsFactory;
+	private GameState gameState;
 
 	public MainController(MainWindow mainView, MainModel mainModel, NetworkManager netManager, ComponentsFactory componentsFactory) {
 		super(mainView);
