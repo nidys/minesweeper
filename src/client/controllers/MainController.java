@@ -6,6 +6,8 @@ import client.network.NetworkManager;
 import client.utils.ComponentsFactory;
 import client.utils.ListenerGenerator;
 import client.views.MainWindow;
+import client.views.NewGameDialog;
+import client.views.listeners.GameModeBtnListener;
 import client.views.listeners.NewGameButtonListener;
 
 /**
@@ -20,23 +22,24 @@ public class MainController extends ControllerBase {
 	private GameState gameState;
 	private ListenerGenerator listenerGenerator;
 
-	public MainController(MainWindow mainView, MainModel mainModel, NetworkManager netManager, ComponentsFactory componentsFactory) {
+	public MainController(MainWindow mainView, MainModel mainModel, NetworkManager netManager, GameState gameState,
+			ComponentsFactory componentsFactory) {
 		super(mainView);
 		this.mainView = mainView;
 		this.mainModel = mainModel;
 		this.netManager = netManager;
+		this.gameState = gameState;
 		this.componentsFactory = componentsFactory;
-		listenerGenerator = new ListenerGenerator(mainView, mainModel, netManager, gameState, this);
+		this.listenerGenerator = new ListenerGenerator(mainView, mainModel, netManager, gameState, this);
 
 		initializeModels();
 		initializeViewListeners();
 	}
 
-	public void createNewGameComponents() {
+	public void createNewGameComponent() {
 		mainModel.fakeModelChange(); // to fake a change in model for
 		// Observer usage example
-
-		NewGameController newGameController = componentsFactory.CreateNewGameComponent();
+		NewGameController newGameController = componentsFactory.CreateNewGameComponent(listenerGenerator);
 		newGameController.activate();
 	}
 

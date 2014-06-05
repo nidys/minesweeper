@@ -2,6 +2,7 @@ package client.utils;
 
 import client.controllers.MainController;
 import client.controllers.NewGameController;
+import client.gameRules.GameState;
 import client.models.MainModel;
 import client.network.NetworkManager;
 import client.views.MainWindow;
@@ -15,16 +16,16 @@ public class ComponentsFactory {
 	private MainWindow mainView;
 	private MainController mainController;
 	private NetworkManager netManager;
+	private GameState gameState;
 
 	/**
 	 * Creates the NewGame component.
 	 * 
 	 * @return Controller for NewGame component.
 	 */
-	public NewGameController CreateNewGameComponent() {
+	public NewGameController CreateNewGameComponent(ListenerGenerator listenerGenerator) {
 		NewGameDialog newGameView = new NewGameDialog(mainView, true);
-		NewGameController newGameController = new NewGameController(newGameView);
-
+		NewGameController newGameController = new NewGameController(newGameView, listenerGenerator);
 		return newGameController;
 	}
 
@@ -39,7 +40,8 @@ public class ComponentsFactory {
 			mainView = new MainWindow();
 			MainModel mainModel = new MainModel();
 			netManager = new NetworkManager();
-			mainController = new MainController(mainView, mainModel, netManager, this);
+			gameState = new GameState();
+			mainController = new MainController(mainView, mainModel, netManager, gameState, this);
 		}
 		return mainController;
 	}
