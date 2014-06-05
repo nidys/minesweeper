@@ -4,6 +4,7 @@ import client.gameRules.GameState;
 import client.models.MainModel;
 import client.network.NetworkManager;
 import client.utils.ComponentsFactory;
+import client.utils.ListenerGenerator;
 import client.views.MainWindow;
 import client.views.listeners.NewGameButtonListener;
 
@@ -17,6 +18,7 @@ public class MainController extends ControllerBase {
 	private NetworkManager netManager;
 	private ComponentsFactory componentsFactory;
 	private GameState gameState;
+	private ListenerGenerator listenerGenerator;
 
 	public MainController(MainWindow mainView, MainModel mainModel, NetworkManager netManager, ComponentsFactory componentsFactory) {
 		super(mainView);
@@ -24,6 +26,7 @@ public class MainController extends ControllerBase {
 		this.mainModel = mainModel;
 		this.netManager = netManager;
 		this.componentsFactory = componentsFactory;
+		listenerGenerator = new ListenerGenerator(mainView, mainModel, netManager, gameState, this);
 
 		initializeModels();
 		initializeViewListeners();
@@ -45,6 +48,6 @@ public class MainController extends ControllerBase {
 	}
 
 	private void initializeViewListeners() {
-		mainView.addNewGameBtnListener(new NewGameButtonListener(mainView, this, netManager));
+		mainView.addNewGameBtnListener(new NewGameButtonListener(listenerGenerator));
 	}
 }

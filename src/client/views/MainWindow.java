@@ -11,6 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.GroupLayout.Alignment;
 
+import static client.internationalization.ButtonNames.NEW_GAME;
+
 import common.network.ServerAddress;
 
 /**
@@ -35,11 +37,12 @@ public class MainWindow extends WindowBase implements Observer {
 		serverAddress.setColumns(10);
 
 		userNick = new JTextField();
-		// generate random user name so that user don't always have to write
+		// generate random user name so that user don't need to write it all the
+		// time
 		userNick.setText("user" + String.valueOf(new Random().nextInt(100)));
 		userNick.setColumns(10);
 
-		newGameBtn = new JButton("New game");
+		newGameBtn = new JButton(NEW_GAME);
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)

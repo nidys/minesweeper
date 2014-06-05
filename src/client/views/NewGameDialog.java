@@ -1,9 +1,16 @@
 package client.views;
 
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import static client.internationalization.ButtonNames.CANCEL;
+import static client.internationalization.ButtonNames.HOST;
+import static client.internationalization.ButtonNames.JOIN;
+import static client.internationalization.ButtonNames.OK;
 
 import common.gameRules.GameMode;
 
@@ -20,6 +27,9 @@ public class NewGameDialog extends DialogBase {
 	private JButton classicGameButton;
 	private JButton sharedGameButton;
 	private JButton perksGameButton;
+
+	private JButton hostGameButton;
+	private JButton joinGameButton;
 
 	public NewGameDialog(JFrame owner, boolean isModal) {
 		super(owner, isModal);
@@ -56,19 +66,33 @@ public class NewGameDialog extends DialogBase {
 			buttonPane.setBounds(0, 100, 265, 35);
 			getContentPane().add(buttonPane);
 			{
-				JButton hostGameButton = new JButton("Host");
+				hostGameButton = new JButton(HOST);
 				hostGameButton.setBounds(10, 5, 117, 25);
 				buttonPane.setLayout(null);
-				hostGameButton.setActionCommand("OK");
+				hostGameButton.setActionCommand(OK);
 				buttonPane.add(hostGameButton);
 				getRootPane().setDefaultButton(hostGameButton);
 			}
 			{
-				JButton joinGameButton = new JButton("Join");
+				joinGameButton = new JButton(JOIN);
 				joinGameButton.setBounds(138, 5, 117, 25);
-				joinGameButton.setActionCommand("Cancel");
+				joinGameButton.setActionCommand(CANCEL);
 				buttonPane.add(joinGameButton);
 			}
 		}
+	}
+
+	public void addGameModeBtnListener(ActionListener listener) {
+		classicGameButton.addActionListener(listener);
+		sharedGameButton.addActionListener(listener);
+		perksGameButton.addActionListener(listener);
+	}
+
+	public void addHostBtnListener(ActionListener listener) {
+		hostGameButton.addActionListener(listener);
+	}
+
+	public void addJoinBtnListener(ActionListener listener) {
+		joinGameButton.addActionListener(listener);
 	}
 }

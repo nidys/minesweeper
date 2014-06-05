@@ -2,14 +2,13 @@ package client.views.listeners;
 
 import java.awt.event.ActionEvent;
 
-import client.controllers.MainController;
-import client.network.NetworkManager;
-import client.views.MainWindow;
+import client.utils.ListenerGenerator;
 
 public class NewGameButtonListener extends BaseListenerWithMVCAccess {
 
-	public NewGameButtonListener(MainWindow view, MainController controller, NetworkManager netManager) {
-		super(view, controller, netManager);
+	public NewGameButtonListener(ListenerGenerator listenerGenerator) {
+		super();
+		listenerGenerator.setFields(this);
 		// TODO Auto-generated constructor stub
 	}
 
