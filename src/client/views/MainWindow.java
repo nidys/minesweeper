@@ -1,5 +1,6 @@
 package client.views;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -88,17 +89,17 @@ public class MainWindow extends WindowBase implements Observer {
 		getContentPane().add(lblOpponent, gbc_lblOpponent);
 
 		myBombField = new JButton[] { // <br>
-		createBombFieldBtn(NEW_BUTTON_1, 0, 0, 5, 5, 0, 1), // <br>
-				createBombFieldBtn(NEW_BUTTON_1, 0, 0, 5, 5, 1, 1), // <br>
-				createBombFieldBtn(NEW_BUTTON_1, 0, 0, 5, 5, 0, 2), // <br>
-				createBombFieldBtn(NEW_BUTTON_1, 0, 0, 5, 5, 1, 2) // <br>
+		createBombFieldBtn("1", 0, 0, 5, 5, 0, 1), // <br>
+				createBombFieldBtn("2", 0, 0, 5, 5, 1, 1), // <br>
+				createBombFieldBtn("3", 0, 0, 5, 5, 0, 2), // <br>
+				createBombFieldBtn("4", 0, 0, 5, 5, 1, 2) // <br>
 
 		};
 		oponentBombField = new JButton[] { // <br>
-		createBombFieldBtn(NEW_BUTTON, 0, 0, 5, 5, 3, 1), // <br>
-				createBombFieldBtn(NEW_BUTTON, 0, 0, 5, 0, 4, 1), // <br>
-				createBombFieldBtn(NEW_BUTTON, 0, 0, 5, 5, 3, 2), // <br>
-				createBombFieldBtn(NEW_BUTTON, 0, 0, 5, 0, 4, 2) // <br>
+		createBombFieldBtn("1", 0, 0, 5, 5, 3, 1), // <br>
+				createBombFieldBtn("2", 0, 0, 5, 0, 4, 1), // <br>
+				createBombFieldBtn("3", 0, 0, 5, 5, 3, 2), // <br>
+				createBombFieldBtn("4", 0, 0, 5, 0, 4, 2) // <br>
 
 		};
 
@@ -135,6 +136,7 @@ public class MainWindow extends WindowBase implements Observer {
 		userNick.setColumns(10);
 
 		newGameBtn = new JButton(NEW_GAME);
+		newGameBtn.setBackground(Color.BLUE);
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -189,6 +191,28 @@ public class MainWindow extends WindowBase implements Observer {
 
 	public String getUserNick() {
 		return userNick.getText();
+	}
+
+	public void setMyFieldAsBomb(int pos) {
+		myBombField[pos - 1].setBackground(Color.RED);
+	}
+
+	public void setMyFieldAsEmpty(int pos) {
+		myBombField[pos - 1].setBackground(Color.GRAY);
+	}
+
+	public void setOpponentAsBomb(int pos) {
+		oponentBombField[pos - 1].setBackground(Color.RED);
+	}
+
+	public void setOpponentAsEmpty(int pos) {
+		oponentBombField[pos - 1].setBackground(Color.GRAY);
+	}
+
+	public void resetMyFields() {
+		for (int i = 0; i < myBombField.length; i++) {
+			myBombField[i].setBackground(null);
+		}
 	}
 
 	/**

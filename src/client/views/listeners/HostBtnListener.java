@@ -15,6 +15,8 @@ public class HostBtnListener extends BaseListenerForDialog {
 	public void actionPerformed(ActionEvent e) {
 		viewController.initializeGameBoard();
 		newGameController.disactivate();
+		System.out.println("Sending create game for user = " + gameState.getUserNick());
+		netManager.createGame(gameState.getUserNick(), gameState.getMode(), gameState.getPlayerHandler());
 	}
 
 }

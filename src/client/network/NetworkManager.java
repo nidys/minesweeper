@@ -1,8 +1,12 @@
 package client.network;
 
 import java.rmi.Naming;
+import java.rmi.RemoteException;
 
+import common.gameRules.GameMode;
+import common.model.Result;
 import common.network.GameManager;
+import common.network.PlayerHandler;
 
 public class NetworkManager {
 	GameManager remoteGameManager;
@@ -16,5 +20,41 @@ public class NetworkManager {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public boolean createGame(String userNick, GameMode gm, PlayerHandler playerHandler) {
+		try {
+			return remoteGameManager.createNewGame(userNick, gm, playerHandler);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public Boolean joinGame(String userNick, PlayerHandler playerHandler) {
+		try {
+			return remoteGameManager.joinGame(userNick, playerHandler);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public Result shot(String userNick, int position) {
+		try {
+			Result res = remoteGameManager.shot(userNick, position);
+			System.out.println("Got shot result = " + res);
+			return res;
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return Result.ERROR;
+	}
+
+	public void resetBoard(String userNick) {
+
 	}
 }

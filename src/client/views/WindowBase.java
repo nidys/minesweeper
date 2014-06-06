@@ -15,12 +15,12 @@ public abstract class WindowBase extends JFrame {
 	}
 
 	private void forceWindowsStyle() {
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException
-				| IllegalAccessException | UnsupportedLookAndFeelException e) {
-			// TODO Replace with Logger.
-			e.printStackTrace();
-		}
+//		try {
+//			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//		} catch (ClassNotFoundException | InstantiationException
+//				| IllegalAccessException | UnsupportedLookAndFeelException e) {
+//			// TODO Replace with Logger.
+//			e.printStackTrace();
+//		}
 	}
 }

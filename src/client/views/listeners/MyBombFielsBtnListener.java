@@ -2,6 +2,8 @@ package client.views.listeners;
 
 import java.awt.event.ActionEvent;
 
+import common.model.Result;
+
 import client.utils.ListenerGenerator;
 
 public class MyBombFielsBtnListener extends BaseListenerForWindow {
@@ -13,8 +15,14 @@ public class MyBombFielsBtnListener extends BaseListenerForWindow {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("Clicked my bomb field");
+		System.out.println("Clicked my bomb field, user=" + gameState.getUserNick());
+		int position = Integer.valueOf(e.getActionCommand());
+		Result res = netManager.shot(gameState.getUserNick(), position);
+		if (res == Result.BOMB) {
+			view.setMyFieldAsBomb(position);
+		} else {
+			view.setMyFieldAsEmpty(position);
+		}
 	}
 
 }

@@ -13,8 +13,10 @@ public class JoinBtnListener extends BaseListenerForDialog {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-
+		viewController.initializeGameBoard();
+		newGameController.disactivate();
+		System.out.println("Sending join game for user = " + gameState.getUserNick());
+		netManager.joinGame(gameState.getUserNick(), gameState.getPlayerHandler());
 	}
 
 }

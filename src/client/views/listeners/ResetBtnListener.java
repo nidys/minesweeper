@@ -13,7 +13,8 @@ public class ResetBtnListener extends BaseListenerForWindow {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		netManager.resetBoard(gameState.getUserNick());
+		view.resetMyFields();
 
 	}
 
