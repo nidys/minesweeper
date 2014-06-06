@@ -5,9 +5,12 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import org.apache.log4j.Logger;
+
 /**
  * Base class for small modal windows.
  */
+@SuppressWarnings("serial")
 public abstract class DialogBase extends JDialog {
 
 	public DialogBase(JFrame owner, boolean isModal) {

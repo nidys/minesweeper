@@ -2,11 +2,14 @@ package server;
 
 import java.rmi.RemoteException;
 
+import org.apache.log4j.Logger;
+
 import common.model.Board;
 import common.model.Result;
 import common.network.PlayerHandler;
 
 public class BoardDispatcher {
+	private static Logger log = Logger.getLogger(BoardDispatcher.class);
 	private Board board;
 	private PlayerHandler playerHandler;
 

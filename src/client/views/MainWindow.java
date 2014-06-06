@@ -17,6 +17,10 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.GroupLayout.Alignment;
 
+import org.apache.log4j.Logger;
+
+import client.internationalization.ButtonNames;
+
 import static client.internationalization.ButtonNames.NEW_GAME;
 
 import common.network.ServerAddress;
@@ -26,6 +30,7 @@ import common.network.ServerAddress;
  */
 @SuppressWarnings("serial")
 public class MainWindow extends WindowBase implements Observer {
+	private static Logger log = Logger.getLogger(MainWindow.class);
 
 	private JButton newGameBtn;
 	private JButton btnReset;
@@ -103,7 +108,7 @@ public class MainWindow extends WindowBase implements Observer {
 
 		};
 
-		btnReset = new JButton("Reset");
+		btnReset = new JButton(ButtonNames.RESET);
 		GridBagConstraints gbc_btnReset = new GridBagConstraints();
 		gbc_btnReset.insets = new Insets(0, 0, 0, 5);
 		gbc_btnReset.gridx = 0;
@@ -221,6 +226,6 @@ public class MainWindow extends WindowBase implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		// MainModel model = (MainModel) o;
-		System.out.println("update() from MainWindow.");
+		log.debug("update() from MainWindow.");
 	}
 }

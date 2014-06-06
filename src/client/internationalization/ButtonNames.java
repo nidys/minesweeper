@@ -7,5 +7,6 @@ public final class ButtonNames {
 	public static final String JOIN = "Join";
 	public static final String OK = "OK";
 	public static final String HOST = "Host";
+	public static final String RESET = "Reset";
 
 }

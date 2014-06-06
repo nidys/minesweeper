@@ -3,12 +3,15 @@ package client.network;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 
+import org.apache.log4j.Logger;
+
 import common.gameRules.GameMode;
 import common.model.Result;
 import common.network.GameManager;
 import common.network.PlayerHandler;
 
 public class NetworkManager {
+	private static Logger log = Logger.getLogger(NetworkManager.class);
 	GameManager remoteGameManager;
 
 	public boolean connectToServer(String serverAddr, String userNick) {
@@ -45,7 +48,7 @@ public class NetworkManager {
 	public Result shot(String userNick, int position) {
 		try {
 			Result res = remoteGameManager.shot(userNick, position);
-			System.out.println("Got shot result = " + res);
+			log.debug("Got shot result = " + res);
 			return res;
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block

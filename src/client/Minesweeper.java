@@ -2,10 +2,13 @@ package client;
 
 import java.awt.EventQueue;
 
+import org.apache.log4j.Logger;
+
 import client.controllers.MainController;
 import client.utils.Locator;
 
 public class Minesweeper {
+	private static Logger log = Logger.getLogger(Minesweeper.class);
 
 	/**
 	 * Launch the application.
@@ -13,8 +16,7 @@ public class Minesweeper {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		System.out.println("Client started...");
+		log.debug("Client started...");
 		init();
 	}
 

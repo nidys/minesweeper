@@ -3,10 +3,13 @@ package client.views.listeners;
 import java.awt.event.ActionEvent;
 import java.rmi.RemoteException;
 
+import org.apache.log4j.Logger;
+
 import client.network.PlayerHandlerImpl;
 import client.utils.ListenerGenerator;
 
 public class NewGameButtonListener extends BaseListenerForWindow {
+	private static Logger log = Logger.getLogger(NewGameButtonListener.class);
 
 	public NewGameButtonListener(ListenerGenerator listenerGenerator) {
 		super();
@@ -25,7 +28,8 @@ public class NewGameButtonListener extends BaseListenerForWindow {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		System.out.println("New Game button user=" + gameState.getUserNick());
+		System.out.println();
+		log.debug("New Game button user=" + gameState.getUserNick());
 		viewController.createNewGameComponent();
 	}
 

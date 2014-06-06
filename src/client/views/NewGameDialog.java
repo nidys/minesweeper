@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import org.apache.log4j.Logger;
+
 import static client.internationalization.ButtonNames.CANCEL;
 import static client.internationalization.ButtonNames.HOST;
 import static client.internationalization.ButtonNames.JOIN;

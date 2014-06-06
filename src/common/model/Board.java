@@ -2,7 +2,10 @@ package common.model;
 
 import java.util.Random;
 
+import org.apache.log4j.Logger;
+
 public class Board {
+	private static Logger log = Logger.getLogger(Board.class);
 	private final int BOARD_SIZE = 2;
 	private Field[][] mineField = new Field[BOARD_SIZE][BOARD_SIZE];
 	private int bombsNum;
@@ -18,7 +21,7 @@ public class Board {
 		int y = pos % BOARD_SIZE;
 		x = x == BOARD_SIZE ? 0 : x;
 		y = y == BOARD_SIZE ? 0 : y;
-		System.out.println("trying to hit x=" + x + ",y=" + y + ", pos = " + pos);
+		log.debug("trying to hit x=" + x + ",y=" + y + ", pos = " + pos);
 		if (mineField[x][y] == Field.BOMB) {
 			return Result.BOMB;
 		} else {
@@ -33,7 +36,7 @@ public class Board {
 		int x = r.nextInt(BOARD_SIZE - 1);
 		int y = r.nextInt(BOARD_SIZE - 1);
 		mineField[x][y] = Field.BOMB;
-		System.out.println("Bomb is at =" + x + ", =" + y);
+		log.debug("Bomb is at =" + x + ", =" + y);
 		// int tmpBombsNum = bombsNum;
 		// Random r = new Random();
 		// while (tmpBombsNum > 0) {
