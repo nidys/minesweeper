@@ -40,7 +40,6 @@ public class ListenerGenerator {
 
 	public void setFieldsForWindow(BaseListenerForWindow listener) {
 		listener.setView(mainView);
-		listener.setViewController(mainController);
 		setBaseComponents(listener);
 	}
 
@@ -54,6 +53,7 @@ public class ListenerGenerator {
 		listener.setMainModel(mainModel);
 		listener.setNetManager(netManager);
 		listener.setGameState(gameState);
+		listener.setViewController(mainController);
 	}
 
 }

@@ -17,6 +17,7 @@ public class NewGameButtonListener extends BaseListenerForWindow {
 		String userNick = view.getUserNick();
 		netManager.connectToServer(serverAddr, userNick);
 		viewController.createNewGameComponent();
+		gameState.setUserNick(userNick);
 	}
 
 }

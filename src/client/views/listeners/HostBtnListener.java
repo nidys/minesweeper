@@ -13,8 +13,8 @@ public class HostBtnListener extends BaseListenerForDialog {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-
+		viewController.initializeGameBoard();
+		newGameController.disactivate();
 	}
 
 }

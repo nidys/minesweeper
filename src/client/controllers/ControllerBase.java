@@ -17,7 +17,10 @@ public abstract class ControllerBase {
 	 * on the screen).
 	 */
 	public void activate() {
-		System.out.println("BBBB");
 		view.setVisible(true);
+	}
+
+	public void disactivate() {
+		view.setVisible(false);
 	}
 }
