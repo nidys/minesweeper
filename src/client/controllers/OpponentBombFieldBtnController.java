@@ -1,12 +1,13 @@
-package client.views.listeners;
+package client.controllers;
 
 import java.awt.event.ActionEvent;
 
+import client.controllers.base.BaseControllerForWindow;
 import client.utils.ListenerGenerator;
 
-public class OpponentBombFieldBtnListener extends BaseListenerForWindow {
+public class OpponentBombFieldBtnController extends BaseControllerForWindow {
 
-	public OpponentBombFieldBtnListener(ListenerGenerator listenerGenerator) {
+	public OpponentBombFieldBtnController(ListenerGenerator listenerGenerator) {
 		super();
 		listenerGenerator.setFieldsForWindow(this);
 	}

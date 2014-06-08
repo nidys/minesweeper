@@ -1,16 +1,16 @@
 package client.utils;
 
+import client.controllers.GameModeBtnController;
+import client.controllers.HostBtnController;
+import client.controllers.JoinBtnController;
+import client.controllers.MyBombFielsBtnController;
+import client.controllers.NewGameBtnController;
+import client.controllers.OpponentBombFieldBtnController;
+import client.controllers.ResetBtnController;
 import client.gameRules.GameState;
 import client.network.NetworkManager;
 import client.views.MainWindow;
 import client.views.NewGameDialog;
-import client.views.listeners.GameModeBtnListener;
-import client.views.listeners.HostBtnListener;
-import client.views.listeners.JoinBtnListener;
-import client.views.listeners.MyBombFielsBtnListener;
-import client.views.listeners.NewGameButtonListener;
-import client.views.listeners.OpponentBombFieldBtnListener;
-import client.views.listeners.ResetBtnListener;
 
 /**
  * Responsible for creating MVC components, and 'injecting' dependencies.
@@ -56,18 +56,18 @@ public class ComponentsFactory {
 	
 	// Temporarily here
 	public void initializeBoardListeners() {
-		mainView.addResetBtnListener(new ResetBtnListener(listenerGenerator));
-		mainView.addBombFieldBtnListener(new MyBombFielsBtnListener(listenerGenerator));
-		mainView.addOponentFieldBtnListener(new OpponentBombFieldBtnListener(listenerGenerator));
+		mainView.addResetBtnListener(new ResetBtnController(listenerGenerator));
+		mainView.addBombFieldBtnListener(new MyBombFielsBtnController(listenerGenerator));
+		mainView.addOponentFieldBtnListener(new OpponentBombFieldBtnController(listenerGenerator));
 	}
 	
 	private void initializeStartViewListeners() {
-		mainView.addNewGameBtnListener(new NewGameButtonListener(listenerGenerator));
+		mainView.addNewGameBtnListener(new NewGameBtnController(listenerGenerator));
 	}
 	
 	private void initializeNewGameListeners() {
-		newGameView.addGameModeBtnListener(new GameModeBtnListener(listenerGenerator));
-		newGameView.addHostBtnListener(new HostBtnListener(listenerGenerator, mainView));
-		newGameView.addJoinBtnListener(new JoinBtnListener(listenerGenerator, mainView));
+		newGameView.addGameModeBtnListener(new GameModeBtnController(listenerGenerator));
+		newGameView.addHostBtnListener(new HostBtnController(listenerGenerator, mainView));
+		newGameView.addJoinBtnListener(new JoinBtnController(listenerGenerator, mainView));
 	}
 }

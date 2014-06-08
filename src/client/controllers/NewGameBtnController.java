@@ -1,18 +1,19 @@
-package client.views.listeners;
+package client.controllers;
 
 import java.awt.event.ActionEvent;
 import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
 
+import client.controllers.base.BaseControllerForWindow;
 import client.network.PlayerHandlerImpl;
 import client.utils.ListenerGenerator;
 import client.views.NewGameDialog;
 
-public class NewGameButtonListener extends BaseListenerForWindow {
-	private static Logger log = Logger.getLogger(NewGameButtonListener.class);
+public class NewGameBtnController extends BaseControllerForWindow {
+	private static Logger log = Logger.getLogger(NewGameBtnController.class);
 
-	public NewGameButtonListener(ListenerGenerator listenerGenerator) {
+	public NewGameBtnController(ListenerGenerator listenerGenerator) {
 		super();
 		listenerGenerator.setFieldsForWindow(this);
 	}

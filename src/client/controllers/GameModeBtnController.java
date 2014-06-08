@@ -1,14 +1,14 @@
-package client.views.listeners;
+package client.controllers;
 
 import java.awt.event.ActionEvent;
 
 import common.gameRules.GameMode;
-
+import client.controllers.base.BaseControllerForDialog;
 import client.utils.ListenerGenerator;
 
-public class GameModeBtnListener extends BaseListenerForDialog {
+public class GameModeBtnController extends BaseControllerForDialog {
 
-	public GameModeBtnListener(ListenerGenerator listenerGenerator) {
+	public GameModeBtnController(ListenerGenerator listenerGenerator) {
 		super();
 		listenerGenerator.setFieldsForDialog(this);
 	}

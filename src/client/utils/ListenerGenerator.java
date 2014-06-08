@@ -1,12 +1,12 @@
 package client.utils;
 
+import client.controllers.base.BaseController;
+import client.controllers.base.BaseControllerForDialog;
+import client.controllers.base.BaseControllerForWindow;
 import client.gameRules.GameState;
 import client.network.NetworkManager;
 import client.views.MainWindow;
 import client.views.NewGameDialog;
-import client.views.listeners.BaseListenerForDialog;
-import client.views.listeners.BaseListenerForWindow;
-import client.views.listeners.BaseListenerWithMVCAccess;
 
 public class ListenerGenerator {
 	private ComponentsFactory componentsFactory;
@@ -30,17 +30,17 @@ public class ListenerGenerator {
 		this.newGameView = newGameView;
 	}
 
-	public void setFieldsForWindow(BaseListenerForWindow listener) {
+	public void setFieldsForWindow(BaseControllerForWindow listener) {
 		listener.setMainView(mainView);
 		setBaseComponents(listener);
 	}
 
-	public void setFieldsForDialog(BaseListenerForDialog listener) {
+	public void setFieldsForDialog(BaseControllerForDialog listener) {
 		listener.setNewGameView(newGameView);
 		setBaseComponents(listener);
 	}
 
-	private void setBaseComponents(BaseListenerWithMVCAccess listener) {
+	private void setBaseComponents(BaseController listener) {
 		listener.setComponentsFactory(componentsFactory);
 		listener.setNetManager(netManager);
 		listener.setGameState(gameState);

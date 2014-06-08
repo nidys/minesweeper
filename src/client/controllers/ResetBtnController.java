@@ -1,12 +1,13 @@
-package client.views.listeners;
+package client.controllers;
 
 import java.awt.event.ActionEvent;
 
+import client.controllers.base.BaseControllerForWindow;
 import client.utils.ListenerGenerator;
 
-public class ResetBtnListener extends BaseListenerForWindow {
+public class ResetBtnController extends BaseControllerForWindow {
 
-	public ResetBtnListener(ListenerGenerator listenerGenerator) {
+	public ResetBtnController(ListenerGenerator listenerGenerator) {
 		super();
 		listenerGenerator.setFieldsForWindow(this);
 	}

@@ -1,17 +1,17 @@
-package client.views.listeners;
+package client.controllers;
 
 import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
 
 import common.model.Result;
-
+import client.controllers.base.BaseControllerForWindow;
 import client.utils.ListenerGenerator;
 
-public class MyBombFielsBtnListener extends BaseListenerForWindow {
-	private static Logger log = Logger.getLogger(MyBombFielsBtnListener.class);
+public class MyBombFielsBtnController extends BaseControllerForWindow {
+	private static Logger log = Logger.getLogger(MyBombFielsBtnController.class);
 
-	public MyBombFielsBtnListener(ListenerGenerator listenerGenerator) {
+	public MyBombFielsBtnController(ListenerGenerator listenerGenerator) {
 		super();
 		listenerGenerator.setFieldsForWindow(this);
 	}

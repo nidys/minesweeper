@@ -1,4 +1,4 @@
-package client.views.listeners;
+package client.controllers.base;
 
 import java.awt.event.ActionListener;
 
@@ -6,7 +6,7 @@ import client.gameRules.GameState;
 import client.network.NetworkManager;
 import client.utils.ComponentsFactory;
 
-public abstract class BaseListenerWithMVCAccess implements ActionListener {
+public abstract class BaseController implements ActionListener {
 	protected ComponentsFactory componentsFactory;
 	protected NetworkManager netManager;
 	protected GameState gameState;
