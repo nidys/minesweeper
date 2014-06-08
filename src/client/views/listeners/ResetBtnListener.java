@@ -15,7 +15,6 @@ public class ResetBtnListener extends BaseListenerForWindow {
 	public void actionPerformed(ActionEvent e) {
 		netManager.resetBoard(gameState.getUserNick());
 		view.resetMyFields();
-
 	}
 
 }
