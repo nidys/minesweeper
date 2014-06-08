@@ -6,23 +6,16 @@ import org.apache.log4j.Logger;
 
 public class Board {
 	private static Logger log = Logger.getLogger(Board.class);
-	private final int BOARD_SIZE = 2;
-	private Field[][] mineField = new Field[BOARD_SIZE][BOARD_SIZE];
-	private int bombsNum;
+	private Field[] mineField;
 
-	public Board(int bombsNum) {
-		this.bombsNum = bombsNum;
+	public Board(int bombsNum, int boardSize, String userNick) {
+		mineField = new Field[boardSize];
 		initEmpty();
 		generateBombs(bombsNum);
 	}
 
 	public Result shot(int pos) {
-		int x = pos / BOARD_SIZE;
-		int y = pos % BOARD_SIZE;
-		x = x == BOARD_SIZE ? 0 : x;
-		y = y == BOARD_SIZE ? 0 : y;
-		log.debug("trying to hit x=" + x + ",y=" + y + ", pos = " + pos);
-		if (mineField[x][y] == Field.BOMB) {
+		if (mineField[pos] == Field.BOMB) {
 			return Result.BOMB;
 		} else {
 			return Result.EMPTY;
@@ -33,33 +26,29 @@ public class Board {
 
 	public void generateBombs(int bombsNum) {
 		Random r = new Random(System.currentTimeMillis());
-		int x = r.nextInt(BOARD_SIZE - 1);
-		int y = r.nextInt(BOARD_SIZE - 1);
-		mineField[x][y] = Field.BOMB;
-		log.debug("Bomb is at =" + x + ", =" + y);
-		// int tmpBombsNum = bombsNum;
-		// Random r = new Random();
-		// while (tmpBombsNum > 0) {
-		// int tmpBoardSize = BOARD_SIZE - 1;
-		// int pos = r.nextInt(BOARD_SIZE * BOARD_SIZE);
-		// int x = 1;// pos / BOARD_SIZE - 1;
-		// int y = 0;// pos % BOARD_SIZE - 1;
-		// x = x < 0 ? 0 : x;
-		// y = y < 0 ? 0 : y;
-		// if (mineField[x][y] != Field.BOMB) {
-		// mineField[x][y] = Field.BOMB;
-		// System.out.println("Bomb is at =" + x + ", =" + y);
-		// tmpBombsNum--;
-		// }
-		// }
+		int i = 0;
+		while (i < bombsNum) {
+			int val = r.nextInt(mineField.length);
+			if (mineField[val] != Field.BOMB) {
+				mineField[val] = Field.BOMB;
+				i++;
+			}
+		}
+		debugFieldSett(String.format("generateBombs[%d], done\n", bombsNum));
 	}
 
 	public void initEmpty() {
-		for (int i = 0; i < BOARD_SIZE; i++) {
-			for (int j = 0; j < BOARD_SIZE; j++) {
-				mineField[i][j] = Field.EMPTY;
-			}
+		for (int i = 0; i < mineField.length; i++) {
+			mineField[i] = Field.EMPTY;
 		}
+	}
+
+	private void debugFieldSett(String msg) {
+		StringBuilder s = new StringBuilder();
+		for (int i = 0; i < mineField.length; i++) {
+			s.append(String.format("\t[i=%d] = %s\n", i, mineField[i]));
+		}
+		log.debug(msg + s.toString());
 	}
 
 	public enum Field {

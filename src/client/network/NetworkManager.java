@@ -58,6 +58,13 @@ public class NetworkManager {
 	}
 
 	public void resetBoard(String userNick) {
+		try {
+			log.debug("Sending reset board");
+			remoteGameManager.resetBoard(userNick);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 }

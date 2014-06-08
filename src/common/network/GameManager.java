@@ -9,6 +9,8 @@ import common.model.Result;
 public interface GameManager extends Remote {
 	public String tmpMsg(String msg) throws RemoteException;
 
+	// change userNick to soth more general? pass board size, bombs num, nick,..
+	// ?
 	public Boolean createNewGame(String userNick, GameMode gm, PlayerHandler playerHandler) throws RemoteException;
 
 	public Boolean joinGame(String userNick, PlayerHandler playerHandler) throws RemoteException;
