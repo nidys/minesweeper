@@ -29,7 +29,7 @@ public class PerksLogic {
 	}
 
 	public boolean joinNewPlayer(String userNick, PlayerHandler playerHandler) {
-		if (players.size() >= MAX_PLAYERS) {
+		if (players.size() <= MAX_PLAYERS) {
 			log.debug(String.format("joinNewPlayer = %s", userNick));
 			players.put(userNick, new BoardDispatcher(new Board(bombsNum, boardSize, userNick), playerHandler));
 			return true;
@@ -49,7 +49,7 @@ public class PerksLogic {
 		log.debug(String.format("Player[%s], shot result = %s", userNick, res));
 		for (String nick : players.keySet()) {
 			if (!nick.equals(userNick)) {
-				players.get(nick).informOpponent(position, res);
+				players.get(nick).informOpponent(position + 1, res);
 			}
 		}
 		return res;
