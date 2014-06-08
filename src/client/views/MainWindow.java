@@ -29,7 +29,7 @@ import common.network.ServerAddress;
  * View for the Main component (view with the game board). Standard window.
  */
 @SuppressWarnings("serial")
-public class MainWindow extends WindowBase implements Observer {
+public class MainWindow extends WindowBase {
 	private static Logger log = Logger.getLogger(MainWindow.class);
 
 	private JButton newGameBtn;
@@ -38,9 +38,6 @@ public class MainWindow extends WindowBase implements Observer {
 	private JTextField userNick;
 	private JButton[] myBombField;
 	private JButton[] oponentBombField;
-
-	private static final String NEW_BUTTON = "    ";
-	private static final String NEW_BUTTON_1 = "ME    ";
 
 	/**
 	 * Create the frame.
@@ -218,14 +215,5 @@ public class MainWindow extends WindowBase implements Observer {
 		for (int i = 0; i < myBombField.length; i++) {
 			myBombField[i].setBackground(null);
 		}
-	}
-
-	/**
-	 * Example usage of an Observer pattern (not sure if we'll use it).
-	 */
-	@Override
-	public void update(Observable o, Object arg) {
-		// MainModel model = (MainModel) o;
-		log.debug("update() from MainWindow.");
 	}
 }

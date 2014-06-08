@@ -22,9 +22,9 @@ public class MyBombFielsBtnListener extends BaseListenerForWindow {
 		int position = Integer.valueOf(e.getActionCommand());
 		Result res = netManager.shot(gameState.getUserNick(), position);
 		if (res == Result.BOMB) {
-			view.setMyFieldAsBomb(position);
+			mainView.setMyFieldAsBomb(position);
 		} else {
-			view.setMyFieldAsEmpty(position);
+			mainView.setMyFieldAsEmpty(position);
 		}
 	}
 

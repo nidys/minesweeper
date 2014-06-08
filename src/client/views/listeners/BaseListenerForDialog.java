@@ -4,12 +4,8 @@ import client.controllers.NewGameController;
 import client.views.NewGameDialog;
 
 public abstract class BaseListenerForDialog extends BaseListenerWithMVCAccess {
-	NewGameDialog newGameView;
-	NewGameController newGameController;
-
-	public BaseListenerForDialog() {
-		super();
-	}
+	protected NewGameDialog newGameView;
+	protected NewGameController newGameController;
 
 	public void setNewGameView(NewGameDialog newGameView) {
 		this.newGameView = newGameView;
@@ -18,5 +14,4 @@ public abstract class BaseListenerForDialog extends BaseListenerWithMVCAccess {
 	public void setNewGameControlle(NewGameController newGameControlle) {
 		this.newGameController = newGameControlle;
 	}
-
 }

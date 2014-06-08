@@ -23,6 +23,6 @@ public class Locator {
 	 * @return Controller for a Main Component.
 	 */
 	public MainController getMain() {
-		return componentsFactory.CreateMainComponent();
+		return componentsFactory.createMainComponent();
 	}
 }

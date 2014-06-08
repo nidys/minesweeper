@@ -3,7 +3,6 @@ package client.utils;
 import client.controllers.MainController;
 import client.controllers.NewGameController;
 import client.gameRules.GameState;
-import client.models.MainModel;
 import client.network.NetworkManager;
 import client.views.MainWindow;
 import client.views.NewGameDialog;
@@ -12,10 +11,10 @@ import client.views.listeners.BaseListenerForWindow;
 import client.views.listeners.BaseListenerWithMVCAccess;
 
 public class ListenerGenerator {
-
+	private ComponentsFactory componentsFactory;
+	
 	// for window
 	private MainWindow mainView;
-	private MainModel mainModel;
 	private NetworkManager netManager;
 	private GameState gameState;
 	private MainController mainController;
@@ -24,13 +23,12 @@ public class ListenerGenerator {
 	private NewGameDialog newGameView;
 	private NewGameController newGameController;
 
-	public ListenerGenerator(MainWindow mainView, MainModel mainModel, NetworkManager netManager, GameState gameState, MainController mainController) {
-		super();
+	public ListenerGenerator(MainWindow mainView, NetworkManager netManager, GameState gameState, MainController mainController, ComponentsFactory componentsFactory) {
 		this.mainView = mainView;
-		this.mainModel = mainModel;
 		this.netManager = netManager;
 		this.gameState = gameState;
 		this.mainController = mainController;
+		this.componentsFactory = componentsFactory;
 	}
 
 	public void setDialogComponents(NewGameDialog newGameView, NewGameController newGameControlle) {
@@ -39,7 +37,7 @@ public class ListenerGenerator {
 	}
 
 	public void setFieldsForWindow(BaseListenerForWindow listener) {
-		listener.setView(mainView);
+		listener.setMainView(mainView);
 		setBaseComponents(listener);
 	}
 
@@ -50,10 +48,9 @@ public class ListenerGenerator {
 	}
 
 	private void setBaseComponents(BaseListenerWithMVCAccess listener) {
-		listener.setMainModel(mainModel);
+		listener.setComponentsFactory(componentsFactory);
 		listener.setNetManager(netManager);
 		listener.setGameState(gameState);
 		listener.setViewController(mainController);
 	}
-
 }
