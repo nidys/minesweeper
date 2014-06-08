@@ -1,7 +1,5 @@
 package client.utils;
 
-import client.controllers.MainController;
-import client.controllers.NewGameController;
 import client.gameRules.GameState;
 import client.network.NetworkManager;
 import client.views.MainWindow;
@@ -20,12 +18,10 @@ import client.views.listeners.ResetBtnListener;
  */
 public class ComponentsFactory {
 	private MainWindow mainView;
-	private MainController mainController;
 	private NetworkManager netManager;
 	private GameState gameState;
 	private ListenerGenerator listenerGenerator;
 	private NewGameDialog newGameView;
-	private NewGameController newGameController;
 	
 	/**
 	 * Creates the Main component. This method cannot be called within the
@@ -33,17 +29,16 @@ public class ComponentsFactory {
 	 * 
 	 * @return Controller for Main component.
 	 */
-	public MainController createMainComponent() {
+	public MainWindow createMainComponent() {
 		if (mainView == null) {
 			mainView = new MainWindow();
 			netManager = new NetworkManager();
 			gameState = new GameState();
 			
-			mainController = new MainController(mainView, this);
-			listenerGenerator = new ListenerGenerator(mainView, netManager, gameState, mainController, this);
+			listenerGenerator = new ListenerGenerator(mainView, netManager, gameState, this);
 			initializeStartViewListeners();
 		}
-		return mainController;
+		return mainView;
 	}
 	
 	/**
@@ -51,13 +46,12 @@ public class ComponentsFactory {
 	 * 
 	 * @return Controller for NewGame component.
 	 */
-	public NewGameController createNewGameComponent() {
+	public NewGameDialog createNewGameComponent() {
 		newGameView = new NewGameDialog(mainView, true);
-		newGameController = new NewGameController(newGameView, listenerGenerator);
-		listenerGenerator.setDialogComponents(newGameView, newGameController);
+		listenerGenerator.setDialogComponents(newGameView);
 		
 		initializeNewGameListeners();
-		return newGameController;
+		return newGameView;
 	}
 	
 	// Temporarily here

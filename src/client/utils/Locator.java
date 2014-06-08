@@ -1,6 +1,6 @@
 package client.utils;
 
-import client.controllers.MainController;
+import client.views.MainWindow;
 
 /**
  * Root for the application initialization. Responsible for creation most of the
@@ -22,7 +22,7 @@ public class Locator {
 	 * 
 	 * @return Controller for a Main Component.
 	 */
-	public MainController getMain() {
+	public MainWindow getMain() {
 		return componentsFactory.createMainComponent();
 	}
 }

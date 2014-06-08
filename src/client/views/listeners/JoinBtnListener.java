@@ -21,7 +21,8 @@ public class JoinBtnListener extends BaseListenerForDialog {
 	public void actionPerformed(ActionEvent e) {
 		mainView.drawGameBoard();
 		componentsFactory.initializeBoardListeners();
-		newGameController.disactivate();
+		newGameView.setVisible(false);
+//		newGameController.disactivate();
 		log.debug("Sending join game for user = " + gameState.getUserNick());
 		netManager.joinGame(gameState.getUserNick(), gameState.getPlayerHandler());
 	}

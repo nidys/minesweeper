@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 
 import org.apache.log4j.Logger;
 
-import client.controllers.NewGameController;
 import client.utils.ListenerGenerator;
 import client.views.MainWindow;
 
@@ -21,7 +20,8 @@ public class HostBtnListener extends BaseListenerForDialog {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		initializeGameBoard();
-		newGameController.disactivate();
+		newGameView.setVisible(false);
+//		newGameController.disactivate();
 		log.debug("Sending create game for user = " + gameState.getUserNick());
 		netManager.createGame(gameState.getUserNick(), gameState.getMode(), gameState.getPlayerHandler());
 	}

@@ -5,9 +5,9 @@ import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
 
-import client.controllers.NewGameController;
 import client.network.PlayerHandlerImpl;
 import client.utils.ListenerGenerator;
+import client.views.NewGameDialog;
 
 public class NewGameButtonListener extends BaseListenerForWindow {
 	private static Logger log = Logger.getLogger(NewGameButtonListener.class);
@@ -30,8 +30,8 @@ public class NewGameButtonListener extends BaseListenerForWindow {
 			e1.printStackTrace();
 		}
 		log.debug("New Game button user=" + gameState.getUserNick());
-		NewGameController newGameController = componentsFactory.createNewGameComponent();
-		newGameController.activate();
+		NewGameDialog newGameView = componentsFactory.createNewGameComponent();
+		newGameView.setVisible(true);
 	}
 
 }

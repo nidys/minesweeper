@@ -4,8 +4,8 @@ import java.awt.EventQueue;
 
 import org.apache.log4j.Logger;
 
-import client.controllers.MainController;
 import client.utils.Locator;
+import client.views.MainWindow;
 
 public class Minesweeper {
 	private static Logger log = Logger.getLogger(Minesweeper.class);
@@ -26,8 +26,8 @@ public class Minesweeper {
 				try {
 					Locator locator = new Locator();
 
-					MainController mainController = locator.getMain();
-					mainController.activate();
+					MainWindow mainView = locator.getMain();
+					mainView.setVisible(true);
 
 				} catch (Exception e) {
 					e.printStackTrace();

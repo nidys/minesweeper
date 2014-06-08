@@ -1,7 +1,5 @@
 package client.utils;
 
-import client.controllers.MainController;
-import client.controllers.NewGameController;
 import client.gameRules.GameState;
 import client.network.NetworkManager;
 import client.views.MainWindow;
@@ -17,23 +15,19 @@ public class ListenerGenerator {
 	private MainWindow mainView;
 	private NetworkManager netManager;
 	private GameState gameState;
-	private MainController mainController;
 
 	// for dialog
 	private NewGameDialog newGameView;
-	private NewGameController newGameController;
 
-	public ListenerGenerator(MainWindow mainView, NetworkManager netManager, GameState gameState, MainController mainController, ComponentsFactory componentsFactory) {
+	public ListenerGenerator(MainWindow mainView, NetworkManager netManager, GameState gameState, ComponentsFactory componentsFactory) {
 		this.mainView = mainView;
 		this.netManager = netManager;
 		this.gameState = gameState;
-		this.mainController = mainController;
 		this.componentsFactory = componentsFactory;
 	}
 
-	public void setDialogComponents(NewGameDialog newGameView, NewGameController newGameControlle) {
+	public void setDialogComponents(NewGameDialog newGameView) {
 		this.newGameView = newGameView;
-		this.newGameController = newGameControlle;
 	}
 
 	public void setFieldsForWindow(BaseListenerForWindow listener) {
@@ -43,7 +37,6 @@ public class ListenerGenerator {
 
 	public void setFieldsForDialog(BaseListenerForDialog listener) {
 		listener.setNewGameView(newGameView);
-		listener.setNewGameControlle(newGameController);
 		setBaseComponents(listener);
 	}
 
@@ -51,6 +44,5 @@ public class ListenerGenerator {
 		listener.setComponentsFactory(componentsFactory);
 		listener.setNetManager(netManager);
 		listener.setGameState(gameState);
-		listener.setViewController(mainController);
 	}
 }
