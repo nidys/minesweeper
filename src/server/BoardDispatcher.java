@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 
 import common.model.Board;
 import common.model.Result;
-import common.network.PlayerHandler;
+import common.network.callbacks.PlayerHandler;
 
 public class BoardDispatcher {
 	private static Logger log = Logger.getLogger(BoardDispatcher.class);

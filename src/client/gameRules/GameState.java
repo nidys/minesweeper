@@ -2,7 +2,7 @@ package client.gameRules;
 
 import common.gameRules.GameMode;
 import common.model.Board;
-import common.network.PlayerHandler;
+import common.network.callbacks.PlayerHandler;
 
 public class GameState {
 	private GameMode currentMode;

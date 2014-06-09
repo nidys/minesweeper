@@ -3,9 +3,10 @@ package common.network;
 public enum ServerAddress {
 	LOCALHOST("127.0.0.1", Port.DEFAULT);
 	private String addr;
+	public static final String RMI_PLACE = "/roommanager";
 
 	private ServerAddress(String addr, Port p) {
-		addr = addr + ":" + p.getValue();
+		this.addr = addr + ":" + p.getValue();
 	}
 
 	public String getValue() {
