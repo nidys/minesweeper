@@ -1,4 +1,4 @@
-package common.network;
+package common.network.callbacks;
 
 import java.io.Serializable;
 import java.rmi.Remote;
