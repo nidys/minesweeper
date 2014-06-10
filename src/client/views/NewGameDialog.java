@@ -15,6 +15,12 @@ import static client.internationalization.ButtonNames.JOIN;
 import static client.internationalization.ButtonNames.OK;
 
 import common.gameRules.GameMode;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
+import javax.swing.border.TitledBorder;
+import javax.swing.UIManager;
 
 /**
  * View for the NewGame component (view with the game board). A dialog.
@@ -32,9 +38,17 @@ public class NewGameDialog extends DialogBase {
 
 	private JButton hostGameButton;
 	private JButton joinGameButton;
+	private JPanel panelSettings;
+	private JLabel lblBoardSize;
+	private JTextField txtBoardSize;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JRadioButton rdbtnEasy;
+	private JRadioButton rdbtnMedium;
+	private JRadioButton rdbtnHard;
 
 	public NewGameDialog(JFrame owner, boolean isModal) {
 		super(owner, isModal);
+		setTitle("Minesweeper: New game");
 		buildGUI();
 		setLocationRelativeTo(owner);
 	}
@@ -42,8 +56,46 @@ public class NewGameDialog extends DialogBase {
 	private void buildGUI() {
 		setAlwaysOnTop(true);
 		setResizable(false);
-		setBounds(100, 100, 270, 170);
+		setBounds(100, 100, 273, 319);
 		getContentPane().setLayout(null);
+		{
+			panelSettings = new JPanel();
+			panelSettings.setBounds(0, 92, 265, 95);
+			getContentPane().add(panelSettings);
+			panelSettings.setLayout(null);
+			{
+				lblBoardSize = new JLabel("Board size:");
+				lblBoardSize.setBounds(43, 14, 53, 14);
+				panelSettings.add(lblBoardSize);
+			}
+			
+			txtBoardSize = new JTextField();
+			txtBoardSize.setBounds(100, 11, 128, 20);
+			panelSettings.add(txtBoardSize);
+			txtBoardSize.setColumns(10);
+			
+			JPanel Type = new JPanel();
+			Type.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Type:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			Type.setBounds(40, 38, 192, 46);
+			panelSettings.add(Type);
+			Type.setLayout(null);
+			
+			rdbtnEasy = new JRadioButton("Easy");
+			rdbtnEasy.setSelected(true);
+			rdbtnEasy.setBounds(6, 16, 49, 23);
+			Type.add(rdbtnEasy);
+			buttonGroup.add(rdbtnEasy);
+			
+			rdbtnMedium = new JRadioButton("Medium");
+			rdbtnMedium.setBounds(63, 16, 61, 23);
+			Type.add(rdbtnMedium);
+			buttonGroup.add(rdbtnMedium);
+			
+			rdbtnHard = new JRadioButton("Hard");
+			rdbtnHard.setBounds(137, 16, 49, 23);
+			Type.add(rdbtnHard);
+			buttonGroup.add(rdbtnHard);
+		}
 		contentPanel.setBounds(0, 0, 265, 95);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel);
@@ -65,7 +117,7 @@ public class NewGameDialog extends DialogBase {
 		contentPanel.add(perksGameButton);
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setBounds(0, 100, 265, 35);
+			buttonPane.setBounds(0, 255, 265, 35);
 			getContentPane().add(buttonPane);
 			{
 				hostGameButton = new JButton(HOST);
@@ -82,8 +134,38 @@ public class NewGameDialog extends DialogBase {
 				buttonPane.add(joinGameButton);
 			}
 		}
+		
+		JPanel panelAdditionalSettings = new JPanel();
+		panelAdditionalSettings.setBounds(0, 187, 265, 68);
+		getContentPane().add(panelAdditionalSettings);
 	}
 
+	public int getBoardSize(){
+		if (txtBoardSize.getText().isEmpty())
+		{
+			return -1;
+		}
+		return Integer.parseInt(txtBoardSize.getText());
+	}
+	
+	public int getBombsNumber(){
+		int size = Integer.parseInt(txtBoardSize.getText());
+		if( size <= 0)
+			return -1;
+		if (rdbtnEasy.isSelected()){
+			return (int) Math.floor(0.25 * size);
+		}else if (rdbtnMedium.isSelected()){
+			return (int) Math.floor(0.50 * size);
+		}else if (rdbtnHard.isSelected()){
+			return (int) Math.floor(0.75 * size);
+		}else{
+			return -1;
+		}
+		
+			
+	}
+	
+	
 	public void addGameModeBtnListener(ActionListener listener) {
 		classicGameButton.addActionListener(listener);
 		sharedGameButton.addActionListener(listener);

@@ -1,28 +1,28 @@
 package client.views;
 
+import static client.internationalization.ButtonNames.NEW_GAME;
+
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.Random;
 
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
-import javax.swing.GroupLayout.Alignment;
 
 import org.apache.log4j.Logger;
 
+import client.controllers.MyBombFielsBtnController;
+import client.controllers.OpponentBombFieldBtnController;
 import client.internationalization.ButtonNames;
-
-import static client.internationalization.ButtonNames.NEW_GAME;
-
 import common.network.ServerAddress;
 
 /**
@@ -46,9 +46,9 @@ public class MainWindow extends WindowBase {
 		drawEntryScreen();
 	}
 
-	public void drawGameBoard() {
+	public void drawGameBoard(int boardSize) {
 		clearWindow();
-		drawComponents();
+		drawComponents(boardSize);
 	}
 
 	private void clearWindow() {
@@ -56,7 +56,7 @@ public class MainWindow extends WindowBase {
 		getContentPane().repaint();
 	}
 
-	public void drawComponents() {
+	public void drawComponents(int boardSize) {
 		setBounds(100, 100, 293, 227);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -139,26 +139,51 @@ public class MainWindow extends WindowBase {
 
 		newGameBtn = new JButton(NEW_GAME);
 		newGameBtn.setBackground(Color.BLUE);
+		
+		JLabel lblMinesweeper = new JLabel("Minesweeper");
+		lblMinesweeper.setFont(new Font("Tahoma", Font.PLAIN, 56));
+		
+		JLabel lblServerAdress = new JLabel("Server adress:");
+		
+		JLabel lblUserName = new JLabel("User name:");
 
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(
-						groupLayout
-								.createSequentialGroup()
-								.addGap(158)
-								.addGroup(
-										groupLayout
-												.createParallelGroup(Alignment.LEADING)
-												.addComponent(userNick, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE)
-												.addComponent(newGameBtn)
-												.addComponent(serverAddress, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-														GroupLayout.PREFERRED_SIZE)).addContainerGap(176, Short.MAX_VALUE)));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(
-				groupLayout.createSequentialGroup().addGap(83)
-						.addComponent(serverAddress, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addGap(18)
-						.addComponent(userNick, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE).addGap(29)
-						.addComponent(newGameBtn).addContainerGap(78, Short.MAX_VALUE)));
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(94)
+							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+								.addComponent(lblServerAdress)
+								.addComponent(lblUserName))
+							.addGap(18)
+							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(userNick, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(newGameBtn)
+								.addComponent(serverAddress, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(groupLayout.createSequentialGroup()
+							.addGap(43)
+							.addComponent(lblMinesweeper)))
+					.addContainerGap(190, Short.MAX_VALUE))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addGap(34)
+					.addComponent(lblMinesweeper)
+					.addGap(35)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(serverAddress, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblServerAdress))
+					.addGap(18)
+					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
+						.addComponent(userNick, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblUserName))
+					.addGap(29)
+					.addComponent(newGameBtn)
+					.addContainerGap(68, Short.MAX_VALUE))
+		);
 		getContentPane().setLayout(groupLayout);
 	}
 
@@ -175,18 +200,18 @@ public class MainWindow extends WindowBase {
 		btnReset.addActionListener(listener);
 	}
 
-	public void addBombFieldBtnListener(ActionListener listener) {
+	public void addBombFieldBtnListener(MyBombFielsBtnController listener) {
 		for (int i = 0; i < myBombField.length; i++) {
-			myBombField[i].addActionListener(listener);
+			myBombField[i].addMouseListener(listener);
 		}
 	}
-
-	public void addOponentFieldBtnListener(ActionListener listener) {
-		for (int i = 0; i < myBombField.length; i++) {
-			oponentBombField[i].addActionListener(listener);
+	
+	public void addOponentFieldBtnListener(OpponentBombFieldBtnController opponentBombFieldBtnController) {
+		for (int i = 0; i < oponentBombField.length; i++) {
+			oponentBombField[i].addMouseListener(opponentBombFieldBtnController);
 		}
 	}
-
+	
 	public String getServerAddress() {
 		return serverAddress.getText();
 	}
@@ -214,6 +239,18 @@ public class MainWindow extends WindowBase {
 	public void resetMyFields() {
 		for (int i = 0; i < myBombField.length; i++) {
 			myBombField[i].setBackground(null);
+		}
+	}
+
+	public void setMyFieldAsFlagged(int pos) {
+		if (myBombField[pos - 1].getText() != "F")
+		{
+			myBombField[pos - 1].setText("F");
+			myBombField[pos - 1].setBackground(Color.BLUE);
+		}
+		else{
+			myBombField[pos - 1].setText(""+pos);
+			myBombField[pos - 1].setBackground(Color.GRAY);
 		}
 	}
 }
