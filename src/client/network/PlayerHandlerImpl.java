@@ -28,9 +28,9 @@ public class PlayerHandlerImpl extends UnicastRemoteObject implements PlayerHand
 	public void opponentShot(int position, Result result) throws RemoteException {
 		log.debug(String.format("Got opponentShot. Posp[%d] result[%s]", position, result));
 		if (result == Result.BOMB) {
-			view.setOpponentAsBomb(position);
+			view.setFieldAsBomb(position);
 		} else {
-			view.setOpponentAsEmpty(position);
+			view.setFieldAsEmpty(position);
 		}
 	}
 

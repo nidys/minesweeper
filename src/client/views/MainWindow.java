@@ -4,9 +4,7 @@ import static client.internationalization.ButtonNames.NEW_GAME;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
@@ -15,7 +13,6 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
@@ -23,7 +20,11 @@ import org.apache.log4j.Logger;
 import client.controllers.MyBombFielsBtnController;
 import client.controllers.OpponentBombFieldBtnController;
 import client.internationalization.ButtonNames;
+import client.views.component.PlayerGameBoardPanel;
+
+import common.gameRules.GameMode;
 import common.network.ServerAddress;
+import javax.swing.JMenuBar;
 
 /**
  * View for the Main component (view with the game board). Standard window.
@@ -38,17 +39,20 @@ public class MainWindow extends WindowBase {
 	private JTextField userNick;
 	private JButton[] myBombField;
 	private JButton[] oponentBombField;
-
+	
+	private GamePanelBase gamePanel;
+	private GameMode mode;
 	/**
 	 * Create the frame.
 	 */
 	public MainWindow() {
 		drawEntryScreen();
+		//drawGameBoard();
 	}
 
-	public void drawGameBoard(int boardSize) {
+	public void drawGameBoard() {
 		clearWindow();
-		drawComponents(boardSize);
+		drawComponents();
 	}
 
 	private void clearWindow() {
@@ -56,72 +60,20 @@ public class MainWindow extends WindowBase {
 		getContentPane().repaint();
 	}
 
-	public void drawComponents(int boardSize) {
-		setBounds(100, 100, 293, 227);
+	public void drawComponents() {
+		setBounds(100, 100, 733, 394);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0, 0, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0, 0 };
-		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-		getContentPane().setLayout(gridBagLayout);
-
-		JLabel lblMe = new JLabel("Me");
-		GridBagConstraints gbc_lblMe = new GridBagConstraints();
-		gbc_lblMe.gridwidth = 2;
-		gbc_lblMe.insets = new Insets(0, 0, 5, 5);
-		gbc_lblMe.gridx = 0;
-		gbc_lblMe.gridy = 0;
-		getContentPane().add(lblMe, gbc_lblMe);
-
-		JSeparator separator = new JSeparator();
-		GridBagConstraints gbc_separator = new GridBagConstraints();
-		gbc_separator.insets = new Insets(0, 0, 5, 5);
-		gbc_separator.gridheight = 2;
-		gbc_separator.gridx = 2;
-		gbc_separator.gridy = 0;
-		getContentPane().add(separator, gbc_separator);
-
-		JLabel lblOpponent = new JLabel("Opponent");
-		GridBagConstraints gbc_lblOpponent = new GridBagConstraints();
-		gbc_lblOpponent.gridwidth = 2;
-		gbc_lblOpponent.insets = new Insets(0, 0, 5, 5);
-		gbc_lblOpponent.gridx = 3;
-		gbc_lblOpponent.gridy = 0;
-		getContentPane().add(lblOpponent, gbc_lblOpponent);
-
-		myBombField = new JButton[] { // <br>
-		createBombFieldBtn("1", 0, 0, 5, 5, 0, 1), // <br>
-				createBombFieldBtn("2", 0, 0, 5, 5, 1, 1), // <br>
-				createBombFieldBtn("3", 0, 0, 5, 5, 0, 2), // <br>
-				createBombFieldBtn("4", 0, 0, 5, 5, 1, 2) // <br>
-
-		};
-		oponentBombField = new JButton[] { // <br>
-		createBombFieldBtn("1", 0, 0, 5, 5, 3, 1), // <br>
-				createBombFieldBtn("2", 0, 0, 5, 0, 4, 1), // <br>
-				createBombFieldBtn("3", 0, 0, 5, 5, 3, 2), // <br>
-				createBombFieldBtn("4", 0, 0, 5, 0, 4, 2) // <br>
-
-		};
-
-		btnReset = new JButton(ButtonNames.RESET);
-		GridBagConstraints gbc_btnReset = new GridBagConstraints();
-		gbc_btnReset.insets = new Insets(0, 0, 0, 5);
-		gbc_btnReset.gridx = 0;
-		gbc_btnReset.gridy = 4;
-		getContentPane().add(btnReset, gbc_btnReset);
+		getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+				
+						btnReset = new JButton(ButtonNames.RESET);
+						menuBar.add(btnReset);
 	}
 
-	private JButton createBombFieldBtn(String name, int top, int left, int bottom, int right, int gridx, int gridy) {
-		JButton btn = new JButton(name);
-		GridBagConstraints gbc_btn = new GridBagConstraints();
-		gbc_btn.insets = new Insets(top, left, bottom, right);
-		gbc_btn.gridx = gridx;
-		gbc_btn.gridy = gridy;
-		getContentPane().add(btn, gbc_btn);
-		return btn;
-	}
+//	private JButton createBombFieldBtn(String name, int top, int left, int bottom, int right, int gridx, int gridy) {
+//	}
 
 	private void drawEntryScreen() {
 		setBounds(100, 100, 450, 300);
@@ -200,17 +152,6 @@ public class MainWindow extends WindowBase {
 		btnReset.addActionListener(listener);
 	}
 
-	public void addBombFieldBtnListener(MyBombFielsBtnController listener) {
-		for (int i = 0; i < myBombField.length; i++) {
-			myBombField[i].addMouseListener(listener);
-		}
-	}
-	
-	public void addOponentFieldBtnListener(OpponentBombFieldBtnController opponentBombFieldBtnController) {
-		for (int i = 0; i < oponentBombField.length; i++) {
-			oponentBombField[i].addMouseListener(opponentBombFieldBtnController);
-		}
-	}
 	
 	public String getServerAddress() {
 		return serverAddress.getText();
@@ -219,38 +160,89 @@ public class MainWindow extends WindowBase {
 	public String getUserNick() {
 		return userNick.getText();
 	}
-
-	public void setMyFieldAsBomb(int pos) {
-		myBombField[pos - 1].setBackground(Color.RED);
+	public void addNewPlayerToView(PlayerGameBoardPanel playerGameBoardPanel) {
+		((PerksGamePanel) gamePanel).addPlayer(playerGameBoardPanel);
+		
 	}
 
-	public void setMyFieldAsEmpty(int pos) {
-		myBombField[pos - 1].setBackground(Color.GRAY);
-	}
-
-	public void setOpponentAsBomb(int pos) {
-		oponentBombField[pos - 1].setBackground(Color.RED);
-	}
-
-	public void setOpponentAsEmpty(int pos) {
-		oponentBombField[pos - 1].setBackground(Color.GRAY);
-	}
-
-	public void resetMyFields() {
-		for (int i = 0; i < myBombField.length; i++) {
-			myBombField[i].setBackground(null);
+	public void addBombFieldBtnListener(MyBombFielsBtnController listener) {
+		if (mode == GameMode.PERKS){
+			((PerksGamePanel) gamePanel).addBombFieldBtnListener(listener);
+		}else if (mode == GameMode.CLASSIC){
+			
+		}else if (mode == GameMode.SHARED){
+			
+		}else{
+			
 		}
 	}
+	
+	public void initializeGameBoard(GameMode mode) {
+		this.mode = mode;
+		
+		if (mode == GameMode.PERKS){
+			gamePanel = new PerksGamePanel();
+			getContentPane().add(gamePanel);
+		}else if (mode == GameMode.CLASSIC){
+			
+		}else if (mode == GameMode.SHARED){
+			
+		}else{
+			
+		}
+		
+		
+	}
 
-	public void setMyFieldAsFlagged(int pos) {
-		if (myBombField[pos - 1].getText() != "F")
-		{
-			myBombField[pos - 1].setText("F");
-			myBombField[pos - 1].setBackground(Color.BLUE);
+	public void setFieldAsBomb(int position) {
+		if (mode == GameMode.PERKS){
+			((PerksGamePanel) gamePanel).setFieldAsBomb(position);
+		}else if (mode == GameMode.CLASSIC){
+			
+		}else if (mode == GameMode.SHARED){
+			
+		}else{
+			
 		}
-		else{
-			myBombField[pos - 1].setText(""+pos);
-			myBombField[pos - 1].setBackground(Color.GRAY);
+		
+	}
+
+	public void setFieldAsEmpty(int position) {
+		if (mode == GameMode.PERKS){
+			((PerksGamePanel) gamePanel).setFieldAsEmpty(position);
+		}else if (mode == GameMode.CLASSIC){
+			
+		}else if (mode == GameMode.SHARED){
+			
+		}else{
+			
 		}
+		
+	}
+
+	public void resetFields() {
+		if (mode == GameMode.PERKS){
+			((PerksGamePanel) gamePanel).resetFields();
+		}else if (mode == GameMode.CLASSIC){
+			
+		}else if (mode == GameMode.SHARED){
+			
+		}else{
+			
+		}
+		
+	}
+
+	public void setFieldAsFlagged(int position) {
+		if (mode == GameMode.PERKS){
+			((PerksGamePanel) gamePanel).setFieldAsFlagged(position);
+		}else if (mode == GameMode.CLASSIC){
+			
+		}else if (mode == GameMode.SHARED){
+			
+		}else{
+			
+		}
+		
 	}
 }

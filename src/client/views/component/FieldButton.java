@@ -15,6 +15,7 @@ public class FieldButton extends JButton {
 	private static final long serialVersionUID = 1L;
 	
 	int position;
+	
 
 	public int getPosition() {
 		return position;

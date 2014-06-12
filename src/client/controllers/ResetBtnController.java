@@ -15,6 +15,6 @@ public class ResetBtnController extends BaseControllerForWindow {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		netManager.resetBoard(gameState.getUserNick());
-		mainView.resetMyFields();
+		mainView.resetFields();
 	}
 }

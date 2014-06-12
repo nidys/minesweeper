@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import client.controllers.base.BaseControllerForDialog;
 import client.utils.ListenerGenerator;
 import client.views.MainWindow;
+import client.views.component.PlayerGameBoardPanel;
 
 public class JoinBtnController extends BaseControllerForDialog {
 	private static Logger log = Logger.getLogger(JoinBtnController.class);
@@ -20,7 +21,8 @@ public class JoinBtnController extends BaseControllerForDialog {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		mainView.drawGameBoard();
+		//mainView.drawGameBoard();
+		mainView.addNewPlayerToView(new PlayerGameBoardPanel());
 		componentsFactory.initializeBoardListeners();
 		newGameView.setVisible(false);
 //		newGameController.disactivate();

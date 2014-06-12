@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import client.controllers.base.BaseControllerForDialog;
 import client.utils.ListenerGenerator;
 import client.views.MainWindow;
+import client.views.component.PlayerGameBoardPanel;
 
 public class HostBtnController extends BaseControllerForDialog {
 	private static Logger log = Logger.getLogger(HostBtnController.class);
@@ -20,15 +21,18 @@ public class HostBtnController extends BaseControllerForDialog {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		initializeGameBoard();
-		newGameView.setVisible(false);
+		
 //		newGameController.disactivate();
 		log.debug("Sending create game for user = " + gameState.getUserNick());
 		netManager.createGame(gameState.getUserNick(), gameState.getMode(), gameState.getPlayerHandler());
+		initializeGameBoard();
+		newGameView.setVisible(false);
 	}
 	
 	public void initializeGameBoard() {
 		mainView.drawGameBoard();
+		mainView.initializeGameBoard(gameState.getMode());
+		mainView.addNewPlayerToView(new PlayerGameBoardPanel());
 //		mainController.initializeGameBoard();
 		componentsFactory.initializeBoardListeners();
 	}

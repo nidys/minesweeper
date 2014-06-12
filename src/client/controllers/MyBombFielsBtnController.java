@@ -69,11 +69,11 @@ public class MyBombFielsBtnController extends BaseControllerForField {
 		if (pressed) {
 			if (SwingUtilities.isRightMouseButton(arg0)) {
 				if (button.getText() != "F"){
-					mainView.setMyFieldAsFlagged(position);
+					mainView.setFieldAsFlagged(position);
 				}
 				else
 				{
-					mainView.setMyFieldAsFlagged(position);
+					mainView.setFieldAsFlagged(position);
 				}
 			}
 			else {
@@ -81,11 +81,11 @@ public class MyBombFielsBtnController extends BaseControllerForField {
 				
 				Result res = netManager.shot(gameState.getUserNick(), position);
 				if (res == Result.BOMB) {
-					mainView.setMyFieldAsBomb(position);
+					mainView.setFieldAsBomb(position);
 				}
 				else
 				{
-					mainView.setMyFieldAsEmpty(position);
+					mainView.setFieldAsEmpty(position);
 				}
 			}
 		}
