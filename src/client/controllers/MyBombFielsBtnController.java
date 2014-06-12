@@ -1,5 +1,6 @@
 package client.controllers;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 
 import javax.swing.SwingUtilities;
@@ -9,7 +10,6 @@ import org.apache.log4j.Logger;
 import client.controllers.base.BaseControllerForField;
 import client.utils.ListenerGenerator;
 import client.views.component.FieldButton;
-
 import common.model.Result;
 
 public class MyBombFielsBtnController extends BaseControllerForField {
@@ -68,23 +68,25 @@ public class MyBombFielsBtnController extends BaseControllerForField {
 		int position = button.getPosition();
 		if (pressed) {
 			if (SwingUtilities.isRightMouseButton(arg0)) {
-				if (button.getText() != "F"){
+				if (button.getText() != "F" && button.getBackground() != Color.GRAY){
 					mainView.setFieldAsFlagged(position);
 				}
-				else
-				{
+				else{
 					mainView.setFieldAsFlagged(position);
 				}
 			}
 			else {
-				log.debug("Clicked field, user=" + gameState.getUserNick());
 				
+				log.debug("Clicked field, user=" + gameState.getUserNick());
+				if (button.getText() == "F"){
+					return;
+				}
+				log.debug("position=" + position);
 				Result res = netManager.shot(gameState.getUserNick(), position);
 				if (res == Result.BOMB) {
 					mainView.setFieldAsBomb(position);
 				}
-				else
-				{
+				else{
 					mainView.setFieldAsEmpty(position);
 				}
 			}

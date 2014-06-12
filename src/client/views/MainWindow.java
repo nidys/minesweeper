@@ -13,18 +13,17 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
 
 import client.controllers.MyBombFielsBtnController;
-import client.controllers.OpponentBombFieldBtnController;
 import client.internationalization.ButtonNames;
 import client.views.component.PlayerGameBoardPanel;
-
 import common.gameRules.GameMode;
 import common.network.ServerAddress;
-import javax.swing.JMenuBar;
 
 /**
  * View for the Main component (view with the game board). Standard window.
@@ -37,8 +36,8 @@ public class MainWindow extends WindowBase {
 	private JButton btnReset;
 	private JTextField serverAddress;
 	private JTextField userNick;
-	private JButton[] myBombField;
-	private JButton[] oponentBombField;
+//	private JButton[] myBombField;
+//	private JButton[] oponentBombField;
 	
 	private GamePanelBase gamePanel;
 	private GameMode mode;
@@ -61,15 +60,16 @@ public class MainWindow extends WindowBase {
 	}
 
 	public void drawComponents() {
-		setBounds(100, 100, 733, 394);
+		setBounds(100, 100, 456, 356);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-				
+			
 						btnReset = new JButton(ButtonNames.RESET);
 						menuBar.add(btnReset);
+						getContentPane().setBounds(0,0,450,301);
 	}
 
 //	private JButton createBombFieldBtn(String name, int top, int left, int bottom, int right, int gridx, int gridy) {
@@ -162,6 +162,7 @@ public class MainWindow extends WindowBase {
 	}
 	public void addNewPlayerToView(PlayerGameBoardPanel playerGameBoardPanel) {
 		((PerksGamePanel) gamePanel).addPlayer(playerGameBoardPanel);
+		setBounds(gamePanel.getBounds());
 		
 	}
 
@@ -179,7 +180,6 @@ public class MainWindow extends WindowBase {
 	
 	public void initializeGameBoard(GameMode mode) {
 		this.mode = mode;
-		
 		if (mode == GameMode.PERKS){
 			gamePanel = new PerksGamePanel();
 			getContentPane().add(gamePanel);
@@ -204,6 +204,10 @@ public class MainWindow extends WindowBase {
 		}else{
 			
 		}
+		JOptionPane.showMessageDialog(this,
+			    "You lost!.",
+			    ":(",
+			    JOptionPane.ERROR_MESSAGE);
 		
 	}
 

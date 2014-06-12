@@ -56,27 +56,28 @@ public class NewGameDialog extends DialogBase {
 	private void buildGUI() {
 		setAlwaysOnTop(true);
 		setResizable(false);
-		setBounds(100, 100, 273, 319);
+		setBounds(100, 100, 299, 319);
 		getContentPane().setLayout(null);
 		{
 			panelSettings = new JPanel();
-			panelSettings.setBounds(0, 92, 265, 95);
+			panelSettings.setBounds(0, 92, 293, 95);
 			getContentPane().add(panelSettings);
 			panelSettings.setLayout(null);
 			{
 				lblBoardSize = new JLabel("Board size:");
-				lblBoardSize.setBounds(43, 14, 53, 14);
+				lblBoardSize.setBounds(10, 14, 53, 14);
 				panelSettings.add(lblBoardSize);
 			}
 			
 			txtBoardSize = new JTextField();
-			txtBoardSize.setBounds(100, 11, 128, 20);
+			txtBoardSize.setText("2");
+			txtBoardSize.setBounds(73, 11, 210, 20);
 			panelSettings.add(txtBoardSize);
 			txtBoardSize.setColumns(10);
 			
 			JPanel Type = new JPanel();
 			Type.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Type:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-			Type.setBounds(40, 38, 192, 46);
+			Type.setBounds(10, 38, 273, 46);
 			panelSettings.add(Type);
 			Type.setLayout(null);
 			
@@ -87,16 +88,16 @@ public class NewGameDialog extends DialogBase {
 			buttonGroup.add(rdbtnEasy);
 			
 			rdbtnMedium = new JRadioButton("Medium");
-			rdbtnMedium.setBounds(63, 16, 61, 23);
+			rdbtnMedium.setBounds(100, 16, 61, 23);
 			Type.add(rdbtnMedium);
 			buttonGroup.add(rdbtnMedium);
 			
 			rdbtnHard = new JRadioButton("Hard");
-			rdbtnHard.setBounds(137, 16, 49, 23);
+			rdbtnHard.setBounds(218, 16, 49, 23);
 			Type.add(rdbtnHard);
 			buttonGroup.add(rdbtnHard);
 		}
-		contentPanel.setBounds(0, 0, 265, 95);
+		contentPanel.setBounds(0, 0, 293, 95);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel);
 		{
@@ -105,11 +106,11 @@ public class NewGameDialog extends DialogBase {
 		}
 		{
 			sharedGameButton = new JButton(GameMode.SHARED.toString());
-			sharedGameButton.setBounds(95, 10, 75, 75);
+			sharedGameButton.setBounds(107, 10, 75, 75);
 		}
 		{
 			perksGameButton = new JButton(GameMode.PERKS.toString());
-			perksGameButton.setBounds(180, 10, 75, 75);
+			perksGameButton.setBounds(208, 10, 75, 75);
 		}
 		contentPanel.setLayout(null);
 		contentPanel.add(classicGameButton);
@@ -117,7 +118,7 @@ public class NewGameDialog extends DialogBase {
 		contentPanel.add(perksGameButton);
 		{
 			JPanel buttonPane = new JPanel();
-			buttonPane.setBounds(0, 255, 265, 35);
+			buttonPane.setBounds(0, 255, 293, 35);
 			getContentPane().add(buttonPane);
 			{
 				hostGameButton = new JButton(HOST);
@@ -129,14 +130,14 @@ public class NewGameDialog extends DialogBase {
 			}
 			{
 				joinGameButton = new JButton(JOIN);
-				joinGameButton.setBounds(138, 5, 117, 25);
+				joinGameButton.setBounds(166, 5, 117, 25);
 				joinGameButton.setActionCommand(CANCEL);
 				buttonPane.add(joinGameButton);
 			}
 		}
 		
 		JPanel panelAdditionalSettings = new JPanel();
-		panelAdditionalSettings.setBounds(0, 187, 265, 68);
+		panelAdditionalSettings.setBounds(0, 187, 293, 68);
 		getContentPane().add(panelAdditionalSettings);
 	}
 

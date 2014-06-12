@@ -33,8 +33,8 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 	public boolean initGame(String userNick, PlayerHandler playerHandler) {
 		log.debug("Create game for user = " + userNick);
 		// receive boardSize, bombsNum? verify config?
-		boardSize = 4;
-		bombsNum = 1;
+		boardSize = 5;
+		bombsNum = 10;
 		players.put(userNick, new BoardDispatcher(new Board(bombsNum, boardSize, userNick), playerHandler));
 		return true;
 	}

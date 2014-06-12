@@ -16,7 +16,8 @@ public class PerksGamePanel extends GamePanelBase {
 	}
 
 	private void drawComponents() {
-		layout = new GridLayout(0, 2);
+		setBounds(0, 0, 450, 301);
+		layout = new GridLayout(0, 1);
 		setLayout(layout);
 	}
 	

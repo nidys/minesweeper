@@ -14,6 +14,7 @@ public class Board {
 	public Board(int bombsNum, int boardSize, String userNick) {
 		this.boardSize = boardSize;
 		mineField = new int[this.boardSize*this.boardSize];
+		System.out.println(bombsNum + ";" + boardSize);
 		initEmpty();
 		generateBombs(bombsNum);
 		fillWithNumbers();
