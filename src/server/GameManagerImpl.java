@@ -15,6 +15,9 @@ import server.gameEngine.BaseLogicImpl;
 import server.gameEngine.PerksLogic;
 
 import common.enums.GameMode;
+import common.exceptions.create.InvalidGameNameException;
+import common.exceptions.create.MaximumRoomExceededException;
+import common.exceptions.join.MaximumPlayerExceededException;
 import common.model.AvailableGameInfo;
 import common.model.Config;
 import common.model.GameSettings;
@@ -33,7 +36,7 @@ public class GameManagerImpl implements GameManager {
 	}
 
 	@Override
-	public GameSettings createNewGame(Config gameConfig) throws RemoteException {
+	public GameSettings createNewGame(Config gameConfig) throws RemoteException, InvalidGameNameException, MaximumRoomExceededException {
 		// TODO implement
 		error(log, "implement!!!");
 		// if (gm == GameMode.PERKS) {
@@ -52,7 +55,7 @@ public class GameManagerImpl implements GameManager {
 	 * interfaces spec update and then this will be repaired
 	 */
 	@Override
-	public GameSettings joinGame(String userNick, String gameId, PlayerHandler playerHandler) throws RemoteException {
+	public GameSettings joinGame(String userNick, String gameId, PlayerHandler playerHandler) throws RemoteException, MaximumPlayerExceededException {
 		// TODO implement!!!
 		error(log, "implement!!!");
 		// BaseLogicImpl engine = games.get(games.keySet().toArray()[0]);
