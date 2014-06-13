@@ -20,12 +20,13 @@ public class MyBombFielsBtnController extends BaseControllerForWindow {
 	public void actionPerformed(ActionEvent e) {
 		log.debug("Clicked my bomb field, user=" + gameState.getUserNick());
 		int position = Integer.valueOf(e.getActionCommand());
-		Result res = netManager.shot(gameState.getUserNick(), position);
-		if (res == Result.BOMB) {
-			mainView.setMyFieldAsBomb(position);
-		} else {
-			mainView.setMyFieldAsEmpty(position);
-		}
+		// TODO from now shot return list of fields to discover
+		// Result res = netManager.shot(gameState.getUserNick(), position);
+		// if (res == Result.BOMB) {
+		// mainView.setMyFieldAsBomb(position);
+		// } else {
+		// mainView.setMyFieldAsEmpty(position);
+		// }
 	}
 
 }

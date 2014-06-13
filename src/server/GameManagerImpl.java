@@ -1,7 +1,10 @@
 package server;
 
+import static client.utils.LoggingHelper.error;
+
 import java.rmi.RemoteException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -10,6 +13,9 @@ import server.gameEngine.BaseLogicImpl;
 import server.gameEngine.PerksLogic;
 
 import common.enums.GameMode;
+import common.model.AvailableGameInfo;
+import common.model.Config;
+import common.model.GameSettings;
 import common.network.callbacks.PlayerHandler;
 import common.network.protocols.GameLogic;
 import common.network.protocols.GameManager;
@@ -25,14 +31,17 @@ public class GameManagerImpl implements GameManager {
 	}
 
 	@Override
-	public GameLogic createNewGame(String userNick, GameMode gm, PlayerHandler playerHandler) throws RemoteException {
-		if (gm == GameMode.PERKS) {
-			BaseLogicImpl engine = new PerksLogic();
-			if (createEngine(userNick, gm, playerHandler, engine)) {
-				return engine;
-			}
-		}
-		log.debug(String.format("Player[%s], create this game type is not yet implemented, gm=%s", userNick, gm));
+	public GameSettings createNewGame(Config gameConfig) throws RemoteException {
+		// TODO implement
+		error(log, "implement!!!", null);
+		// if (gm == GameMode.PERKS) {
+		// BaseLogicImpl engine = new PerksLogic();
+		// if (createEngine(userNick, gm, playerHandler, engine)) {
+		// return engine;
+		// }
+		// }
+		// log.debug(String.format("Player[%s], create this game type is not yet implemented, gm=%s",
+		// userNick, gm));
 		return null;
 	}
 
@@ -41,12 +50,14 @@ public class GameManagerImpl implements GameManager {
 	 * interfaces spec update and then this will be repaired
 	 */
 	@Override
-	public GameLogic joinGame(String userNick, PlayerHandler playerHandler) throws RemoteException {
-		BaseLogicImpl engine = games.get(games.keySet().toArray()[0]);
-		if (engine.joinNewPlayer(userNick, playerHandler)) {
-			return engine;
-		}
-		log.debug(String.format("Players[%s] didnt join game", userNick));
+	public GameSettings joinGame(String userNick, String gameId, PlayerHandler playerHandler) throws RemoteException {
+		// TODO implement!!!
+		error(log, "implement!!!", null);
+		// BaseLogicImpl engine = games.get(games.keySet().toArray()[0]);
+		// if (engine.joinNewPlayer(userNick, playerHandler)) {
+		// return engine;
+		// }
+		// log.debug(String.format("Players[%s] didnt join game", userNick));
 		return null;
 	}
 
@@ -61,5 +72,12 @@ public class GameManagerImpl implements GameManager {
 		}
 		log.debug(String.format("Player[%s] is already in game - %s", userNick, games.get(userNick).getClass().getName()));
 		return false;
+	}
+
+	@Override
+	public List<AvailableGameInfo> getGameList() {
+		// TODO implement!!
+		error(log, "implement!!!", null);
+		return null;
 	}
 }

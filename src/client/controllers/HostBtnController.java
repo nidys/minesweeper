@@ -22,14 +22,16 @@ public class HostBtnController extends BaseControllerForDialog {
 	public void actionPerformed(ActionEvent e) {
 		initializeGameBoard();
 		newGameView.setVisible(false);
-//		newGameController.disactivate();
+		// newGameController.disactivate();
 		log.debug("Sending create game for user = " + gameState.getUserNick());
-		netManager.createGame(gameState.getUserNick(), gameState.getMode(), gameState.getPlayerHandler());
+		// TODO pass here all required parameters
+		// netManager.createGame(gameState.getUserNick(), gameState.getMode(),
+		// gameState.getPlayerHandler());
 	}
-	
+
 	public void initializeGameBoard() {
 		mainView.drawGameBoard();
-//		mainController.initializeGameBoard();
+		// mainController.initializeGameBoard();
 		componentsFactory.initializeBoardListeners();
 	}
 }

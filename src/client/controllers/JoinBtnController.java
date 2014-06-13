@@ -25,7 +25,8 @@ public class JoinBtnController extends BaseControllerForDialog {
 		newGameView.setVisible(false);
 //		newGameController.disactivate();
 		log.debug("Sending join game for user = " + gameState.getUserNick());
-		netManager.joinGame(gameState.getUserNick(), gameState.getPlayerHandler());
+		//TODO must specify gameId too, and pass
+//		netManager.joinGame(gameState.getUserNick(), gameState.getPlayerHandler());
 	}
 
 }

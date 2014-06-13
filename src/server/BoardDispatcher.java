@@ -30,11 +30,11 @@ public class BoardDispatcher {
 	}
 
 	public void informOpponent(int position, Result res) {
-		try {
-			playerHandler.opponentShot(position, res);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			playerHandler.opponentShot(position, res);
+//		} catch (RemoteException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 }

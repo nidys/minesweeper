@@ -1,12 +1,17 @@
 package client.network;
 
+import static client.utils.LoggingHelper.error;
+
 import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import common.enums.GameMode;
+import common.model.AvailableGameInfo;
 import common.model.Result;
+import common.model.ShotResult;
 import common.network.ServerAddress;
 import common.network.callbacks.PlayerHandler;
 import common.network.protocols.GameLogic;
@@ -29,43 +34,56 @@ public class NetworkManager {
 	}
 
 	public boolean createGame(String userNick, GameMode gm, PlayerHandler playerHandler) {
-		try {
-			log.debug(String.format("Sending gm=%s", gm));
-			engine = remoteGameManager.createNewGame(userNick, gm, playerHandler);
-			if (engine != null) {
-				return true;
-			}
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// TODO used in HostBtnController, fill with appropriate parameters
+		// try {
+		// log.debug(String.format("Sending gm=%s", gm));
+		// engine = remoteGameManager.createNewGame(userNick, gm,
+		// playerHandler);
+		// if (engine != null) {
+		// return true;
+		// }
+		// } catch (RemoteException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 		return false;
 	}
 
+	public List<AvailableGameInfo> getGameList() {
+		// TODO implement!!!
+		error(log, "implement!!!", null);
+		// gm.getGameList();
+		return null;
+	}
+
 	public Boolean joinGame(String userNick, PlayerHandler playerHandler) {
-		try {
-			engine = remoteGameManager.joinGame(userNick, playerHandler);
-			if (engine != null) {
-				return true;
-			}
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// TODO used in JoinBtnController
+		// TODO must pass gameId too
+		error(log, "implement!!!", null);
+		// try {
+		// engine = remoteGameManager.joinGame(userNick, playerHandler);
+		// if (engine != null) {
+		// return true;
+		// }
+		// } catch (RemoteException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 		return false;
 	}
 
 	public Result shot(String userNick, int position) {
-		try {
-			log.debug(String.format("Engine null=%b", engine == null));
-			Result res = engine.shot(userNick, position);
-			// engine.shot(userNick, position);
-			log.debug("Got shot result = " + res);
-			return res;
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// TODO used in MyBombFielsBtnController
+		// TODO from now shot from engine return list of fields to discover
+		// try {
+		// log.debug(String.format("Engine null=%b", engine == null));
+		// Result res = null;//engine.shot(userNick, position);
+		// log.debug("Got shot result = " + res);
+		// return res;
+		// } catch (RemoteException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 		return Result.ERROR;
 	}
 

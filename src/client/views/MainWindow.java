@@ -196,17 +196,27 @@ public class MainWindow extends WindowBase {
 	}
 
 	public void setMyFieldAsBomb(int pos) {
+		//TODO from now shot return list of fields to discover
 		myBombField[pos - 1].setBackground(Color.RED);
 	}
 
 	public void setMyFieldAsEmpty(int pos) {
+		//TODO from now shot return list of fields to discover
 		myBombField[pos - 1].setBackground(Color.GRAY);
 	}
 
+	/**
+	 * TODO PlayerHandler.opponentShot, commented until SHARED,PERKS will be
+	 * developed
+	 */
 	public void setOpponentAsBomb(int pos) {
 		oponentBombField[pos - 1].setBackground(Color.RED);
 	}
 
+	/**
+	 * TODO PlayerHandler.opponentShot, commented until SHARED,PERKS will be
+	 * developed
+	 */
 	public void setOpponentAsEmpty(int pos) {
 		oponentBombField[pos - 1].setBackground(Color.GRAY);
 	}
