@@ -13,7 +13,7 @@ public interface GameManager extends Remote {
 
 	public GameSettings createNewGame(Config gameConfig) throws RemoteException;
 
-	public List<AvailableGameInfo> getGameList();
+	public List<AvailableGameInfo> getGameList() throws RemoteException;
 
 	public GameSettings joinGame(String userNick, String gameId, PlayerHandler playerHandler) throws RemoteException;
 }
