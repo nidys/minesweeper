@@ -2,7 +2,7 @@ package client.controllers;
 
 import java.awt.event.ActionEvent;
 
-import common.gameRules.GameMode;
+import common.enums.GameMode;
 import client.controllers.base.BaseControllerForDialog;
 import client.utils.ListenerGenerator;
 

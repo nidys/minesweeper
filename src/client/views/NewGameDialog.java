@@ -14,7 +14,7 @@ import static client.internationalization.ButtonNames.HOST;
 import static client.internationalization.ButtonNames.JOIN;
 import static client.internationalization.ButtonNames.OK;
 
-import common.gameRules.GameMode;
+import common.enums.GameMode;
 
 /**
  * View for the NewGame component (view with the game board). A dialog.

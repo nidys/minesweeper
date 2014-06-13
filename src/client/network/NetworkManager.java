@@ -5,7 +5,7 @@ import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
 
-import common.gameRules.GameMode;
+import common.enums.GameMode;
 import common.model.Result;
 import common.network.ServerAddress;
 import common.network.callbacks.PlayerHandler;

@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 import server.gameEngine.BaseLogicImpl;
 import server.gameEngine.PerksLogic;
 
-import common.gameRules.GameMode;
+import common.enums.GameMode;
 import common.network.callbacks.PlayerHandler;
 import common.network.protocols.GameLogic;
 import common.network.protocols.GameManager;

@@ -3,7 +3,7 @@ package common.network.protocols;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import common.gameRules.GameMode;
+import common.enums.GameMode;
 import common.network.callbacks.PlayerHandler;
 
 public interface GameManager extends Remote {

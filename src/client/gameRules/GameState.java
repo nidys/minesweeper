@@ -1,6 +1,6 @@
 package client.gameRules;
 
-import common.gameRules.GameMode;
+import common.enums.GameMode;
 import common.model.Board;
 import common.network.callbacks.PlayerHandler;
 
