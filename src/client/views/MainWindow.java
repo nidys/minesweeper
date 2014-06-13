@@ -196,12 +196,12 @@ public class MainWindow extends WindowBase {
 	}
 
 	public void setMyFieldAsBomb(int pos) {
-		//TODO from now shot return list of fields to discover
+		// TODO from now shot return list of fields to discover
 		myBombField[pos - 1].setBackground(Color.RED);
 	}
 
 	public void setMyFieldAsEmpty(int pos) {
-		//TODO from now shot return list of fields to discover
+		// TODO from now shot return list of fields to discover
 		myBombField[pos - 1].setBackground(Color.GRAY);
 	}
 

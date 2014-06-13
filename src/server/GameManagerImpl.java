@@ -1,6 +1,8 @@
 package server;
 
+import static client.utils.LoggingHelper.debug;
 import static client.utils.LoggingHelper.error;
+import static client.utils.LoggingHelper.info;
 
 import java.rmi.RemoteException;
 import java.util.HashMap;
@@ -26,14 +28,14 @@ public class GameManagerImpl implements GameManager {
 
 	@Override
 	public String tmpMsg(String msg) throws RemoteException {
-		log.info("User: " + msg + ", connected...");
+		info(log, "User[%s], connected...", msg);
 		return msg + String.valueOf(msg.length() + 1);
 	}
 
 	@Override
 	public GameSettings createNewGame(Config gameConfig) throws RemoteException {
 		// TODO implement
-		error(log, "implement!!!", null);
+		error(log, "implement!!!");
 		// if (gm == GameMode.PERKS) {
 		// BaseLogicImpl engine = new PerksLogic();
 		// if (createEngine(userNick, gm, playerHandler, engine)) {
@@ -52,7 +54,7 @@ public class GameManagerImpl implements GameManager {
 	@Override
 	public GameSettings joinGame(String userNick, String gameId, PlayerHandler playerHandler) throws RemoteException {
 		// TODO implement!!!
-		error(log, "implement!!!", null);
+		error(log, "implement!!!");
 		// BaseLogicImpl engine = games.get(games.keySet().toArray()[0]);
 		// if (engine.joinNewPlayer(userNick, playerHandler)) {
 		// return engine;
@@ -67,17 +69,17 @@ public class GameManagerImpl implements GameManager {
 				games.put(userNick, engine);
 				return true;
 			}
-			log.debug(String.format("Player[%s] couldnt init game[%s]", userNick, gm));
+			debug(log, "Player[%s] couldnt init game[%s]", userNick, gm);
 			return false;
 		}
-		log.debug(String.format("Player[%s] is already in game - %s", userNick, games.get(userNick).getClass().getName()));
+		debug(log, "Player[%s] is already in game[%s]", userNick, games.get(userNick).getClass().getName());
 		return false;
 	}
 
 	@Override
 	public List<AvailableGameInfo> getGameList() {
 		// TODO implement!!
-		error(log, "implement!!!", null);
+		error(log, "implement!!!");
 		return null;
 	}
 }

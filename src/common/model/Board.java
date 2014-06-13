@@ -1,5 +1,7 @@
 package common.model;
 
+import static client.utils.LoggingHelper.debug;
+
 import java.util.Random;
 
 import org.apache.log4j.Logger;
@@ -48,7 +50,7 @@ public class Board {
 		for (int i = 0; i < mineField.length; i++) {
 			s.append(String.format("\t[i=%d] = %s\n", i, mineField[i]));
 		}
-		log.debug(msg + s.toString());
+		debug(log, msg, s.toString());
 	}
 
 	public enum Field {

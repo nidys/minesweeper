@@ -1,5 +1,6 @@
 package client.network;
 
+import static client.utils.LoggingHelper.debug;
 import static client.utils.LoggingHelper.error;
 
 import java.rmi.Naming;
@@ -51,7 +52,7 @@ public class NetworkManager {
 
 	public List<AvailableGameInfo> getGameList() {
 		// TODO implement!!!
-		error(log, "implement!!!", null);
+		error(log, "implement!!!");
 		// gm.getGameList();
 		return null;
 	}
@@ -59,7 +60,7 @@ public class NetworkManager {
 	public Boolean joinGame(String userNick, PlayerHandler playerHandler) {
 		// TODO used in JoinBtnController
 		// TODO must pass gameId too
-		error(log, "implement!!!", null);
+		error(log, "implement!!!");
 		// try {
 		// engine = remoteGameManager.joinGame(userNick, playerHandler);
 		// if (engine != null) {
@@ -89,7 +90,7 @@ public class NetworkManager {
 
 	public void resetBoard(String userNick) {
 		try {
-			log.debug("Sending reset board");
+			debug(log, "Sending reset board");
 			engine.resetBoard(userNick);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block

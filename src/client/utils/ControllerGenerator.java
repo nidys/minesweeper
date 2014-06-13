@@ -8,9 +8,9 @@ import client.network.NetworkManager;
 import client.views.MainWindow;
 import client.views.NewGameDialog;
 
-public class ListenerGenerator {
+public class ControllerGenerator {
 	private ComponentsFactory componentsFactory;
-	
+
 	// for window
 	private MainWindow mainView;
 	private NetworkManager netManager;
@@ -19,7 +19,7 @@ public class ListenerGenerator {
 	// for dialog
 	private NewGameDialog newGameView;
 
-	public ListenerGenerator(MainWindow mainView, NetworkManager netManager, GameState gameState, ComponentsFactory componentsFactory) {
+	public ControllerGenerator(MainWindow mainView, NetworkManager netManager, GameState gameState, ComponentsFactory componentsFactory) {
 		this.mainView = mainView;
 		this.netManager = netManager;
 		this.gameState = gameState;

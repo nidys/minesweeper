@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 /**
  * Base class for standard windows.
  */
+@SuppressWarnings("serial")
 public abstract class WindowBase extends JFrame {
 
 	public WindowBase() {

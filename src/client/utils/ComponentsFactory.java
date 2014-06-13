@@ -20,7 +20,7 @@ public class ComponentsFactory {
 	private MainWindow mainView;
 	private NetworkManager netManager;
 	private GameState gameState;
-	private ListenerGenerator listenerGenerator;
+	private ControllerGenerator listenerGenerator;
 	private NewGameDialog newGameView;
 	
 	/**
@@ -35,7 +35,7 @@ public class ComponentsFactory {
 			netManager = new NetworkManager();
 			gameState = new GameState();
 			
-			listenerGenerator = new ListenerGenerator(mainView, netManager, gameState, this);
+			listenerGenerator = new ControllerGenerator(mainView, netManager, gameState, this);
 			initializeStartViewListeners();
 		}
 		return mainView;

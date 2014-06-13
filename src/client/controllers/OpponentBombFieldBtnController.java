@@ -3,11 +3,11 @@ package client.controllers;
 import java.awt.event.ActionEvent;
 
 import client.controllers.base.BaseControllerForWindow;
-import client.utils.ListenerGenerator;
+import client.utils.ControllerGenerator;
 
 public class OpponentBombFieldBtnController extends BaseControllerForWindow {
 
-	public OpponentBombFieldBtnController(ListenerGenerator listenerGenerator) {
+	public OpponentBombFieldBtnController(ControllerGenerator listenerGenerator) {
 		super();
 		listenerGenerator.setFieldsForWindow(this);
 	}

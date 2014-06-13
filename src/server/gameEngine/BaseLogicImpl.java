@@ -2,6 +2,7 @@ package server.gameEngine;
 
 import static client.utils.LoggingHelper.debug;
 import static client.utils.LoggingHelper.error;
+import static client.utils.LoggingHelper.info;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -36,7 +37,7 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 	protected final int BOARD_SIZE = 2; // Change to MAX board size?
 
 	public boolean initGame(String userNick, PlayerHandler playerHandler) {
-		log.debug("Create game for user = " + userNick);
+		debug(log, "Create game for user[%s]", userNick);
 		// receive boardSize, bombsNum? verify config?
 		boardSize = 4;
 		bombsNum = 1;
@@ -46,22 +47,22 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 
 	public boolean joinNewPlayer(String userNick, PlayerHandler playerHandler) {
 		if (players.size() <= MAX_PLAYERS) {
-			log.debug(String.format("joinNewPlayer = %s", userNick));
+			debug(log, "joinNewPlayer[%s]", userNick);
 			players.put(userNick, new BoardDispatcher(new Board(bombsNum, boardSize, userNick), playerHandler));
 			return true;
 		}
-		log.debug(String.format("Player[%s] not joined, too many players", userNick));
+		debug(log, "Player[%s] not joined, too many players", userNick);
 		return false;
 	}
 
 	@Override
 	public List<ShotResult> shot(String userNick, int position) throws RemoteException {
 		position--;
-		log.debug(String.format("Got shor for user[%s], pos[%s]", userNick, position));
+		debug(log, "Got shor for user[%s], pos[%d]", userNick, position);
 		if (isValueWithinBoardSize(position) == false) {
-			log.info(String.format("Player[%s] shot in not valid field = %d", userNick, position));
+			info(log, "Player[%s] shot in not valid field = %d", userNick, position);
 
-			error(log, "returning null", null);
+			error(log, "returning null");
 			// TODO return list
 			return null;
 		}
@@ -71,21 +72,21 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 		// userNick, res, players.size()));
 		for (String nick : players.keySet()) {
 			if (!nick.equals(userNick)) {
-				log.debug(String.format("Sending to player[%s]", nick));
+				debug(log, "Sending to player[%s]", nick);
 				// TODO in classic mode send progress
 				// use for SHARED/PERKS mode
 				// players.get(nick).informOpponent(position + 1, res);
 			}
 		}
 		// TODO return list
-		error(log, "returning null", null);
+		error(log, "returning null");
 		return null;
 	}
 
 	@Override
 	public void resetBoard(String userNick) throws RemoteException {
 		// TODO implement logic
-		log.debug("Reset from player: " + userNick);
+		debug(log, "Reset from player[%s]", userNick);
 		players.get(userNick).generateBombs(bombsNum);
 	}
 
@@ -96,20 +97,20 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 	@Override
 	public void ready(String userNick) throws RemoteException {
 		// TODO Auto-generated method stub
-		error(log, "implement!!!", null);
+		error(log, "implement!!!");
 	}
 
 	@Override
 	public void start(String userNick) throws RemoteException {
 		// TODO Auto-generated method stub
-		error(log, "implement!!!", null);
+		error(log, "implement!!!");
 
 	}
 
 	@Override
 	public void leaveBeforeEnd(String userNick) throws RemoteException {
 		// TODO Auto-generated method stub
-		error(log, "implement!!!", null);
+		error(log, "implement!!!");
 
 	}
 }

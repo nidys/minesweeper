@@ -1,5 +1,7 @@
 package client.controllers;
 
+import static client.utils.LoggingHelper.debug;
+
 import java.awt.event.ActionEvent;
 import java.rmi.RemoteException;
 
@@ -7,13 +9,13 @@ import org.apache.log4j.Logger;
 
 import client.controllers.base.BaseControllerForWindow;
 import client.network.PlayerHandlerImpl;
-import client.utils.ListenerGenerator;
+import client.utils.ControllerGenerator;
 import client.views.NewGameDialog;
 
 public class NewGameBtnController extends BaseControllerForWindow {
 	private static Logger log = Logger.getLogger(NewGameBtnController.class);
 
-	public NewGameBtnController(ListenerGenerator listenerGenerator) {
+	public NewGameBtnController(ControllerGenerator listenerGenerator) {
 		super();
 		listenerGenerator.setFieldsForWindow(this);
 	}
@@ -30,7 +32,7 @@ public class NewGameBtnController extends BaseControllerForWindow {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		log.debug("New Game button user=" + gameState.getUserNick());
+		debug(log, "New Game button user[%s]", gameState.getUserNick());
 		NewGameDialog newGameView = componentsFactory.createNewGameComponent();
 		newGameView.setVisible(true);
 	}
