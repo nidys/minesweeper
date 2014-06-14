@@ -1,8 +1,8 @@
 package server;
 
-import static client.utils.LoggingHelper.debug;
-import static client.utils.LoggingHelper.error;
-import static client.utils.LoggingHelper.info;
+import static common.utils.LoggingHelper.debug;
+import static common.utils.LoggingHelper.error;
+import static common.utils.LoggingHelper.info;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;

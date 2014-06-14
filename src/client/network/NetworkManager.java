@@ -1,7 +1,7 @@
 package client.network;
 
-import static client.utils.LoggingHelper.debug;
-import static client.utils.LoggingHelper.error;
+import static common.utils.LoggingHelper.debug;
+import static common.utils.LoggingHelper.error;
 
 import java.rmi.Naming;
 import java.rmi.RemoteException;

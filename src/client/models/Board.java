@@ -1,6 +1,6 @@
 package client.models;
 
-import static client.utils.LoggingHelper.debug;
+import static common.utils.LoggingHelper.debug;
 
 import java.util.Random;
 

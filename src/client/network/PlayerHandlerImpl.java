@@ -5,7 +5,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 import org.apache.log4j.Logger;
 
-import static client.utils.LoggingHelper.debug;
+import static common.utils.LoggingHelper.debug;
 import client.views.MainWindow;
 
 import common.enums.GameInterruptMessage;

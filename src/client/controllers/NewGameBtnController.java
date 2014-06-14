@@ -1,6 +1,6 @@
 package client.controllers;
 
-import static client.utils.LoggingHelper.debug;
+import static common.utils.LoggingHelper.debug;
 
 import java.awt.event.ActionEvent;
 import java.rmi.RemoteException;

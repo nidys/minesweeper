@@ -1,4 +1,4 @@
-package client.utils;
+package common.utils;
 
 import org.apache.log4j.Logger;
 

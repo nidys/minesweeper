@@ -1,8 +1,6 @@
 package server.gameEngine;
 
-import static client.utils.LoggingHelper.debug;
-import static client.utils.LoggingHelper.error;
-import static client.utils.LoggingHelper.info;
+import static common.utils.LoggingHelper.debug;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -20,6 +18,7 @@ import common.enums.GameMode;
 import common.exceptions.create.MaxOpponentSizeIsTooLarge;
 import common.exceptions.join.MaximumPlayerExceededException;
 import common.exceptions.join.PlayerWithIdenticalNickAlreadyInGame;
+import common.exceptions.shot.PositionOutOfRange;
 import common.model.Config;
 import common.model.GameDifficultyFactors;
 import common.model.GameSettings;
@@ -27,11 +26,7 @@ import common.model.ShotResult;
 import common.network.callbacks.PlayerHandler;
 import common.network.protocols.GameLogic;
 
-//Temporarly acts as classic mode, to be moved to ClassicLogic
 public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameLogic {
-	public BaseLogicImpl() throws RemoteException {
-		super();
-	}
 
 	protected static final int MAX_PLAYERS = 4;
 	// <userId, (board,callback)>
@@ -68,12 +63,26 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 	}
 
 	public void addPlayer(String userNick, PlayerHandler playerHandler)
-			throws PlayerWithIdenticalNickAlreadyInGame, MaximumPlayerExceededException {
+			throws PlayerWithIdenticalNickAlreadyInGame, MaximumPlayerExceededException,
+			RemoteException {
 		handleJoinPlayerConditions(userNick);
+
 		debug(log, "Player[%s] setting boardSizeX[%d], boardSizeY[%d], bombsNumber[%d]", userNick,
 				boardSizeX, boardSizeY, bombsNumber);
+
 		players.put(userNick, new PlayerData(new Board(bombsNumber, boardSizeX, boardSizeY),
 				playerHandler));
+
+		setOpponentInotherPlayers(userNick);
+	}
+
+	// Helpers
+
+	private void setOpponentInotherPlayers(String userNick) throws RemoteException {
+		for (String player : getOtherPlayers(userNick)) {
+			debug(log, "Sending setOpponent to [%s]", player);
+			players.get(player).playerHandler.setOpponents(userNick);
+		}
 	}
 
 	private void handleJoinPlayerConditions(String userNick)
@@ -116,12 +125,17 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 	}
 
 	public GameSettings getGameSettings(String userNick) {
-		PlayerData pData = players.get(userNick);
-		GameDifficultyFactors factors = new GameDifficultyFactors(pData.board.getBoardSizeX(),
-				pData.board.getBoardSizeY(), pData.board.getBombsNumber());
+		// PlayerData pData = players.get(userNick);
+		GameDifficultyFactors factors = new GameDifficultyFactors(boardSizeX, boardSizeY,
+				bombsNumber);
+		List<String> opponents = getOtherPlayers(userNick);
+		return new GameSettings((GameLogic) this, factors, opponents);
+	}
+
+	private List<String> getOtherPlayers(String userNick) {
 		List<String> opponents = new ArrayList<String>(players.keySet());
 		opponents.remove(userNick);
-		return new GameSettings((GameLogic) this, factors, opponents);
+		return opponents;
 	}
 
 	public abstract GameMode getGameMode();
@@ -134,71 +148,28 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 		return players.size();
 	}
 
+	// GameLogic Interface
+	@Override
+	public abstract List<ShotResult> shot(String userNick, int position) throws RemoteException,
+			PositionOutOfRange;
+
+	@Override
+	public abstract void resetBoard(String userNick) throws RemoteException;
+
+	@Override
+	public abstract void ready(String userNick) throws RemoteException;
+
+	@Override
+	public abstract void start(String userNick) throws RemoteException;
+
+	@Override
+	public abstract void leaveBeforeEnd(String userNick) throws RemoteException;
+
 	// #############################################################
-
-	@Override
-	public List<ShotResult> shot(String userNick, int position) throws RemoteException {
-		position--;
-		debug(log, "Got shor for user[%s], pos[%d]", userNick, position);
-		if (isValueWithinBoardSize(position) == false) {
-			info(log, "Player[%s] shot in not valid field = %d", userNick, position);
-
-			error(log, "returning null");
-			// TODO return list
-			return null;
-		}
-		// TODO return list
-		// Result res = players.get(userNick).shot(position);
-		// log.debug(String.format("Player[%s], shot result = %s, players[%d]",
-		// userNick, res, players.size()));
-		for (String nick : players.keySet()) {
-			if (!nick.equals(userNick)) {
-				debug(log, "Sending to player[%s]", nick);
-				// TODO in classic mode send progress
-				// use for SHARED/PERKS mode
-				// players.get(nick).informOpponent(position + 1, res);
-			}
-		}
-		// TODO return list
-		error(log, "returning null");
-		return null;
-	}
-
-	@Override
-	public void resetBoard(String userNick) throws RemoteException {
-		// TODO implement logic
-		debug(log, "Reset from player[%s]", userNick);
-		// players.get(userNick).generateBombs(bombsNum);
-	}
-
-	private boolean isValueWithinBoardSize(int val) {
-		// return val >= 0 && val < board;
-		return false;
-	}
-
-	@Override
-	public void ready(String userNick) throws RemoteException {
-		// TODO Auto-generated method stub
-		error(log, "implement!!!");
-	}
-
-	@Override
-	public void start(String userNick) throws RemoteException {
-		// TODO Auto-generated method stub
-		error(log, "implement!!!");
-
-	}
-
-	@Override
-	public void leaveBeforeEnd(String userNick) throws RemoteException {
-		// TODO Auto-generated method stub
-		error(log, "implement!!!");
-
-	}
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1320613550415878733L;
 	private static Logger log = Logger.getLogger(BaseLogicImpl.class);
+
+	public BaseLogicImpl() throws RemoteException {
+		super();
+	}
 }
