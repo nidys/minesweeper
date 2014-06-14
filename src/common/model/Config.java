@@ -13,7 +13,7 @@ public class Config implements Serializable {
 	private static final long serialVersionUID = 4482950374250948406L;
 	private String userNick;
 	private GameMode gameMode;
-	private PlayerHandler pplayerHandler;
+	private PlayerHandler playerHandler;
 	private GameDifficulty gameDifficulty;
 	private String gameId;
 	/**
@@ -28,12 +28,12 @@ public class Config implements Serializable {
 	private int lifeAmount;
 	private int maxOpponentAmount;
 
-	public Config(String userNick, GameMode gameMode, PlayerHandler pplayerHandler, GameDifficulty gameDifficulty, String gameId, boolean isNormal,
+	public Config(String userNick, GameMode gameMode, PlayerHandler playerHandler, GameDifficulty gameDifficulty, String gameId, boolean isNormal,
 			boolean isLifecount, boolean isTimed, long gameDuration, int lifeAmount, int maxOpponentAmount) {
 		super();
 		this.userNick = userNick;
 		this.gameMode = gameMode;
-		this.pplayerHandler = pplayerHandler;
+		this.playerHandler = playerHandler;
 		this.gameDifficulty = gameDifficulty;
 		this.gameId = gameId;
 		this.isNormal = isNormal;
@@ -64,12 +64,12 @@ public class Config implements Serializable {
 		this.gameMode = gameMode;
 	}
 
-	public PlayerHandler getPplayerHandler() {
-		return pplayerHandler;
+	public PlayerHandler getPlayerHandler() {
+		return playerHandler;
 	}
 
-	public void setPplayerHandler(PlayerHandler pplayerHandler) {
-		this.pplayerHandler = pplayerHandler;
+	public void setPlayerHandler(PlayerHandler playerHandler) {
+		this.playerHandler = playerHandler;
 	}
 
 	public GameDifficulty getGameDifficulty() {

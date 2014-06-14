@@ -6,11 +6,14 @@ import static client.utils.LoggingHelper.error;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.log4j.Logger;
 
+import common.enums.GameDifficulty;
 import common.enums.GameMode;
 import common.model.AvailableGameInfo;
+import common.model.Config;
 import common.model.Result;
 import common.model.ShotResult;
 import common.network.ServerAddress;
@@ -25,7 +28,8 @@ public class NetworkManager {
 
 	public boolean connectToServer(String serverAddr, String userNick) {
 		try {
-			remoteGameManager = (GameManager) Naming.lookup("rmi://" + serverAddr + ServerAddress.RMI_PLACE);
+			remoteGameManager = (GameManager) Naming.lookup("rmi://" + serverAddr
+					+ ServerAddress.RMI_PLACE);
 			remoteGameManager.tmpMsg(userNick);
 			return true;
 		} catch (Exception e) {

@@ -13,15 +13,16 @@ public class AvailableGameInfo implements Serializable {
 	private GameMode gameMode;
 	private String hostUser;
 	private int maxPlayers;
-	private int currentlyAttachedPlayers;
+	private int currentlyConnectedPlayers;
 
-	public AvailableGameInfo(String gameId, GameMode gameMode, String hostUser, int maxPlayers, int currentlyAttachedPlayers) {
+	public AvailableGameInfo(String gameId, GameMode gameMode, String hostUser, int maxPlayers,
+			int currentlyAttachedPlayers) {
 		super();
 		this.gameId = gameId;
 		this.gameMode = gameMode;
 		this.hostUser = hostUser;
 		this.maxPlayers = maxPlayers;
-		this.currentlyAttachedPlayers = currentlyAttachedPlayers;
+		this.currentlyConnectedPlayers = currentlyAttachedPlayers;
 	}
 
 	public String getGameId() {
@@ -56,12 +57,12 @@ public class AvailableGameInfo implements Serializable {
 		this.maxPlayers = maxPlayers;
 	}
 
-	public int getCurrentlyAttachedPlayers() {
-		return currentlyAttachedPlayers;
+	public int getCurrentlyConnectedPlayers() {
+		return currentlyConnectedPlayers;
 	}
 
-	public void setCurrentlyAttachedPlayers(int currentlyAttachedPlayers) {
-		this.currentlyAttachedPlayers = currentlyAttachedPlayers;
+	public void setCurrentlyConnectedPlayers(int currentlyConnectedPlayers) {
+		this.currentlyConnectedPlayers = currentlyConnectedPlayers;
 	}
 
 }

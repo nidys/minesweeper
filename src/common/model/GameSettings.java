@@ -14,7 +14,8 @@ public class GameSettings implements Serializable {
 	private GameDifficultyFactors factors;
 	private List<String> currentlyLoggedUsers; // null for createNewGame
 
-	public GameSettings(GameLogic engine, GameDifficultyFactors factors, List<String> currentlyLoggedUsers) {
+	public GameSettings(GameLogic engine, GameDifficultyFactors factors,
+			List<String> currentlyLoggedUsers) {
 		super();
 		this.engine = engine;
 		this.factors = factors;

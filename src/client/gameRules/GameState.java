@@ -1,7 +1,7 @@
 package client.gameRules;
 
+import client.models.Board;
 import common.enums.GameMode;
-import common.model.Board;
 import common.network.callbacks.PlayerHandler;
 
 public class GameState {

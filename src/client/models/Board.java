@@ -1,10 +1,12 @@
-package common.model;
+package client.models;
 
 import static client.utils.LoggingHelper.debug;
 
 import java.util.Random;
 
 import org.apache.log4j.Logger;
+
+import common.model.Result;
 
 public class Board {
 	private static Logger log = Logger.getLogger(Board.class);
