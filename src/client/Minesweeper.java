@@ -1,5 +1,7 @@
 package client;
 
+import static common.utils.LoggingHelper.debug;
+
 import java.awt.EventQueue;
 
 import org.apache.log4j.Logger;
@@ -16,7 +18,7 @@ public class Minesweeper {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		log.debug("Client started...");
+		debug(log, "Client started...");
 		init();
 	}
 
