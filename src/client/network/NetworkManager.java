@@ -12,8 +12,14 @@ import org.apache.log4j.Logger;
 
 import common.enums.GameDifficulty;
 import common.enums.GameMode;
+import common.exceptions.create.InvalidGameNameException;
+import common.exceptions.create.MaxOpponentSizeIsTooLarge;
+import common.exceptions.create.MaximumRoomExceededException;
+import common.exceptions.join.MaximumPlayerExceededException;
+import common.exceptions.join.PlayerWithIdenticalNickAlreadyInGame;
 import common.model.AvailableGameInfo;
 import common.model.Config;
+import common.model.GameSettings;
 import common.model.Result;
 import common.model.ShotResult;
 import common.network.ServerAddress;
@@ -24,6 +30,7 @@ import common.network.protocols.GameManager;
 public class NetworkManager {
 	private static Logger log = Logger.getLogger(NetworkManager.class);
 	GameManager remoteGameManager;
+	GameSettings gameSettings;
 	GameLogic engine;
 
 	public boolean connectToServer(String serverAddr, String userNick) {
@@ -38,20 +45,16 @@ public class NetworkManager {
 		}
 	}
 
-	public boolean createGame(String userNick, GameMode gm, PlayerHandler playerHandler) {
+	public boolean createGame(Config config) 
+			throws RemoteException, InvalidGameNameException, 
+				   MaximumRoomExceededException, MaxOpponentSizeIsTooLarge {
 		// TODO used in HostBtnController, fill with appropriate parameters
-		// try {
 		// log.debug(String.format("Sending gm=%s", gm));
-		// engine = remoteGameManager.createNewGame(userNick, gm,
-		// playerHandler);
-		// if (engine != null) {
-		// return true;
-		// }
-		// } catch (RemoteException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		return false;
+		
+		// engine = remoteGameManager.createNewGame(userNick, gm, playerHandler);
+		gameSettings = remoteGameManager.createNewGame(config);
+		
+		return gameSettings != null;
 	}
 
 	public List<AvailableGameInfo> getGameList() {
@@ -61,20 +64,16 @@ public class NetworkManager {
 		return null;
 	}
 
-	public Boolean joinGame(String userNick, PlayerHandler playerHandler) {
+	public Boolean joinGame(String userNick, PlayerHandler playerHandler) 
+			throws RemoteException, MaximumPlayerExceededException, 
+				   InvalidGameNameException, PlayerWithIdenticalNickAlreadyInGame {
 		// TODO used in JoinBtnController
-		// TODO must pass gameId too
-		error(log, "implement!!!");
-		// try {
-		// engine = remoteGameManager.joinGame(userNick, playerHandler);
-		// if (engine != null) {
-		// return true;
-		// }
-		// } catch (RemoteException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		return false;
+		// TODO must pass gameId too. Is engine deprecated? 
+		error(log, "Finish implementation!!!");
+//		engine = remoteGameManager.joinGame(userNick, playerHandler);
+		gameSettings = remoteGameManager.joinGame(userNick, "MOCK_GAME_ID", playerHandler);
+		
+		return gameSettings != null;
 	}
 
 	public Result shot(String userNick, int position) {
@@ -95,6 +94,7 @@ public class NetworkManager {
 	public void resetBoard(String userNick) {
 		try {
 			debug(log, "Sending reset board");
+			// If engine is deprecated, NullPointer will occur here, replace with new logic
 			engine.resetBoard(userNick);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block

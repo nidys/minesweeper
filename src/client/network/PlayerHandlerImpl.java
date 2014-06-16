@@ -7,9 +7,9 @@ import org.apache.log4j.Logger;
 
 import static common.utils.LoggingHelper.debug;
 import client.views.MainWindow;
-
 import common.enums.GameInterruptMessage;
 import common.model.GameSummary;
+import common.model.Result;
 import common.network.callbacks.PlayerHandler;
 
 public class PlayerHandlerImpl extends UnicastRemoteObject implements PlayerHandler {
@@ -30,6 +30,15 @@ public class PlayerHandlerImpl extends UnicastRemoteObject implements PlayerHand
 	public void setOpponents(String newOpponentNick) {
 		debug(log, "Setting newOpponent[%s]", newOpponentNick);
 		// TODO For CLASSIC mode: set Labels for progress status
+	}
+	
+	public void opponentShot(int position, Result result) throws RemoteException {
+		log.debug(String.format("Got opponentShot. Posp[%d] result[%s]", position, result));
+		if (result == Result.BOMB) {
+			view.setFieldAsBomb(position);
+		} else {
+			view.setFieldAsEmpty(position);
+		}
 	}
 
 	@Override

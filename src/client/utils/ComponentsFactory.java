@@ -58,7 +58,8 @@ public class ComponentsFactory {
 	public void initializeBoardListeners() {
 		mainView.addResetBtnListener(new ResetBtnController(listenerGenerator));
 		mainView.addBombFieldBtnListener(new MyBombFielsBtnController(listenerGenerator));
-		mainView.addOponentFieldBtnListener(new OpponentBombFieldBtnController(listenerGenerator));
+		// TODO MALY Review if it's obsolete
+		//mainView.addOponentFieldBtnListener(new OpponentBombFieldBtnController(listenerGenerator));
 	}
 	
 	private void initializeStartViewListeners() {

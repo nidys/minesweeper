@@ -9,17 +9,23 @@ import org.apache.log4j.Logger;
 import common.model.Result;
 
 public class Board {
+	final static int BOMB = -1;
+	static final int EMPTY = 0;
 	private static Logger log = Logger.getLogger(Board.class);
-	private Field[] mineField;
+	private int[] mineField; // 0 - nothing, 1-5 - values -1 - bomb
+	private int boardSize;
 
 	public Board(int bombsNum, int boardSize, String userNick) {
-		mineField = new Field[boardSize];
+		this.boardSize = boardSize;
+		mineField = new int[this.boardSize*this.boardSize];
+		System.out.println(bombsNum + ";" + boardSize);
 		initEmpty();
 		generateBombs(bombsNum);
+		fillWithNumbers();
 	}
 
 	public Result shot(int pos) {
-		if (mineField[pos] == Field.BOMB) {
+		if (mineField[pos] == BOMB) {
 			return Result.BOMB;
 		} else {
 			return Result.EMPTY;
@@ -27,14 +33,23 @@ public class Board {
 		// TODO consider field with number
 
 	}
+	
+	public void fillWithNumbers(){
+		for (int i = 0 ; i < this.boardSize; ++ i){
+			for (int j = 0; j < this.boardSize; ++j){
+				
+			}
+		}
+			
+	}
 
 	public void generateBombs(int bombsNum) {
 		Random r = new Random(System.currentTimeMillis());
 		int i = 0;
 		while (i < bombsNum) {
 			int val = r.nextInt(mineField.length);
-			if (mineField[val] != Field.BOMB) {
-				mineField[val] = Field.BOMB;
+			if (mineField[val] != BOMB) {
+				mineField[val] = BOMB;
 				i++;
 			}
 		}
@@ -43,7 +58,7 @@ public class Board {
 
 	public void initEmpty() {
 		for (int i = 0; i < mineField.length; i++) {
-			mineField[i] = Field.EMPTY;
+			mineField[i] = EMPTY;
 		}
 	}
 
@@ -53,9 +68,5 @@ public class Board {
 			s.append(String.format("\t[i=%d] = %s\n", i, mineField[i]));
 		}
 		debug(log, msg, s.toString());
-	}
-
-	public enum Field {
-		EMPTY, MARKED, BOMB;
 	}
 }

@@ -6,7 +6,7 @@ import client.gameRules.GameState;
 import client.network.NetworkManager;
 import client.utils.ComponentsFactory;
 
-public abstract class BaseController implements ActionListener {
+public abstract class BaseController {
 	protected ComponentsFactory componentsFactory;
 	protected NetworkManager netManager;
 	protected GameState gameState;

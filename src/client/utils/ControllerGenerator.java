@@ -1,5 +1,7 @@
 package client.utils;
 
+import client.controllers.MyBombFielsBtnController;
+import client.controllers.OpponentBombFieldBtnController;
 import client.controllers.base.BaseController;
 import client.controllers.base.BaseControllerForDialog;
 import client.controllers.base.BaseControllerForWindow;
@@ -44,5 +46,17 @@ public class ControllerGenerator {
 		listener.setComponentsFactory(componentsFactory);
 		listener.setNetManager(netManager);
 		listener.setGameState(gameState);
+	}
+
+	public void setFieldsForWindow(MyBombFielsBtnController listener) {
+		listener.setMainView(mainView);
+		setBaseComponents(listener);
+		
+	}
+
+	public void setFieldsForWindow(OpponentBombFieldBtnController listener) {
+		listener.setMainView(mainView);
+		setBaseComponents(listener);
+		
 	}
 }
