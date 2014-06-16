@@ -127,7 +127,7 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 		Field[][] templBoard = generatedBoards.get(0);
 		Field[][] userBoard = new Field[boardSizeX][boardSizeY];
 		for (int i = 0; i < templBoard.length; i++) {
-			System.arraycopy(templBoard, 0, userBoard[i], 0, templBoard[0].length);
+			System.arraycopy(templBoard[i], 0, userBoard[i], 0, templBoard[0].length);
 		}
 		return userBoard;
 	}

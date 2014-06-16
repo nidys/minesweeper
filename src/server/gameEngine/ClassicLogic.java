@@ -43,10 +43,10 @@ public class ClassicLogic extends BaseLogicImpl {
 
 		for (String otherPlayer : players.keySet()) {
 			if (otherPlayer.equals(userNick) == false) {
-				players.get(otherPlayer).playerHandler.setProgress(board.getProgress());
+				players.get(otherPlayer).playerHandler.setProgress(board.getProgress()); //TODO whos progress?
 			}
 		}
-		error(log, "implement progress?");
+		error(log, "implement correct shot result response");
 		return arr;
 	}
 
