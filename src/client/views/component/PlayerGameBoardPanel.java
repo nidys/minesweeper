@@ -40,14 +40,10 @@ public class PlayerGameBoardPanel extends JPanel {
 
 
 	public PlayerGameBoardPanel(GameDifficultyFactors gameDifficultyFactors, String userNick) {
-		//		this.userNick = userNick;
-		//		this.boardSizeX = gameDifficultyFactors.getBoardSizeX(); 
-		//		this.boardSizeY = gameDifficultyFactors.getBoardSizeY(); 
-		//		this.bombsNumber = gameDifficultyFactors.getBombsNumber();
-		this.userNick = "user";
-		this.boardSizeX = 16;
-		this.boardSizeY = 16;
-		this.bombsNumber = 40;
+		this.userNick = userNick;
+		this.boardSizeX = gameDifficultyFactors.getBoardSizeX(); 
+		this.boardSizeY = gameDifficultyFactors.getBoardSizeY(); 
+		this.bombsNumber = gameDifficultyFactors.getBombsNumber();
 		this.duration = 100;
 		createBasicComponents();
 		generateBoard();

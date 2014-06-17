@@ -47,14 +47,10 @@ public class HostBtnController extends BaseControllerForDialog {
 		}
 	}
 
-	public void initializeGameBoard(GameDifficultyFactors gameDifficultyFactors) {
+	private void initializeGameBoard(GameDifficultyFactors gameDifficultyFactors) {
 		mainView.drawGameBoard();
 		mainView.initializeGameBoard(gameState.getMode());
-		gameDifficultyFactors.setBoardSizeX(16);
-		gameDifficultyFactors.setBoardSizeY(16);
-		gameDifficultyFactors.setBombsNumber(40);
 		mainView.addNewPlayerToView(new PlayerGameBoardPanel(gameDifficultyFactors, gameState.getUserNick())); // TODO Przekazac dane z Config'a
-
 		componentsFactory.initializeBoardListeners();
 	}
 	
@@ -64,10 +60,10 @@ public class HostBtnController extends BaseControllerForDialog {
 	private Config createGameConfig()
 	{
 		Config config = new Config();
-		config.setGameDifficulty(GameDifficulty.MEDIUM); // TODO Change it
+		config.setGameDifficulty(gameState.getDifficulty()); // TODO Change it
 		config.setGameId("MOCK_GAME_ID");
-		config.setGameMode(GameMode.CLASSIC);
-		config.setUserNick("MOCK_USER_NICK");
+		config.setGameMode(gameState.getMode());
+		config.setUserNick(gameState.getUserNick());
 		config.setPlayerHandler(gameState.getPlayerHandler());
 		return config;
 	}

@@ -11,6 +11,7 @@ import common.exceptions.create.InvalidGameNameException;
 import common.exceptions.join.MaximumPlayerExceededException;
 import common.exceptions.join.PlayerWithIdenticalNickAlreadyInGame;
 import common.model.Config;
+import common.model.GameDifficultyFactors;
 import client.controllers.base.BaseControllerForDialog;
 import client.network.PlayerHandlerImpl;
 import client.utils.ControllerGenerator;
@@ -29,24 +30,25 @@ public class JoinBtnController extends BaseControllerForDialog {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		mainView.drawGameBoard();
-		mainView.initializeGameBoard(gameState.getMode());
-		// TODO Finish creation of the PlayerGameBoardPanel analogic to the usage in HostBtnController
-		//mainView.addNewPlayerToView(new PlayerGameBoardPanel());
-
-		componentsFactory.initializeBoardListeners();
-		newGameView.setVisible(false);
-		debug(log, "Sending join game for user[%s]", gameState.getUserNick());
-		
 		// TODO must specify gameId too, and pass
 		try {
-			netManager.joinGame(gameState.getUserNick(), gameState.getPlayerHandler());
+			debug(log, "Sending join game for user[%s]", gameState.getUserNick());
+			GameDifficultyFactors gameDifficultyFactors 
+			= netManager.joinGame(gameState.getUserNick(), gameState.getPlayerHandler());
+			
+			newGameView.setVisible(false);
+			initializeGameBoard(gameDifficultyFactors);
 		} catch (RemoteException | MaximumPlayerExceededException | 
 				 InvalidGameNameException | PlayerWithIdenticalNickAlreadyInGame ex) {
 			// TODO Handle exceptions
 			ex.printStackTrace();
 		}
-		// gameState.getPlayerHandler());
 	}
-
+	
+	private void initializeGameBoard(GameDifficultyFactors gameDifficultyFactors) {
+		mainView.drawGameBoard();
+		mainView.initializeGameBoard(gameState.getMode());
+		mainView.addNewPlayerToView(new PlayerGameBoardPanel(gameDifficultyFactors, gameState.getUserNick()));
+		componentsFactory.initializeBoardListeners();
+	}
 }
