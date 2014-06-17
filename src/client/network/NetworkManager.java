@@ -17,8 +17,10 @@ import common.exceptions.create.MaxOpponentSizeIsTooLarge;
 import common.exceptions.create.MaximumRoomExceededException;
 import common.exceptions.join.MaximumPlayerExceededException;
 import common.exceptions.join.PlayerWithIdenticalNickAlreadyInGame;
+import common.exceptions.shot.PositionOutOfRange;
 import common.model.AvailableGameInfo;
 import common.model.Config;
+import common.model.GameDifficultyFactors;
 import common.model.GameSettings;
 import common.model.Result;
 import common.model.ShotResult;
@@ -45,7 +47,7 @@ public class NetworkManager {
 		}
 	}
 
-	public boolean createGame(Config config) 
+	public GameDifficultyFactors createGame(Config config) 
 			throws RemoteException, InvalidGameNameException, 
 				   MaximumRoomExceededException, MaxOpponentSizeIsTooLarge {
 		// TODO used in HostBtnController, fill with appropriate parameters
@@ -53,8 +55,9 @@ public class NetworkManager {
 		
 		// engine = remoteGameManager.createNewGame(userNick, gm, playerHandler);
 		gameSettings = remoteGameManager.createNewGame(config);
+		engine = gameSettings.getEngine();
 		
-		return gameSettings != null;
+		return gameSettings.getFactors();
 	}
 
 	public List<AvailableGameInfo> getGameList() {
@@ -76,7 +79,7 @@ public class NetworkManager {
 		return gameSettings != null;
 	}
 
-	public Result shot(String userNick, int position) {
+	public List<ShotResult> shot(String userNick, int position) throws RemoteException, PositionOutOfRange {
 		// TODO used in MyBombFielsBtnController
 		// TODO from now shot from engine return list of fields to discover
 		// try {
@@ -88,7 +91,8 @@ public class NetworkManager {
 		// // TODO Auto-generated catch block
 		// e.printStackTrace();
 		// }
-		return Result.ERROR;
+		
+		return engine.shot(userNick, position);
 	}
 
 	public void resetBoard(String userNick) {

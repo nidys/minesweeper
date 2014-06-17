@@ -15,7 +15,6 @@ import org.apache.log4j.Logger;
 
 import server.gameEngine.BaseLogicImpl;
 import server.gameEngine.ClassicLogic;
-import common.enums.GameMode;
 import common.exceptions.create.InvalidGameNameException;
 import common.exceptions.create.MaxOpponentSizeIsTooLarge;
 import common.exceptions.create.MaximumRoomExceededException;

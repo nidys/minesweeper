@@ -69,16 +69,16 @@ public class OpponentBombFieldBtnController extends BaseControllerForField {
 				// TODO COMMIT
 				//log.debug("Clicked field, user=" + gameState.getUserNick());
 
-				Result res = netManager.shot(gameState.getUserNick(), position);
-				if (res == Result.BOMB) {
-					// TODO COMMIT
-					//mainView.setFieldAsBomb(position);
-					System.out.println("mainView.setFieldAsBomb(position);");
-				} else {
-					// TODO COMMIT
-					//mainView.setFieldAsEmpty(position);
-					System.out.println("mainView.setFieldAsEmpty(position);");
-				}
+//				Result res = netManager.shot(gameState.getUserNick(), position);
+//				if (res == Result.BOMB) {
+//					// TODO COMMIT
+//					//mainView.setFieldAsBomb(position);
+//					System.out.println("mainView.setFieldAsBomb(position);");
+//				} else {
+//					// TODO COMMIT
+//					//mainView.setFieldAsEmpty(position);
+//					System.out.println("mainView.setFieldAsEmpty(position);");
+//				}
 			}
 		}
 		pressed = false;

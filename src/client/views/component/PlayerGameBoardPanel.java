@@ -8,13 +8,15 @@ import java.awt.Insets;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import common.model.GameDifficultyFactors;
+
 import client.controllers.MyBombFielsBtnController;
 
 public class PlayerGameBoardPanel extends JPanel {
 	
 	private String userNick;
-	private int boardSize = 5;
-	private int bobmsNum;
+	private int boardSize;
+	private int bombsAmount;
 	private int time;
 	private JLabel lblUsernick;
 	private JLabel lblBombs;
@@ -22,7 +24,9 @@ public class PlayerGameBoardPanel extends JPanel {
 	private FieldButton[] myBombField;
 	
 	
-	public PlayerGameBoardPanel() {
+	public PlayerGameBoardPanel(GameDifficultyFactors gameDifficultyFactors) {
+		this.boardSize = gameDifficultyFactors.getBoardSizeX(); // Currently we're assuming game board as a square.
+		this.bombsAmount = gameDifficultyFactors.getBombsNumber();
 		createBasicComponents();
 		generateBoard();
 	}

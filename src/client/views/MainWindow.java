@@ -166,6 +166,7 @@ public class MainWindow extends WindowBase {
 		setBounds(gamePanel.getBounds());
 	}
 	
+
 	// TODO MALY COMMIT
 	public void setMyFieldAsBomb(int pos) {
 		// TODO from now shot return list of fields to discover
@@ -176,7 +177,8 @@ public class MainWindow extends WindowBase {
 		if (mode == GameMode.PERKS){
 			((PerksGamePanel) gamePanel).addBombFieldBtnListener(listener);
 		}else if (mode == GameMode.CLASSIC){
-			((ClassicGamePanel) gamePanel).addBombFieldBtnListener(listener);
+			// TODO Aga - Przegadac koncepcje. To jest chwilowo
+			((PerksGamePanel) gamePanel).addBombFieldBtnListener(listener);
 		}else if (mode == GameMode.SHARED){
 			
 		}else{
