@@ -61,7 +61,7 @@ public class HostBtnController extends BaseControllerForDialog {
 	private Config createGameConfig()
 	{
 		Config config = new Config();
-		config.setGameDifficulty(gameState.getDifficulty()); // TODO Change it
+		config.setGameDifficulty(GameDifficulty.MEDIUM); // TODO Change it
 		config.setGameId("MOCK_GAME_ID");
 		config.setGameMode(GameMode.CLASSIC);
 		config.setUserNick("MOCK_USER_NICK");

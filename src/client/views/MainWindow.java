@@ -30,6 +30,12 @@ import client.views.component.PlayerGameBoardPanel;
 
 import common.enums.GameMode;
 import common.network.ServerAddress;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import javax.swing.UIManager;
+import java.awt.Toolkit;
 
 /**
  * View for the Main component (view with the game board). Standard window.
@@ -49,6 +55,8 @@ public class MainWindow extends WindowBase {
 	 * Create the frame.
 	 */
 	public MainWindow() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(MainWindow.class.getResource("/resources/images/bomb.png")));
+		setResizable(false);
 		drawEntryScreen();
 		//drawGameBoard();
 	}
@@ -78,67 +86,80 @@ public class MainWindow extends WindowBase {
 
 
 	private void drawEntryScreen() {
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 463, 288);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		serverAddress = new JTextField();
-		serverAddress.setText(ServerAddress.LOCALHOST.getValue());
-		serverAddress.setColumns(10);
-
-		userNick = new JTextField();
-		// generate random user name so that user don't need to write it all the
-		// time
-		userNick.setText("user" + String.valueOf(new Random().nextInt(100)));
-		userNick.setColumns(10);
-
-		newGameBtn = new JButton(NEW_GAME);
-		newGameBtn.setBackground(Color.BLUE);
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[]{43, 1, 55, 86, 31, 41, 0, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{34, 1, 36, 29, 20, 0, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		getContentPane().setLayout(gridBagLayout);
 		
 		JLabel lblMinesweeper = new JLabel(graphicsFactory.getLogoIcon());
+		lblMinesweeper.setText("");
 		lblMinesweeper.setFont(new Font("Tahoma", Font.PLAIN, 56));
+		GridBagConstraints gbc_lblMinesweeper = new GridBagConstraints();
+		gbc_lblMinesweeper.gridwidth = 7;
+		gbc_lblMinesweeper.anchor = GridBagConstraints.NORTHWEST;
+		gbc_lblMinesweeper.insets = new Insets(0, 0, 5, 5);
+		gbc_lblMinesweeper.gridx = 1;
+		gbc_lblMinesweeper.gridy = 1;
+		getContentPane().add(lblMinesweeper, gbc_lblMinesweeper);
 		
 		JLabel lblServerAdress = new JLabel("Server adress:");
+		GridBagConstraints gbc_lblServerAdress = new GridBagConstraints();
+		gbc_lblServerAdress.fill = GridBagConstraints.VERTICAL;
+		gbc_lblServerAdress.anchor = GridBagConstraints.WEST;
+		gbc_lblServerAdress.insets = new Insets(0, 0, 5, 5);
+		gbc_lblServerAdress.gridwidth = 2;
+		gbc_lblServerAdress.gridx = 1;
+		gbc_lblServerAdress.gridy = 3;
+		getContentPane().add(lblServerAdress, gbc_lblServerAdress);
+		
+				serverAddress = new JTextField();
+				serverAddress.setText(ServerAddress.LOCALHOST.getValue());
+				serverAddress.setColumns(10);
+				GridBagConstraints gbc_serverAddress = new GridBagConstraints();
+				gbc_serverAddress.fill = GridBagConstraints.BOTH;
+				gbc_serverAddress.insets = new Insets(0, 0, 5, 5);
+				gbc_serverAddress.gridx = 3;
+				gbc_serverAddress.gridy = 3;
+				getContentPane().add(serverAddress, gbc_serverAddress);
+		
+				newGameBtn = new JButton(NEW_GAME);
+				newGameBtn.setBackground(UIManager.getColor("Button.background"));
+				GridBagConstraints gbc_newGameBtn = new GridBagConstraints();
+				gbc_newGameBtn.fill = GridBagConstraints.VERTICAL;
+				gbc_newGameBtn.gridwidth = 2;
+				gbc_newGameBtn.gridheight = 2;
+				gbc_newGameBtn.anchor = GridBagConstraints.WEST;
+				gbc_newGameBtn.insets = new Insets(0, 0, 5, 5);
+				gbc_newGameBtn.gridx = 6;
+				gbc_newGameBtn.gridy = 3;
+				getContentPane().add(newGameBtn, gbc_newGameBtn);
 		
 		JLabel lblUserName = new JLabel("User name:");
-
-		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(94)
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(lblServerAdress)
-								.addComponent(lblUserName))
-							.addGap(18)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(userNick, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(newGameBtn)
-								.addComponent(serverAddress, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(43)
-							.addComponent(lblMinesweeper)))
-					.addContainerGap(190, Short.MAX_VALUE))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(34)
-					.addComponent(lblMinesweeper)
-					.addGap(35)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(serverAddress, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblServerAdress))
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(userNick, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblUserName))
-					.addGap(29)
-					.addComponent(newGameBtn)
-					.addContainerGap(68, Short.MAX_VALUE))
-		);
-		getContentPane().setLayout(groupLayout);
+		GridBagConstraints gbc_lblUserName = new GridBagConstraints();
+		gbc_lblUserName.gridwidth = 2;
+		gbc_lblUserName.anchor = GridBagConstraints.WEST;
+		gbc_lblUserName.insets = new Insets(0, 0, 5, 5);
+		gbc_lblUserName.gridx = 1;
+		gbc_lblUserName.gridy = 4;
+		getContentPane().add(lblUserName, gbc_lblUserName);
+		
+				userNick = new JTextField();
+				// generate random user name so that user don't need to write it all the
+				// time
+				userNick.setText("user" + String.valueOf(new Random().nextInt(100)));
+				userNick.setColumns(10);
+				GridBagConstraints gbc_userNick = new GridBagConstraints();
+				gbc_userNick.fill = GridBagConstraints.HORIZONTAL;
+				gbc_userNick.anchor = GridBagConstraints.NORTH;
+				gbc_userNick.insets = new Insets(0, 0, 5, 5);
+				gbc_userNick.gridx = 3;
+				gbc_userNick.gridy = 4;
+				getContentPane().add(userNick, gbc_userNick);
+		getContentPane().validate();
 	}
 
 	/**
