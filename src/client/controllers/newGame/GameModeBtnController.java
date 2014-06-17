@@ -1,4 +1,4 @@
-package client.controllers;
+package client.controllers.newGame;
 
 import java.awt.event.ActionEvent;
 
@@ -9,7 +9,6 @@ import client.utils.ControllerGenerator;
 public class GameModeBtnController extends BaseControllerForDialog {
 
 	public GameModeBtnController(ControllerGenerator listenerGenerator) {
-		super();
 		listenerGenerator.setFieldsForDialog(this);
 	}
 

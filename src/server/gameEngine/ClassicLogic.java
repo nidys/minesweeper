@@ -16,7 +16,6 @@ import server.gameEngine.model.Board;
 import common.enums.GameMode;
 import common.exceptions.shot.PositionOutOfRange;
 import common.model.ShotResult;
-import common.network.callbacks.PlayerHandler;
 
 public class ClassicLogic extends BaseLogicImpl {
 
@@ -31,17 +30,23 @@ public class ClassicLogic extends BaseLogicImpl {
 		debug(log, "Got shot for user[%s], pos[%d]", userNick, position);
 		PlayerData pData = players.get(userNick);
 		Board board = pData.board;
-		PlayerHandler handler = pData.playerHandler;
+		// PlayerHandler handler = pData.playerHandler;
 
 		if (board.isValueWithinBoardSize(position) == false) {
 			info(log, "Player[%s] shot in not valid field, position[%d]", userNick, position);
 			throw new PositionOutOfRange();
 		}
 
+		// TODO for now no algo to collect neighbour empty fields
 		List<ShotResult> arr = new ArrayList<ShotResult>();
 		arr.add(new ShotResult(position, board.getShotResult(position)));
-		// TODO report progress to other players?
-		error(log, "implement progress?");
+
+		for (String otherPlayer : players.keySet()) {
+			if (otherPlayer.equals(userNick) == false) {
+				players.get(otherPlayer).playerHandler.setProgress(board.getProgress()); //TODO whos progress?
+			}
+		}
+		error(log, "implement correct shot result response");
 		return arr;
 	}
 

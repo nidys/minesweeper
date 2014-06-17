@@ -21,7 +21,11 @@ import org.apache.log4j.Logger;
 
 import client.controllers.MyBombFielsBtnController;
 import client.internationalization.ButtonNames;
+
 import client.internationalization.DialogText;
+
+import client.utils.GraphicsFactory;
+
 import client.views.component.PlayerGameBoardPanel;
 
 import common.enums.GameMode;
@@ -33,7 +37,8 @@ import common.network.ServerAddress;
 @SuppressWarnings("serial")
 public class MainWindow extends WindowBase {
 	private static Logger log = Logger.getLogger(MainWindow.class);
-
+	private static GraphicsFactory graphicsFactory = new GraphicsFactory();
+	
 	private JButton newGameBtn;
 	private JButton btnReset;
 	private JTextField serverAddress;
@@ -89,7 +94,7 @@ public class MainWindow extends WindowBase {
 		newGameBtn = new JButton(NEW_GAME);
 		newGameBtn.setBackground(Color.BLUE);
 		
-		JLabel lblMinesweeper = new JLabel("Minesweeper");
+		JLabel lblMinesweeper = new JLabel(graphicsFactory.getLogoIcon());
 		lblMinesweeper.setFont(new Font("Tahoma", Font.PLAIN, 56));
 		
 		JLabel lblServerAdress = new JLabel("Server adress:");
@@ -166,7 +171,13 @@ public class MainWindow extends WindowBase {
 		return userNick.getText();
 	}
 	
-	
+
+
+	// TODO MALY COMMIT
+	public void setMyFieldAsBomb(int pos) {
+		// TODO from now shot return list of fields to discover
+		//myBombField[pos - 1].setBackground(Color.RED);
+	}
 	
 	public void initializeGameBoard(GameMode mode) {
 		if (mode == GameMode.PERKS){

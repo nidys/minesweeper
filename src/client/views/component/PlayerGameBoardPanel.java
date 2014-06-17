@@ -8,8 +8,9 @@ import java.awt.Insets;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import common.enums.GameDifficulty;
-import common.model.Config;
+import common.model.GameDifficultyFactors;
+
+
 import client.controllers.MyBombFielsBtnController;
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -18,19 +19,23 @@ import java.awt.GridLayout;
 public class PlayerGameBoardPanel extends JPanel {
 	
 	private String userNick;
+
 	private int boardSizeX = 5;
 	private int boardSizeY = 5;
-	private int bobmsNum;
+	private int bobmsNumber;
 	private long duration;
+
 	private JLabel lblUsernick;
 	private JLabel lblBombs;
 	private JPanel boardPanel;
 	private FieldButton[] myBombField;
 	
 	
-	public PlayerGameBoardPanel(Config config) {
-		userNick = config.getUserNick();
-		duration = config.getGameDuration(); 
+
+	public PlayerGameBoardPanel(GameDifficultyFactors gameDifficultyFactors) {
+		this.boardSizeX = gameDifficultyFactors.getBoardSizeX(); // Currently we're assuming game board as a square.
+		this.boardSizeY = gameDifficultyFactors.getBoardSizeY(); // Currently we're assuming game board as a square.
+		this.bobmsNumber = gameDifficultyFactors.getBombsNumber();
 		createBasicComponents();
 		generateBoard();
 	}
@@ -101,6 +106,10 @@ public class PlayerGameBoardPanel extends JPanel {
 		myBombField[pos-1].setBackground(Color.RED);
 	}
 
+	public void setFieldAsValued(int pos, int value) {
+		myBombField[pos-1].setText(Integer.toString(value));
+	}
+	
 	public void setFieldAsEmpty(int pos) {
 		myBombField[pos-1].setBackground(Color.GRAY);
 	}

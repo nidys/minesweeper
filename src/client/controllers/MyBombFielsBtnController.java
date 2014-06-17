@@ -2,6 +2,8 @@ package client.controllers;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
+import java.rmi.RemoteException;
+import java.util.List;
 
 import javax.swing.SwingUtilities;
 
@@ -11,28 +13,21 @@ import client.controllers.base.BaseControllerForField;
 import client.utils.ControllerGenerator;
 import client.views.component.FieldButton;
 
+import common.exceptions.shot.PositionOutOfRange;
 import common.model.Result;
+import common.model.ShotResult;
+import client.controllers.base.BaseControllerForWindow;
+import client.utils.ControllerGenerator;
+
 
 public class MyBombFielsBtnController extends BaseControllerForField {
 	private static Logger log = Logger.getLogger(MyBombFielsBtnController.class);
-
 	private boolean pressed;
+	
 	public MyBombFielsBtnController(ControllerGenerator listenerGenerator) {
-		super();
 		listenerGenerator.setFieldsForWindow(this);
 	}
-	//
-	//	@Override
-	//	public void actionPerformed(ActionEvent e) {
-	//		log.debug("Clicked my bomb field, user=" + gameState.getUserNick());
-	//		int position = Integer.valueOf(e.getActionCommand());
-	//		Result res = netManager.shot(gameState.getUserNick(), position);
-	//		if (res == Result.BOMB) {
-	//			mainView.setMyFieldAsBomb(position);
-	//		} else {
-	//			mainView.setMyFieldAsEmpty(position);
-	//		}
-	//	}
+
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
@@ -72,12 +67,10 @@ public class MyBombFielsBtnController extends BaseControllerForField {
 				if (button.getText() != "F" && button.getBackground() != Color.GRAY){
 					// TODO MALY COMMIT
 					//mainView.setFieldAsFlagged(position);
-					System.out.println("mainView.setFieldAsFlagged(position);");
 				}
 				else{
 					// TODO MALY COMMIT
 					//mainView.setFieldAsFlagged(position);
-					System.out.println("mainView.setFieldAsFlagged(position);");
 				}
 			}
 			else {
@@ -87,17 +80,13 @@ public class MyBombFielsBtnController extends BaseControllerForField {
 					return;
 				}
 				log.debug("position=" + position);
-				Result res = netManager.shot(gameState.getUserNick(), position);
-				if (res == Result.BOMB) {
-					// TODO MALY COMMIT
-					//mainView.setFieldAsBomb(position);
-					System.out.println("mainView.setFieldAsBomb(position);");
-				}
-				else{
-					// TODO MALY COMMIT
-					//mainView.setFieldAsEmpty(position);
-					System.out.println("mainView.setFieldAsEmpty(position);");
-				}
+//				try {
+//					List<ShotResult> res = netManager.shot(gameState.getUserNick(), position);
+//					
+//				} catch (RemoteException | PositionOutOfRange e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
 			}
 		}
 		pressed = false;

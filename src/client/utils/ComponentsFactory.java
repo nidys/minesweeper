@@ -1,12 +1,15 @@
 package client.utils;
 
-import client.controllers.GameModeBtnController;
 import client.controllers.HostBtnController;
 import client.controllers.JoinBtnController;
 import client.controllers.MyBombFielsBtnController;
 import client.controllers.NewGameBtnController;
 import client.controllers.OpponentBombFieldBtnController;
 import client.controllers.ResetBtnController;
+import client.controllers.newGame.EasyDifficultyBtnController;
+import client.controllers.newGame.GameModeBtnController;
+import client.controllers.newGame.HardDifficultyBtnController;
+import client.controllers.newGame.MediumDifficultyBtnController;
 import client.gameRules.GameState;
 import client.network.NetworkManager;
 import client.views.MainWindow;
@@ -68,6 +71,10 @@ public class ComponentsFactory {
 	
 	private void initializeNewGameListeners() {
 		newGameView.addGameModeBtnListener(new GameModeBtnController(listenerGenerator));
+		newGameView.addGameDifficultyListeners(
+				new EasyDifficultyBtnController(listenerGenerator),
+				new MediumDifficultyBtnController(listenerGenerator),
+				new HardDifficultyBtnController(listenerGenerator));
 		newGameView.addHostBtnListener(new HostBtnController(listenerGenerator, mainView));
 		newGameView.addJoinBtnListener(new JoinBtnController(listenerGenerator, mainView));
 	}

@@ -31,7 +31,9 @@ public class JoinBtnController extends BaseControllerForDialog {
 	public void actionPerformed(ActionEvent e) {
 		mainView.drawGameBoard();
 		mainView.initializeGameBoard(gameState.getMode());
-		mainView.addNewPlayerToView(new PlayerGameBoardPanel(new Config()));
+		// TODO Finish creation of the PlayerGameBoardPanel analogic to the usage in HostBtnController
+		//mainView.addNewPlayerToView(new PlayerGameBoardPanel());
+
 		componentsFactory.initializeBoardListeners();
 		newGameView.setVisible(false);
 		debug(log, "Sending join game for user[%s]", gameState.getUserNick());

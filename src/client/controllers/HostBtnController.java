@@ -13,6 +13,8 @@ import common.exceptions.create.InvalidGameNameException;
 import common.exceptions.create.MaxOpponentSizeIsTooLarge;
 import common.exceptions.create.MaximumRoomExceededException;
 import common.model.Config;
+import common.model.GameDifficultyFactors;
+import common.model.GameSettings;
 import client.controllers.base.BaseControllerForDialog;
 import client.utils.ControllerGenerator;
 import client.views.MainWindow;
@@ -33,9 +35,11 @@ public class HostBtnController extends BaseControllerForDialog {
 		debug(log, "Sending create game for user[%s]", gameState.getUserNick());
 		try {
 			// TODO pass here all required parameters
-			netManager.createGame(createGameConfig());
+			GameDifficultyFactors gameDifficultyFactors 
+				= netManager.createGame(createGameConfig());
+			
 			newGameView.setVisible(false);
-			initializeGameBoard();
+			initializeGameBoard(gameDifficultyFactors);
 		} catch (RemoteException | InvalidGameNameException |
 				 MaximumRoomExceededException | MaxOpponentSizeIsTooLarge ex) {
 			// TODO Handle exceptions
@@ -43,10 +47,11 @@ public class HostBtnController extends BaseControllerForDialog {
 		}
 	}
 
-	public void initializeGameBoard() {
+	public void initializeGameBoard(GameDifficultyFactors gameDifficultyFactors) {
 		mainView.drawGameBoard();
 		mainView.initializeGameBoard(gameState.getMode());
-		mainView.addNewPlayerToView(new PlayerGameBoardPanel(createGameConfig()));
+		mainView.addNewPlayerToView(new PlayerGameBoardPanel(gameDifficultyFactors)); // TODO Przekazac dane z Config'a
+
 		componentsFactory.initializeBoardListeners();
 	}
 	
@@ -56,7 +61,7 @@ public class HostBtnController extends BaseControllerForDialog {
 	private Config createGameConfig()
 	{
 		Config config = new Config();
-		config.setGameDifficulty(GameDifficulty.MEDIUM); // TODO Change it
+		config.setGameDifficulty(gameState.getDifficulty()); // TODO Change it
 		config.setGameId("MOCK_GAME_ID");
 		config.setGameMode(GameMode.CLASSIC);
 		config.setUserNick("MOCK_USER_NICK");
