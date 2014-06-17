@@ -1,8 +1,5 @@
 package client.controllers;
 
-import static common.utils.LoggingHelper.debug;
-
-import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 
@@ -11,10 +8,10 @@ import javax.swing.SwingUtilities;
 import org.apache.log4j.Logger;
 
 import client.controllers.base.BaseControllerForField;
-import client.views.component.FieldButton;
-import common.model.Result;
-import client.controllers.base.BaseControllerForWindow;
 import client.utils.ControllerGenerator;
+import client.views.component.FieldButton;
+
+import common.model.Result;
 
 public class MyBombFielsBtnController extends BaseControllerForField {
 	private static Logger log = Logger.getLogger(MyBombFielsBtnController.class);

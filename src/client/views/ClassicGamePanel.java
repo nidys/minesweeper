@@ -8,11 +8,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
+import client.controllers.MyBombFielsBtnController;
+import client.views.component.PlayerGameBoardPanel;
+
 import java.awt.GridBagConstraints;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ClassicGamePanel extends JPanel {
+public class ClassicGamePanel extends GamePanelBase {
 	private JPanel progressPanel;
 	private int progressMaxValue;
 	private Map<String, Opponent> opponentsMap;
@@ -107,19 +110,61 @@ public class ClassicGamePanel extends JPanel {
 		opponentsMap.get(opponentName).progressBar.setValue(progressValue);
 	}
 	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					JFrame frame = new JFrame();
-					frame.setBounds(50, 50, 300, 300);
-					ClassicGamePanel gamePanel = new ClassicGamePanel(100);
-					frame.add(gamePanel);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					JFrame frame = new JFrame();
+//					frame.setBounds(50, 50, 300, 300);
+//					ClassicGamePanel gamePanel = new ClassicGamePanel(100);
+//					frame.add(gamePanel);
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
+
+	@Override
+	public void addPlayer(PlayerGameBoardPanel playerGameBoardPanel) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addBombFieldBtnListener(MyBombFielsBtnController listener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setFieldAsBomb(int position) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setFieldAsEmpty(int position) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void resetFields() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setFieldAsFlagged(int position) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setFieldAsEmptyWithValue(int position, int value) {
+		// TODO Auto-generated method stub
+		
 	}
 }

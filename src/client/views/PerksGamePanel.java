@@ -7,6 +7,10 @@ import client.controllers.MyBombFielsBtnController;
 import client.views.component.PlayerGameBoardPanel;
 
 public class PerksGamePanel extends GamePanelBase {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private GridLayout layout;
 	ArrayList<PlayerGameBoardPanel> playerPanels = new ArrayList<PlayerGameBoardPanel>();
 	public PerksGamePanel() {
@@ -51,6 +55,17 @@ public class PerksGamePanel extends GamePanelBase {
 
 	public void setFieldAsFlagged(int position) {
 		playerPanels.get(0).setFieldAsFlagged(position);
+		
+	}
+
+	public void setFieldAsEmptyWithValue(int position, int value) {
+		playerPanels.get(0).setFieldAsEmptyWithValue(position, value);
+		
+	}
+
+	@Override
+	public void setProgress(String opponentName, int progressValue) {
+		// TODO Auto-generated method stub
 		
 	}
 	

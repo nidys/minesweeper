@@ -21,7 +21,9 @@ import org.apache.log4j.Logger;
 
 import client.controllers.MyBombFielsBtnController;
 import client.internationalization.ButtonNames;
+import client.internationalization.DialogText;
 import client.views.component.PlayerGameBoardPanel;
+
 import common.enums.GameMode;
 import common.network.ServerAddress;
 
@@ -36,11 +38,8 @@ public class MainWindow extends WindowBase {
 	private JButton btnReset;
 	private JTextField serverAddress;
 	private JTextField userNick;
-//	private JButton[] myBombField;
-//	private JButton[] oponentBombField;
 	
 	private GamePanelBase gamePanel;
-	private GameMode mode;
 	/**
 	 * Create the frame.
 	 */
@@ -72,8 +71,6 @@ public class MainWindow extends WindowBase {
 						getContentPane().setBounds(0,0,450,301);
 	}
 
-//	private JButton createBombFieldBtn(String name, int top, int left, int bottom, int right, int gridx, int gridy) {
-//	}
 
 	private void drawEntryScreen() {
 		setBounds(100, 100, 450, 300);
@@ -151,7 +148,16 @@ public class MainWindow extends WindowBase {
 	public void addResetBtnListener(ActionListener listener) {
 		btnReset.addActionListener(listener);
 	}
+	
+	public void addBombFieldBtnListener(MyBombFielsBtnController listener) {
+		gamePanel.addBombFieldBtnListener(listener);
+	}
 
+
+	public void addNewPlayerToView(PlayerGameBoardPanel playerGameBoardPanel) {
+		gamePanel.addPlayer(playerGameBoardPanel);
+	}
+	
 	public String getServerAddress() {
 		return serverAddress.getText();
 	}
@@ -159,37 +165,16 @@ public class MainWindow extends WindowBase {
 	public String getUserNick() {
 		return userNick.getText();
 	}
-	public void addNewPlayerToView(PlayerGameBoardPanel playerGameBoardPanel) {
-		((PerksGamePanel) gamePanel).addPlayer(playerGameBoardPanel);
-		setBounds(gamePanel.getBounds());
-	}
 	
-	// TODO MALY COMMIT
-	public void setMyFieldAsBomb(int pos) {
-		// TODO from now shot return list of fields to discover
-		//myBombField[pos - 1].setBackground(Color.RED);
-	}
-
-	public void addBombFieldBtnListener(MyBombFielsBtnController listener) {
-		if (mode == GameMode.PERKS){
-			((PerksGamePanel) gamePanel).addBombFieldBtnListener(listener);
-		}else if (mode == GameMode.CLASSIC){
-			
-		}else if (mode == GameMode.SHARED){
-			
-		}else{
-			
-		}
-	}
+	
 	
 	public void initializeGameBoard(GameMode mode) {
-		this.mode = mode;
 		if (mode == GameMode.PERKS){
 			gamePanel = new PerksGamePanel();
 			getContentPane().add(gamePanel);
 		}else if (mode == GameMode.CLASSIC){
 			// TODO AGA, for testing here
-			gamePanel = new PerksGamePanel();
+			gamePanel = new ClassicGamePanel(100);
 			getContentPane().add(gamePanel);
 		}else if (mode == GameMode.SHARED){
 			
@@ -198,30 +183,32 @@ public class MainWindow extends WindowBase {
 		}
 	}
 	
-	// TODO MALY COMMIT
-	public void setMyFieldAsEmpty(int pos) {
-		// TODO from now shot return list of fields to discover
-		// TODO COMMIT
-		//myBombField[pos - 1].setBackground(Color.GRAY);
-	}
 
 	public void setFieldAsBomb(int position) {
-		if (mode == GameMode.PERKS){
-			((PerksGamePanel) gamePanel).setFieldAsBomb(position);
-		}else if (mode == GameMode.CLASSIC){
+		gamePanel.setFieldAsBomb(position);
+	
+		// TODO Aga Delete magic strings (use internationalization)
+		displayEndGameMessage();
+		
+	}
+	
+
+	private void displayEndGameMessage()
+	{
+		int option = JOptionPane.showConfirmDialog(this,
+			    DialogText.END_GAME_TITLE,
+			    DialogText.END_GAME_MESSAGE,
+			    JOptionPane.YES_NO_OPTION);
+		
+		if (option == 0){ //YES
 			
-		}else if (mode == GameMode.SHARED){
-			
-		}else{
+		}else if (option == 1){ //NO
 			
 		}
-		// TODO Aga Delete magic strings (use internationalization)
-		JOptionPane.showMessageDialog(this,
-			    "You lost!.",
-			    ":(",
-			    JOptionPane.ERROR_MESSAGE);
+		
 	}
-
+	
+	
 	/**
 	 * TODO PlayerHandler.opponentShot, commented until SHARED,PERKS will be
 	 * developed
@@ -232,15 +219,7 @@ public class MainWindow extends WindowBase {
 	}
 
 	public void setFieldAsEmpty(int position) {
-		if (mode == GameMode.PERKS){
-			((PerksGamePanel) gamePanel).setFieldAsEmpty(position);
-		}else if (mode == GameMode.CLASSIC){
-			
-		}else if (mode == GameMode.SHARED){
-			
-		}else{
-			
-		}
+		gamePanel.setFieldAsEmpty(position);
 	}
 
 	/**
@@ -253,26 +232,14 @@ public class MainWindow extends WindowBase {
 	}
 
 	public void resetFields() {
-		if (mode == GameMode.PERKS){
-			((PerksGamePanel) gamePanel).resetFields();
-		}else if (mode == GameMode.CLASSIC){
-			
-		}else if (mode == GameMode.SHARED){
-			
-		}else{
-			
-		}
+		gamePanel.resetFields();
 	}
 	
 	public void setFieldAsFlagged(int position) {
-		if (mode == GameMode.PERKS){
-			((PerksGamePanel) gamePanel).setFieldAsFlagged(position);
-		}else if (mode == GameMode.CLASSIC){
-			
-		}else if (mode == GameMode.SHARED){
-			
-		}else{
-			
-		}
+		gamePanel.setFieldAsFlagged(position);
+	}
+	
+	public void setFieldAsEmptyWithValue(int position, int value){
+		gamePanel.setFieldAsEmptyWithValue(position, value);
 	}
 }

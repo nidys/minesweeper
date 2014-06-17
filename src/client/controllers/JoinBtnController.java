@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import common.exceptions.create.InvalidGameNameException;
 import common.exceptions.join.MaximumPlayerExceededException;
 import common.exceptions.join.PlayerWithIdenticalNickAlreadyInGame;
-
+import common.model.Config;
 import client.controllers.base.BaseControllerForDialog;
 import client.network.PlayerHandlerImpl;
 import client.utils.ControllerGenerator;
@@ -31,7 +31,7 @@ public class JoinBtnController extends BaseControllerForDialog {
 	public void actionPerformed(ActionEvent e) {
 		mainView.drawGameBoard();
 		mainView.initializeGameBoard(gameState.getMode());
-		mainView.addNewPlayerToView(new PlayerGameBoardPanel());
+		mainView.addNewPlayerToView(new PlayerGameBoardPanel(new Config()));
 		componentsFactory.initializeBoardListeners();
 		newGameView.setVisible(false);
 		debug(log, "Sending join game for user[%s]", gameState.getUserNick());

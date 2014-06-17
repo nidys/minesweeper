@@ -46,7 +46,7 @@ public class HostBtnController extends BaseControllerForDialog {
 	public void initializeGameBoard() {
 		mainView.drawGameBoard();
 		mainView.initializeGameBoard(gameState.getMode());
-		mainView.addNewPlayerToView(new PlayerGameBoardPanel());
+		mainView.addNewPlayerToView(new PlayerGameBoardPanel(createGameConfig()));
 		componentsFactory.initializeBoardListeners();
 	}
 	
