@@ -4,6 +4,9 @@ import static common.utils.LoggingHelper.debug;
 
 import java.awt.EventQueue;
 
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+
 import org.apache.log4j.Logger;
 
 import client.utils.Locator;
@@ -26,6 +29,13 @@ public class Minesweeper {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+				        if ("Nimbus".equals(info.getName())) {
+				            UIManager.setLookAndFeel(info.getClassName());
+				            break;
+				        }
+				    }
+					
 					Locator locator = new Locator();
 
 					MainWindow mainView = locator.getMain();

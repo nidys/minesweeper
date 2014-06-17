@@ -21,6 +21,7 @@ import org.apache.log4j.Logger;
 
 import client.controllers.MyBombFielsBtnController;
 import client.internationalization.ButtonNames;
+import client.utils.GraphicsFactory;
 import client.views.component.PlayerGameBoardPanel;
 import common.enums.GameMode;
 import common.network.ServerAddress;
@@ -31,7 +32,8 @@ import common.network.ServerAddress;
 @SuppressWarnings("serial")
 public class MainWindow extends WindowBase {
 	private static Logger log = Logger.getLogger(MainWindow.class);
-
+	private static GraphicsFactory graphicsFactory = new GraphicsFactory();
+	
 	private JButton newGameBtn;
 	private JButton btnReset;
 	private JTextField serverAddress;
@@ -92,7 +94,7 @@ public class MainWindow extends WindowBase {
 		newGameBtn = new JButton(NEW_GAME);
 		newGameBtn.setBackground(Color.BLUE);
 		
-		JLabel lblMinesweeper = new JLabel("Minesweeper");
+		JLabel lblMinesweeper = new JLabel(graphicsFactory.getLogoIcon());
 		lblMinesweeper.setFont(new Font("Tahoma", Font.PLAIN, 56));
 		
 		JLabel lblServerAdress = new JLabel("Server adress:");
