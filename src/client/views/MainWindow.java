@@ -191,7 +191,7 @@ public class MainWindow extends WindowBase {
 			getContentPane().add(gamePanel);
 		}else if (mode == GameMode.CLASSIC){
 			// TODO AGA, for testing here
-			gamePanel = new PerksGamePanel();
+			gamePanel = new ClassicGamePanel(100); //TODO przekazywac progressMaxValue
 			getContentPane().add(gamePanel);
 		}else if (mode == GameMode.SHARED){
 			
@@ -211,7 +211,7 @@ public class MainWindow extends WindowBase {
 		if (mode == GameMode.PERKS){
 			((PerksGamePanel) gamePanel).setFieldAsBomb(position);
 		}else if (mode == GameMode.CLASSIC){
-			
+			((ClassicGamePanel) gamePanel).setFieldAsBomb(position);
 		}else if (mode == GameMode.SHARED){
 			
 		}else{
@@ -237,7 +237,7 @@ public class MainWindow extends WindowBase {
 		if (mode == GameMode.PERKS){
 			((PerksGamePanel) gamePanel).setFieldAsEmpty(position);
 		}else if (mode == GameMode.CLASSIC){
-			
+			((ClassicGamePanel) gamePanel).setFieldAsEmpty(position);
 		}else if (mode == GameMode.SHARED){
 			
 		}else{
@@ -258,7 +258,7 @@ public class MainWindow extends WindowBase {
 		if (mode == GameMode.PERKS){
 			((PerksGamePanel) gamePanel).resetFields();
 		}else if (mode == GameMode.CLASSIC){
-			
+			((ClassicGamePanel) gamePanel).resetFields();
 		}else if (mode == GameMode.SHARED){
 			
 		}else{
@@ -270,7 +270,7 @@ public class MainWindow extends WindowBase {
 		if (mode == GameMode.PERKS){
 			((PerksGamePanel) gamePanel).setFieldAsFlagged(position);
 		}else if (mode == GameMode.CLASSIC){
-			
+			((ClassicGamePanel) gamePanel).setFieldAsFlagged(position);
 		}else if (mode == GameMode.SHARED){
 			
 		}else{

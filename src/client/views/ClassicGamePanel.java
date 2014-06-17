@@ -8,15 +8,20 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
+import client.controllers.MyBombFielsBtnController;
+import client.views.component.PlayerGameBoardPanel;
+
 import java.awt.GridBagConstraints;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ClassicGamePanel extends JPanel {
+public class ClassicGamePanel extends GamePanelBase {
 	private JPanel progressPanel;
 	private int progressMaxValue;
 	private Map<String, Opponent> opponentsMap;
 	
+	public PlayerGameBoardPanel gameBoard;
+		
 	private class Opponent {
 		public JLabel nameLabel;
 		public JLabel pointsLabel;
@@ -28,15 +33,7 @@ public class ClassicGamePanel extends JPanel {
 		
 		this.progressMaxValue = progressMaxValue;
 		
-		opponentsMap = new HashMap<String, Opponent>();
-		
-		//test
-		JPanel gameBoard = new JPanel();
-		addGameBoard(gameBoard);
-		addOpponent("test");
-		addOpponent("test2");
-		setProgress("test", 15);
-		removeOpponent("test2");
+		opponentsMap = new HashMap<String, Opponent>();		
 	}
 	
 	private void initUI() {
@@ -54,10 +51,12 @@ public class ClassicGamePanel extends JPanel {
 		gbc_progressPanel.gridy = 0;
 		gbc_progressPanel.weightx = 0.5;
 		progressPanel.setLayout(new GridBagLayout());
-		add(progressPanel, gbc_progressPanel);
+		add(progressPanel, gbc_progressPanel);		
 	}
 	
-	public void addGameBoard(JPanel gameBoard) {
+	public void setGameBoard(PlayerGameBoardPanel gameBoard) {
+		this.gameBoard = gameBoard;
+		
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 0;
@@ -93,18 +92,38 @@ public class ClassicGamePanel extends JPanel {
 	public void removeOpponent(String opponentName) {
 		Opponent opponent = opponentsMap.get(opponentName);
 		
-		if (opponent != null) {
-			opponentsMap.remove(opponentName);
-			progressPanel.remove(opponent.nameLabel);
-			progressPanel.remove(opponent.pointsLabel);
-			progressPanel.remove(opponent.progressBar);
-		} else {
-			//TODO exception
-		}
+		opponentsMap.remove(opponentName);
+		progressPanel.remove(opponent.nameLabel);
+		progressPanel.remove(opponent.pointsLabel);
+		progressPanel.remove(opponent.progressBar);
 	}
 	
 	public void setProgress(String opponentName, int progressValue) {
 		opponentsMap.get(opponentName).progressBar.setValue(progressValue);
+	}
+	
+	public void addBombFieldBtnListener(MyBombFielsBtnController listener){
+		gameBoard.addBombFieldBtnListener(listener);
+	}
+	
+	public void setFieldAsBomb(int position) {
+		gameBoard.setFieldAsBomb(position);
+		
+	}
+
+	public void setFieldAsEmpty(int position) {
+		gameBoard.setFieldAsEmpty(position);
+		
+	}
+
+	public void resetFields() {
+		gameBoard.resetFields();
+		
+	}
+
+	public void setFieldAsFlagged(int position) {
+		gameBoard.setFieldAsFlagged(position);
+		
 	}
 	
 	public static void main(String[] args) {
@@ -112,7 +131,7 @@ public class ClassicGamePanel extends JPanel {
 			public void run() {
 				try {
 					JFrame frame = new JFrame();
-					frame.setBounds(50, 50, 300, 300);
+					frame.setBounds(50, 50, 800, 400);
 					ClassicGamePanel gamePanel = new ClassicGamePanel(100);
 					frame.add(gamePanel);
 					frame.setVisible(true);

@@ -13,6 +13,8 @@ import org.apache.log4j.Logger;
 
 import server.PlayerData;
 import server.gameEngine.model.Board;
+import server.gameEngine.model.Field;
+import server.gameEngine.utils.Generator;
 
 import common.enums.GameMode;
 import common.exceptions.create.MaxOpponentSizeIsTooLarge;
@@ -39,6 +41,7 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 	protected long gameDuration;
 	protected int lifeAmount;
 	protected int maxOpponentAmount;
+	protected List<Field[][]> generatedBoards;
 
 	private int boardSizeX, boardSizeY, bombsNumber;
 
@@ -70,15 +73,15 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 		debug(log, "Player[%s] setting boardSizeX[%d], boardSizeY[%d], bombsNumber[%d]", userNick,
 				boardSizeX, boardSizeY, bombsNumber);
 
-		players.put(userNick, new PlayerData(new Board(bombsNumber, boardSizeX, boardSizeY),
-				playerHandler));
+		players.put(userNick, new PlayerData(new Board(getCopyOfFirstBoard(), boardSizeX
+				* boardSizeY), playerHandler));
 
-		setOpponentInotherPlayers(userNick);
+		setOpponentInOtherPlayers(userNick);
 	}
 
 	// Helpers
 
-	private void setOpponentInotherPlayers(String userNick) throws RemoteException {
+	private void setOpponentInOtherPlayers(String userNick) throws RemoteException {
 		for (String player : getOtherPlayers(userNick)) {
 			debug(log, "Sending setOpponent to [%s]", player);
 			players.get(player).playerHandler.setOpponents(userNick);
@@ -94,30 +97,39 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 		}
 	}
 
-	// TODO: verify sizes are OK
 	private void setBoardSize(Config gameConfig) {
 		switch (gameConfig.getGameDifficulty()) {
 		default:
 		case EASY:
-			boardSizeX = 5;
-			boardSizeY = 10;
-			bombsNumber = 15;
+			boardSizeX = 9;
+			boardSizeY = 9;
+			bombsNumber = 10;
 			break;
 		case MEDIUM:
-			boardSizeX = 10;
-			boardSizeY = 20;
-			bombsNumber = 70;
+			boardSizeX = 16;
+			boardSizeY = 16;
+			bombsNumber = 40;
 			break;
 		case HARD:
-			boardSizeX = 20;
-			boardSizeY = 40;
-			bombsNumber = 270;
+			boardSizeX = 30;
+			boardSizeY = 16;
+			bombsNumber = 99;
 			break;
 		}
 		debug(log, "setting boardSizeX[%d], boardSizeY[%d], bombsNumber[%d]", boardSizeX,
 				boardSizeY, bombsNumber);
-		players.put(hostUserId, new PlayerData(new Board(bombsNumber, boardSizeX, boardSizeY),
-				gameConfig.getPlayerHandler()));
+		generatedBoards = Generator.generate(10, null, bombsNumber, boardSizeX, boardSizeY);
+		players.put(hostUserId, new PlayerData(new Board(getCopyOfFirstBoard(), boardSizeX
+				* boardSizeY), gameConfig.getPlayerHandler()));
+	}
+
+	private Field[][] getCopyOfFirstBoard() {
+		Field[][] templBoard = generatedBoards.get(0);
+		Field[][] userBoard = new Field[boardSizeX][boardSizeY];
+		for (int i = 0; i < templBoard.length; i++) {
+			System.arraycopy(templBoard[i], 0, userBoard[i], 0, templBoard[0].length);
+		}
+		return userBoard;
 	}
 
 	public String getHostUserId() {
