@@ -7,6 +7,11 @@ import java.rmi.RemoteException;
 
 import org.apache.log4j.Logger;
 
+import client.controllers.base.BaseControllerForDialog;
+import client.utils.ControllerGenerator;
+import client.views.MainWindow;
+import client.views.component.PlayerGameBoardPanel;
+
 import common.enums.GameDifficulty;
 import common.enums.GameMode;
 import common.exceptions.create.InvalidGameNameException;
@@ -14,11 +19,6 @@ import common.exceptions.create.MaxOpponentSizeIsTooLarge;
 import common.exceptions.create.MaximumRoomExceededException;
 import common.model.Config;
 import common.model.GameDifficultyFactors;
-import common.model.GameSettings;
-import client.controllers.base.BaseControllerForDialog;
-import client.utils.ControllerGenerator;
-import client.views.MainWindow;
-import client.views.component.PlayerGameBoardPanel;
 
 public class HostBtnController extends BaseControllerForDialog {
 	private static Logger log = Logger.getLogger(HostBtnController.class);
@@ -50,7 +50,10 @@ public class HostBtnController extends BaseControllerForDialog {
 	public void initializeGameBoard(GameDifficultyFactors gameDifficultyFactors) {
 		mainView.drawGameBoard();
 		mainView.initializeGameBoard(gameState.getMode());
-		mainView.addNewPlayerToView(new PlayerGameBoardPanel(gameDifficultyFactors)); // TODO Przekazac dane z Config'a
+		gameDifficultyFactors.setBoardSizeX(16);
+		gameDifficultyFactors.setBoardSizeY(16);
+		gameDifficultyFactors.setBombsNumber(40);
+		mainView.addNewPlayerToView(new PlayerGameBoardPanel(gameDifficultyFactors, gameState.getUserNick())); // TODO Przekazac dane z Config'a
 
 		componentsFactory.initializeBoardListeners();
 	}

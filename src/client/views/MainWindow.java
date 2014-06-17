@@ -2,40 +2,33 @@ package client.views;
 
 import static client.internationalization.ButtonNames.NEW_GAME;
 
-import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 
 import org.apache.log4j.Logger;
 
 import client.controllers.MyBombFielsBtnController;
 import client.internationalization.ButtonNames;
-
 import client.internationalization.DialogText;
-
 import client.utils.GraphicsFactory;
-
 import client.views.component.PlayerGameBoardPanel;
 
 import common.enums.GameMode;
 import common.network.ServerAddress;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import javax.swing.UIManager;
-import java.awt.Toolkit;
 
 /**
  * View for the Main component (view with the game board). Standard window.
@@ -82,11 +75,14 @@ public class MainWindow extends WindowBase {
 						btnReset = new JButton(ButtonNames.RESET);
 						menuBar.add(btnReset);
 						getContentPane().setBounds(0,0,450,301);
+						this.setResizable(true);
 	}
 
 
 	private void drawEntryScreen() {
 		setBounds(100, 100, 463, 288);
+		this.setResizable(false);
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{43, 1, 55, 86, 31, 41, 0, 0, 0, 0};
@@ -160,6 +156,7 @@ public class MainWindow extends WindowBase {
 				gbc_userNick.gridy = 4;
 				getContentPane().add(userNick, gbc_userNick);
 		getContentPane().validate();
+		
 	}
 
 	/**
