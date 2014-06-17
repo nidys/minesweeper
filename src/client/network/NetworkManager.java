@@ -71,10 +71,10 @@ public class NetworkManager {
 			throws RemoteException, MaximumPlayerExceededException, 
 				   InvalidGameNameException, PlayerWithIdenticalNickAlreadyInGame {
 		// TODO used in JoinBtnController
-		// TODO must pass gameId too. Is engine deprecated? 
+		// TODO must pass gameId too.
 		error(log, "Finish implementation!!!");
-//		engine = remoteGameManager.joinGame(userNick, playerHandler);
 		gameSettings = remoteGameManager.joinGame(userNick, "MOCK_GAME_ID", playerHandler);
+		engine = gameSettings.getEngine();
 		
 		return gameSettings.getFactors();
 	}
