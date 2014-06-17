@@ -111,6 +111,11 @@ public class ClassicGamePanel extends GamePanelBase {
 		
 	}
 
+	public void setFieldAsValues(int position, int value) {
+		gameBoard.setFieldAsValued(position, value);
+		
+	}
+	
 	public void setFieldAsEmpty(int position) {
 		gameBoard.setFieldAsEmpty(position);
 		

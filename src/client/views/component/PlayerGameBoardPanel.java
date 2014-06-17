@@ -93,6 +93,10 @@ public class PlayerGameBoardPanel extends JPanel {
 		myBombField[pos-1].setBackground(Color.RED);
 	}
 
+	public void setFieldAsValued(int pos, int value) {
+		myBombField[pos-1].setText(Integer.toString(value));
+	}
+	
 	public void setFieldAsEmpty(int pos) {
 		myBombField[pos-1].setBackground(Color.GRAY);
 	}
