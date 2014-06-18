@@ -17,8 +17,8 @@ import client.views.component.PlayerGameBoardPanel;
 public class ClassicGamePanel extends GamePanelBase {
 	private JPanel progressPanel;
 	private int progressMaxValue;
-	private Map<String, Opponent> opponentsMap;
-
+	private Map<String, Opponent> opponentsMap = new HashMap<String, Opponent>();
+	
 	public PlayerGameBoardPanel gameBoard;
 
 	private class Opponent {
@@ -29,10 +29,8 @@ public class ClassicGamePanel extends GamePanelBase {
 
 	public ClassicGamePanel(int progressMaxValue) {
 		initUI();
-
-		this.progressMaxValue = progressMaxValue;
-
-		opponentsMap = new HashMap<String, Opponent>();
+		
+		this.progressMaxValue = progressMaxValue;		
 	}
 
 	private void initUI() {

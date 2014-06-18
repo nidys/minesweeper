@@ -8,5 +8,7 @@ public class DialogText {
 	public static final String MAINWINDOW_SHARED_TITLE = "Minesweeper: SHARED";
 	public static final String MAINWINDOW_PERKS_TITLE = "Minesweeper: PERKS";
 	public static final String GAMESLIST_TITLE = "Available games";
-
+	public static final String GAMEROOM_TITLE = "Game room:";
+	public static final String PLAYERSTATE_READY = "Ready";
+	public static final String PLAYERSTATE_WAITING = "Waiting...";
 }
