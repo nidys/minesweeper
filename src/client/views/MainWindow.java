@@ -78,7 +78,7 @@ public class MainWindow extends WindowBase {
 //	}
 
 	private void drawEntryScreen() {
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 350);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		serverAddress = new JTextField();
