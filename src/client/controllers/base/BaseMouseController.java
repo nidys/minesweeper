@@ -3,9 +3,7 @@ package client.controllers.base;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public abstract class BaseMouseController extends BaseController
-		implements
-			MouseListener {
+public abstract class BaseMouseController extends BaseController implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {

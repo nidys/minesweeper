@@ -1,6 +1,6 @@
 package client.controllers;
 
-import static common.utils.LoggingHelper.debug;
+import static common.utils.LoggingHelper.info;
 
 import java.awt.event.ActionEvent;
 import java.rmi.RemoteException;
@@ -23,8 +23,7 @@ public class HostBtnController extends BaseControllerForDialog {
 	private static Logger log = Logger.getLogger(HostBtnController.class);
 	private MainWindow mainView;
 
-	public HostBtnController(ControllerGenerator listenerGenerator,
-			MainWindow mainView) {
+	public HostBtnController(ControllerGenerator listenerGenerator, MainWindow mainView) {
 		super();
 		this.mainView = mainView;
 		listenerGenerator.setFieldsForDialog(this);
@@ -35,27 +34,25 @@ public class HostBtnController extends BaseControllerForDialog {
 		try {
 			String playerName = mainView.getUserNick();
 			GameMode gameMode = newGameView.getGameMode();
-			
-			debug(log, "Sending create game for user[%s]", playerName);
-			GameDifficultyFactors gameDifficultyFactors = netManager
-					.createGame(createGameConfig(playerName, gameMode));
+
+			info(log, "Sending create game for user[%s]", playerName);
+			GameDifficultyFactors gameDifficultyFactors = netManager.createGame(createGameConfig(
+					playerName, gameMode));
 
 			newGameView.setVisible(false);
 			initializeGameBoard(gameDifficultyFactors, playerName, gameMode);
-		} catch (RemoteException | InvalidGameNameException
-				| MaximumRoomExceededException | MaxOpponentSizeIsTooLarge ex) {
+		} catch (RemoteException | InvalidGameNameException | MaximumRoomExceededException
+				| MaxOpponentSizeIsTooLarge ex) {
 			// TODO Handle exceptions
 			ex.printStackTrace();
 		}
 	}
 
-	private void initializeGameBoard(
-			GameDifficultyFactors gameDifficultyFactors, String playerName,
-			GameMode gameMode) {
+	private void initializeGameBoard(GameDifficultyFactors gameDifficultyFactors,
+			String playerName, GameMode gameMode) {
 		mainView.drawGameBoard();
 		mainView.initializeGameBoard(gameMode);
-		mainView.addNewPlayerToView(new PlayerGameBoardPanel(
-				gameDifficultyFactors, playerName)); 
+		mainView.addNewPlayerToView(new PlayerGameBoardPanel(gameDifficultyFactors, playerName));
 		componentsFactory.initializeBoardListeners();
 	}
 

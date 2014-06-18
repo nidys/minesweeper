@@ -20,7 +20,7 @@ public class ComponentsFactory {
 	private GameState gameState;
 	private ControllerGenerator listenerGenerator;
 	private NewGameDialog newGameView;
-	
+
 	/**
 	 * Creates the Main component. This method cannot be called within the
 	 * MainController! This method might be moved to the Locator.
@@ -32,13 +32,13 @@ public class ComponentsFactory {
 			mainView = new MainWindow();
 			netManager = new NetworkManager();
 			gameState = new GameState();
-			
+
 			listenerGenerator = new ControllerGenerator(mainView, netManager, gameState, this);
 			initializeStartViewListeners();
 		}
 		return mainView;
 	}
-	
+
 	/**
 	 * Creates the NewGame component.
 	 * 
@@ -47,23 +47,24 @@ public class ComponentsFactory {
 	public NewGameDialog createNewGameComponent() {
 		newGameView = new NewGameDialog(mainView, true);
 		listenerGenerator.setDialogComponents(newGameView);
-		
+
 		initializeNewGameListeners();
 		return newGameView;
 	}
-	
+
 	// Temporarily here
 	public void initializeBoardListeners() {
 		mainView.addResetBtnListener(new ResetBtnController(listenerGenerator));
 		mainView.addBombFieldBtnListener(new MyBombFielsBtnController(listenerGenerator));
 		// TODO MALY Review if it's obsolete
-		//mainView.addOponentFieldBtnListener(new OpponentBombFieldBtnController(listenerGenerator));
+		// mainView.addOponentFieldBtnListener(new
+		// OpponentBombFieldBtnController(listenerGenerator));
 	}
-	
+
 	private void initializeStartViewListeners() {
 		mainView.addNewGameBtnListener(new NewGameBtnController(listenerGenerator));
 	}
-	
+
 	private void initializeNewGameListeners() {
 		newGameView.addHostBtnListener(new HostBtnController(listenerGenerator, mainView));
 		newGameView.addJoinBtnListener(new JoinBtnController(listenerGenerator, mainView));

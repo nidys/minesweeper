@@ -1,6 +1,6 @@
 package client;
 
-import static common.utils.LoggingHelper.debug;
+import static common.utils.LoggingHelper.info;
 
 import java.awt.EventQueue;
 
@@ -21,7 +21,7 @@ public class Minesweeper {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		debug(log, "Client started...");
+		info(log, "Client started...");
 		init();
 	}
 
@@ -30,12 +30,12 @@ public class Minesweeper {
 			public void run() {
 				try {
 					for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-				        if ("Nimbus".equals(info.getName())) {
-				            UIManager.setLookAndFeel(info.getClassName());
-				            break;
-				        }
-				    }
-					
+						if ("Nimbus".equals(info.getName())) {
+							UIManager.setLookAndFeel(info.getClassName());
+							break;
+						}
+					}
+
 					Locator locator = new Locator();
 
 					MainWindow mainView = locator.getMain();

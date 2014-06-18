@@ -1,6 +1,6 @@
 package server.gameEngine;
 
-import static common.utils.LoggingHelper.debug;
+import static common.utils.LoggingHelper.info;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -57,12 +57,12 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 		lifeAmount = gameConfig.getLifeAmount();
 		maxOpponentAmount = gameConfig.getMaxOpponentAmount();
 		if (maxOpponentAmount > MAX_PLAYERS) {
-			debug(log,
+			info(log,
 					"sending MaxOpponentSizeIsTooLarge exception. maxOpponentAmount[%d], while MAX_PLAYERS[%d]",
 					maxOpponentAmount, MAX_PLAYERS);
 			throw new MaxOpponentSizeIsTooLarge();
 		}
-		debug(log, "creating game for player[%s], maxPlayers[%d]", hostUserId, maxOpponentAmount);
+		info(log, "creating game for player[%s], maxPlayers[%d]", hostUserId, maxOpponentAmount);
 	}
 
 	public void addPlayer(String userNick, PlayerHandler playerHandler)
@@ -70,7 +70,7 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 			RemoteException {
 		handleJoinPlayerConditions(userNick);
 
-		debug(log, "Player[%s] setting boardSizeX[%d], boardSizeY[%d], bombsNumber[%d]", userNick,
+		info(log, "Player[%s] setting boardSizeX[%d], boardSizeY[%d], bombsNumber[%d]", userNick,
 				boardSizeX, boardSizeY, bombsNumber);
 
 		players.put(userNick, new PlayerData(new Board(getCopyOfFirstBoard(), boardSizeX
@@ -83,7 +83,7 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 
 	private void setOpponentInOtherPlayers(String userNick) throws RemoteException {
 		for (String player : getOtherPlayers(userNick)) {
-			debug(log, "Sending setOpponent to [%s]", player);
+			info(log, "Sending setOpponent to [%s]", player);
 			players.get(player).playerHandler.setOpponents(userNick);
 		}
 	}
@@ -116,7 +116,7 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 			bombsNumber = 99;
 			break;
 		}
-		debug(log, "setting boardSizeX[%d], boardSizeY[%d], bombsNumber[%d]", boardSizeX,
+		info(log, "setting boardSizeX[%d], boardSizeY[%d], bombsNumber[%d]", boardSizeX,
 				boardSizeY, bombsNumber);
 		generatedBoards = Generator.generate(5, null, bombsNumber, boardSizeX, boardSizeY);
 		players.put(hostUserId, new PlayerData(new Board(getCopyOfFirstBoard(), boardSizeX

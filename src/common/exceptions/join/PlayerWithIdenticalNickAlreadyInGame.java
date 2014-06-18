@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 import common.exceptions.CustomBaseException;
 
-public class PlayerWithIdenticalNickAlreadyInGame extends CustomBaseException implements Serializable {
+public class PlayerWithIdenticalNickAlreadyInGame extends CustomBaseException implements
+		Serializable {
 
 	/**
 	 * 

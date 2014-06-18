@@ -5,8 +5,6 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import org.apache.log4j.Logger;
-
 /**
  * Base class for small modal windows.
  */
@@ -18,10 +16,12 @@ public abstract class DialogBase extends JDialog {
 		// forceWindowsStyle(); // sets the Windows-like GUI styling
 	}
 
+	// TODO delete or fix for linux
 	private void forceWindowsStyle() {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
 			// Replace with Logger
 			e.printStackTrace();
 		}

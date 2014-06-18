@@ -28,8 +28,9 @@ public class Config implements Serializable {
 	private int lifeAmount;
 	private int maxOpponentAmount;
 
-	public Config(String userNick, GameMode gameMode, PlayerHandler playerHandler, GameDifficulty gameDifficulty, String gameId, boolean isNormal,
-			boolean isLifecount, boolean isTimed, long gameDuration, int lifeAmount, int maxOpponentAmount) {
+	public Config(String userNick, GameMode gameMode, PlayerHandler playerHandler,
+			GameDifficulty gameDifficulty, String gameId, boolean isNormal, boolean isLifecount,
+			boolean isTimed, long gameDuration, int lifeAmount, int maxOpponentAmount) {
 		super();
 		this.userNick = userNick;
 		this.gameMode = gameMode;

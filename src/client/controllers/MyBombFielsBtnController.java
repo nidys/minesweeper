@@ -1,6 +1,7 @@
 package client.controllers;
 
-import java.awt.Color;
+import static common.utils.LoggingHelper.info;
+
 import java.awt.event.MouseEvent;
 import java.rmi.RemoteException;
 import java.util.List;
@@ -14,14 +15,10 @@ import client.utils.ControllerGenerator;
 import client.views.component.FieldButton;
 
 import common.exceptions.shot.PositionOutOfRange;
-import common.model.Result;
 import common.model.ShotResult;
-import client.controllers.base.BaseControllerForWindow;
-import client.utils.ControllerGenerator;
 
 public class MyBombFielsBtnController extends BaseControllerForField {
-	private static Logger log = Logger
-			.getLogger(MyBombFielsBtnController.class);
+	private static Logger log = Logger.getLogger(MyBombFielsBtnController.class);
 	private boolean pressed;
 
 	public MyBombFielsBtnController(ControllerGenerator listenerGenerator) {
@@ -67,15 +64,13 @@ public class MyBombFielsBtnController extends BaseControllerForField {
 				mainView.setFieldAsFlagged(position);
 			} else {
 				try {
-					List<ShotResult> results = netManager.shot(
-							gameState.getUserNick(), position);
+					List<ShotResult> results = netManager.shot(gameState.getUserNick(), position);
 					for (ShotResult result : results)
 						setField(result);
 
 					ShotResult result = results.get(0);
-					log.debug("Clicked field, user=" + gameState.getUserNick()
-							+ ", pos=" + result.getPosition() + ", val="
-							+ result.getValue());
+					info(log, "Clicked field, user[%s], pos[%d], val[%d]", gameState.getUserNick(),
+							result.getPosition(), result.getValue());
 				} catch (RemoteException | PositionOutOfRange e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

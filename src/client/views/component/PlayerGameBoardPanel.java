@@ -10,16 +10,15 @@ import java.awt.Insets;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 
 import client.controllers.MyBombFielsBtnController;
 import client.utils.GraphicsFactory;
+
 import common.model.GameDifficultyFactors;
 
-import javax.swing.JButton;
-import javax.swing.UIManager;
-import javax.swing.ImageIcon;
-
+@SuppressWarnings("serial")
 public class PlayerGameBoardPanel extends JPanel {
 
 	private String userNick;
@@ -37,8 +36,8 @@ public class PlayerGameBoardPanel extends JPanel {
 
 	public PlayerGameBoardPanel(GameDifficultyFactors gameDifficultyFactors, String userNick) {
 		this.userNick = userNick;
-		this.boardSizeX = gameDifficultyFactors.getBoardSizeX(); 
-		this.boardSizeY = gameDifficultyFactors.getBoardSizeY(); 
+		this.boardSizeX = gameDifficultyFactors.getBoardSizeX();
+		this.boardSizeY = gameDifficultyFactors.getBoardSizeY();
 		this.bombsNumber = gameDifficultyFactors.getBombsNumber();
 		this.duration = 100;
 
@@ -48,15 +47,14 @@ public class PlayerGameBoardPanel extends JPanel {
 
 	private void createBasicComponents() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[] { 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 0, 0, 0 };
+		gridBagLayout.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
 		statusPanel = new JPanel();
-		statusPanel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null,
-				null, null));
+		statusPanel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		GridBagConstraints gbc_statusPanel = new GridBagConstraints();
 		gbc_statusPanel.insets = new Insets(0, 0, 5, 0);
 		gbc_statusPanel.fill = GridBagConstraints.BOTH;
@@ -64,11 +62,11 @@ public class PlayerGameBoardPanel extends JPanel {
 		gbc_statusPanel.gridy = 0;
 		add(statusPanel, gbc_statusPanel);
 		GridBagLayout gbl_statusPanel = new GridBagLayout();
-		gbl_statusPanel.columnWidths = new int[]{0, 68, 111, 98, 179, 61, 0, 0};
-		gbl_statusPanel.rowHeights = new int[]{26, 0};
-		gbl_statusPanel.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0,
-				Double.MIN_VALUE};
-		gbl_statusPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_statusPanel.columnWidths = new int[] { 0, 68, 111, 98, 179, 61, 0, 0 };
+		gbl_statusPanel.rowHeights = new int[] { 26, 0 };
+		gbl_statusPanel.columnWeights = new double[] { 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0,
+				Double.MIN_VALUE };
+		gbl_statusPanel.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
 		statusPanel.setLayout(gbl_statusPanel);
 
 		lblUserNick = new JLabel("UserNick");
@@ -80,16 +78,15 @@ public class PlayerGameBoardPanel extends JPanel {
 		gbc_lblUserNick.gridx = 0;
 		gbc_lblUserNick.gridy = 0;
 		statusPanel.add(lblUserNick, gbc_lblUserNick);
-		
+
 		lblFace = new JLabel("");
-		lblFace.setIcon(GraphicsFactory.getHappyFaceIcon());
+		lblFace.setIcon(GraphicsFactory.getWinIcon());
 		GridBagConstraints gbc_lblFace = new GridBagConstraints();
 		gbc_lblFace.insets = new Insets(0, 0, 0, 5);
 		gbc_lblFace.gridx = 3;
 		gbc_lblFace.gridy = 0;
 		statusPanel.add(lblFace, gbc_lblFace);
-		
-		
+
 		lblBombs = new JLabel("" + this.bombsNumber);
 		lblBombs.setFont(new Font("Segoe WP", Font.BOLD, 11));
 		lblBombs.setIcon(GraphicsFactory.getFlagIcon());
@@ -119,14 +116,11 @@ public class PlayerGameBoardPanel extends JPanel {
 	}
 
 	private void generateBoard() {
-		
-		
-		
+
 		board = new FieldButton[boardSizeX * boardSizeY];
 		for (int i = 0; i < boardSizeX; ++i) {
 			for (int j = 0; j < boardSizeY; ++j) {
-				board[i * boardSizeX + j] = createBombFieldBtn(i * boardSizeX
-						+ j + 1 + "", i, j);
+				board[i * boardSizeX + j] = createBombFieldBtn(i * boardSizeX + j + 1 + "", i, j);
 			}
 		}
 
@@ -137,7 +131,6 @@ public class PlayerGameBoardPanel extends JPanel {
 		btn.setPreferredSize(new Dimension(50, 50));
 		gameBoardPanel.add(btn);
 		btn.setText(name);
-
 
 		return btn;
 	}
@@ -151,7 +144,7 @@ public class PlayerGameBoardPanel extends JPanel {
 	public void setFieldAsBomb(int pos) {
 		board[pos - 1].setBackground(Color.RED);
 		board[pos - 1].setIcon(GraphicsFactory.getBombIcon());
-		board[pos - 1].setPreferredSize(new Dimension(32,32));
+		board[pos - 1].setPreferredSize(new Dimension(32, 32));
 		board[pos - 1].setText("");
 		lblFace.setIcon(GraphicsFactory.getDeadFaceIcon());
 	}
@@ -172,24 +165,23 @@ public class PlayerGameBoardPanel extends JPanel {
 
 	public void setFieldAsFlagged(int pos) {
 		if (!board[pos - 1].isFlagged) { // so its not already discovered field
-			//board[pos - 1].setText("F");
+			// board[pos - 1].setText("F");
 			board[pos - 1].setBackground(UIManager.getColor("Button.shadow"));
 			board[pos - 1].setText("");
 			board[pos - 1].setIcon(GraphicsFactory.getFlagIcon());
-			board[pos - 1].setPreferredSize(new Dimension(32,32));
-			
-			
-			lblBombs.setText((Integer.parseInt(lblBombs.getText())-1) + "");
+			board[pos - 1].setPreferredSize(new Dimension(32, 32));
+
+			lblBombs.setText((Integer.parseInt(lblBombs.getText()) - 1) + "");
 			board[pos - 1].isFlagged = true;
-			
-		} else if (board[pos - 1].isFlagged){ // so we want to unset flag
+
+		} else if (board[pos - 1].isFlagged) { // so we want to unset flag
 			board[pos - 1].setText("" + pos);
 			board[pos - 1].setBackground(UIManager.getColor("Button.background"));
 			board[pos - 1].setIcon(null);
-			lblBombs.setText((Integer.parseInt(lblBombs.getText())+1) + "");
+			lblBombs.setText((Integer.parseInt(lblBombs.getText()) + 1) + "");
 			board[pos - 1].isFlagged = false;
-		}else {
-			
+		} else {
+
 		}
 	}
 
