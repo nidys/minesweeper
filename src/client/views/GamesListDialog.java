@@ -43,11 +43,6 @@ public class GamesListDialog extends DialogBase {
 		super(owner, isModal);
 		
 		buildGUI(owner);
-		
-		//test
-		addGame("MyGame", "127.0.0.1");
-		addGame("SecondGame", "192.168.0.1");
-		//removeGame("MyGame");
 	}
 	
 	private void buildGUI(JFrame owner) {

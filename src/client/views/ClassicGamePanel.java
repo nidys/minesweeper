@@ -1,9 +1,7 @@
 package client.views;
 
-import java.awt.EventQueue;
 import java.awt.GridBagLayout;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -19,7 +17,7 @@ import java.util.Map;
 public class ClassicGamePanel extends GamePanelBase {
 	private JPanel progressPanel;
 	private int progressMaxValue;
-	private Map<String, Opponent> opponentsMap;
+	private Map<String, Opponent> opponentsMap = new HashMap<String, Opponent>();
 	
 	public PlayerGameBoardPanel gameBoard;
 		
@@ -32,9 +30,7 @@ public class ClassicGamePanel extends GamePanelBase {
 	public ClassicGamePanel(int progressMaxValue) {
 		initUI();
 		
-		this.progressMaxValue = progressMaxValue;
-		
-		opponentsMap = new HashMap<String, Opponent>();
+		this.progressMaxValue = progressMaxValue;		
 	}
 	
 	private void initUI() {
