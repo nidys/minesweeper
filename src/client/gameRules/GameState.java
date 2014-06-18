@@ -9,7 +9,7 @@ public class GameState {
 	private String userNick;
 	private PlayerHandler playerHandler;
 	private GameDifficulty difficulty;
-	
+
 	public GameMode getMode() {
 		return currentMode;
 	}
@@ -17,7 +17,7 @@ public class GameState {
 	public void setCurrentMode(GameMode currentMode) {
 		this.currentMode = currentMode;
 	}
-	
+
 	public void setUserNick(String userNick) {
 		this.userNick = userNick;
 	}

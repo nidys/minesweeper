@@ -1,17 +1,14 @@
 package client.network;
 
-import static common.utils.LoggingHelper.debug;
 import static common.utils.LoggingHelper.error;
+import static common.utils.LoggingHelper.info;
 
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.util.List;
-import java.util.Random;
 
 import org.apache.log4j.Logger;
 
-import common.enums.GameDifficulty;
-import common.enums.GameMode;
 import common.exceptions.create.InvalidGameNameException;
 import common.exceptions.create.MaxOpponentSizeIsTooLarge;
 import common.exceptions.create.MaximumRoomExceededException;
@@ -22,7 +19,6 @@ import common.model.AvailableGameInfo;
 import common.model.Config;
 import common.model.GameDifficultyFactors;
 import common.model.GameSettings;
-import common.model.Result;
 import common.model.ShotResult;
 import common.network.ServerAddress;
 import common.network.callbacks.PlayerHandler;
@@ -47,16 +43,14 @@ public class NetworkManager {
 		}
 	}
 
-	public GameDifficultyFactors createGame(Config config) 
-			throws RemoteException, InvalidGameNameException, 
-				   MaximumRoomExceededException, MaxOpponentSizeIsTooLarge {
+	public GameDifficultyFactors createGame(Config config) throws RemoteException,
+			InvalidGameNameException, MaximumRoomExceededException, MaxOpponentSizeIsTooLarge {
 		// TODO used in HostBtnController, fill with appropriate parameters
-		// log.debug(String.format("Sending gm=%s", gm));
-		
-		// engine = remoteGameManager.createNewGame(userNick, gm, playerHandler);
+		// engine = remoteGameManager.createNewGame(userNick, gm,
+		// playerHandler);
 		gameSettings = remoteGameManager.createNewGame(config);
 		engine = gameSettings.getEngine();
-		
+
 		return gameSettings.getFactors();
 	}
 
@@ -67,20 +61,20 @@ public class NetworkManager {
 		return null;
 	}
 
-	public GameDifficultyFactors joinGame(String userNick, PlayerHandler playerHandler, String gameId) 
-			throws RemoteException, MaximumPlayerExceededException, 
-				   InvalidGameNameException, PlayerWithIdenticalNickAlreadyInGame {
+	public GameDifficultyFactors joinGame(String userNick, PlayerHandler playerHandler,
+			String gameId) throws RemoteException, MaximumPlayerExceededException,
+			InvalidGameNameException, PlayerWithIdenticalNickAlreadyInGame {
 		// TODO used in JoinBtnController
 		// TODO must pass gameId too.
 		error(log, "Finish implementation!!!");
 		gameSettings = remoteGameManager.joinGame(userNick, gameId, playerHandler);
 		engine = gameSettings.getEngine();
-		
+
 		return gameSettings.getFactors();
 	}
 
-	public List<ShotResult> shot(String userNick, int position) throws RemoteException, PositionOutOfRange {
-		// log.debug(String.format("Engine null=%b", engine == null));	
+	public List<ShotResult> shot(String userNick, int position) throws RemoteException,
+			PositionOutOfRange {
 		return engine.shot(userNick, position);
 	}
 

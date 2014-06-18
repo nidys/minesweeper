@@ -21,7 +21,8 @@ public class ControllerGenerator {
 	// for dialog
 	private NewGameDialog newGameView;
 
-	public ControllerGenerator(MainWindow mainView, NetworkManager netManager, GameState gameState, ComponentsFactory componentsFactory) {
+	public ControllerGenerator(MainWindow mainView, NetworkManager netManager, GameState gameState,
+			ComponentsFactory componentsFactory) {
 		this.mainView = mainView;
 		this.netManager = netManager;
 		this.gameState = gameState;
@@ -51,12 +52,12 @@ public class ControllerGenerator {
 	public void setFieldsForWindow(MyBombFielsBtnController listener) {
 		listener.setMainView(mainView);
 		setBaseComponents(listener);
-		
+
 	}
 
 	public void setFieldsForWindow(OpponentBombFieldBtnController listener) {
 		listener.setMainView(mainView);
 		setBaseComponents(listener);
-		
+
 	}
 }

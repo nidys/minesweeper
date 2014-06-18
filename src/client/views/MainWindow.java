@@ -2,8 +2,8 @@ package client.views;
 
 import static client.internationalization.ButtonNames.NEW_GAME;
 
+import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -12,6 +12,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
+import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,27 +22,20 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
-import org.apache.log4j.Logger;
-
 import client.controllers.MyBombFielsBtnController;
 import client.internationalization.ButtonNames;
 import client.internationalization.DialogText;
 import client.utils.GraphicsFactory;
 import client.views.component.PlayerGameBoardPanel;
+
 import common.enums.GameMode;
 import common.network.ServerAddress;
-
-import java.awt.Component;
-
-import javax.swing.Box;
-import java.awt.Dialog.ModalExclusionType;
 
 /**
  * View for the Main component (view with the game board). Standard window.
  */
 @SuppressWarnings("serial")
 public class MainWindow extends WindowBase {
-	private static Logger log = Logger.getLogger(MainWindow.class);
 	private static GraphicsFactory graphicsFactory = new GraphicsFactory();
 
 	private JButton newGameBtn;
@@ -50,11 +44,13 @@ public class MainWindow extends WindowBase {
 	private JTextField userNick;
 
 	private GamePanelBase gamePanel;
+
 	/**
 	 * Create the frame.
 	 */
 	public MainWindow() {
 		setTitle("Minesweeper");
+		// TODO extract to constant!!!
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				MainWindow.class.getResource("/resources/images/bomb.png")));
 		setResizable(false);
@@ -91,12 +87,11 @@ public class MainWindow extends WindowBase {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{20, 1, 55, 86, 31, 41, 0, 20, 0};
-		gridBagLayout.rowHeights = new int[]{10, 80, 10, 29, 20, 20, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 1.0, 0.0,
-				0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-				Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[] { 20, 1, 55, 86, 31, 41, 0, 20, 0 };
+		gridBagLayout.rowHeights = new int[] { 10, 80, 10, 29, 20, 20, 0 };
+		gridBagLayout.columnWeights = new double[] { 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0,
+				Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		getContentPane().setLayout(gridBagLayout);
 
 		Component horizontalStrut = Box.createHorizontalStrut(20);
@@ -110,7 +105,7 @@ public class MainWindow extends WindowBase {
 		ImageIcon logo = graphicsFactory.getLogoIcon();
 		JLabel lblMinesweeper = new JLabel(logo);
 		lblMinesweeper.setSize(logo.getIconWidth(), logo.getIconHeight());
-		
+
 		GridBagConstraints gbc_lblMinesweeper = new GridBagConstraints();
 		gbc_lblMinesweeper.insets = new Insets(0, 0, 5, 5);
 		gbc_lblMinesweeper.gridwidth = 6;
@@ -249,9 +244,8 @@ public class MainWindow extends WindowBase {
 
 	// TODO -> change it to sth more "changeable" so it will be showing
 	private void displayEndGameMessage() {
-		int option = JOptionPane.showConfirmDialog(this,
-				DialogText.END_GAME_TITLE, DialogText.END_GAME_MESSAGE,
-				JOptionPane.YES_NO_OPTION);
+		int option = JOptionPane.showConfirmDialog(this, DialogText.END_GAME_TITLE,
+				DialogText.END_GAME_MESSAGE, JOptionPane.YES_NO_OPTION);
 
 		if (option == 0) { // YES
 

@@ -1,21 +1,22 @@
 package client.controllers;
 
-import java.awt.event.ActionEvent;
+import static common.utils.LoggingHelper.info;
+
 import java.awt.event.MouseEvent;
 
 import javax.swing.SwingUtilities;
 
 import org.apache.log4j.Logger;
 
-import common.model.Result;
 import client.controllers.base.BaseControllerForField;
-import client.controllers.base.BaseControllerForWindow;
 import client.utils.ControllerGenerator;
 import client.views.component.FieldButton;
 
 public class OpponentBombFieldBtnController extends BaseControllerForField {
+	private static Logger log = Logger.getLogger(OpponentBombFieldBtnController.class);
 
 	private boolean pressed;
+
 	public OpponentBombFieldBtnController(ControllerGenerator listenerGenerator) {
 		super();
 		listenerGenerator.setFieldsForWindow(this);
@@ -58,27 +59,28 @@ public class OpponentBombFieldBtnController extends BaseControllerForField {
 			if (SwingUtilities.isRightMouseButton(arg0)) {
 				if (button.getText() != "F") {
 					// TODO COMMIT
-					//mainView.setFieldAsFlagged(position);
-					System.out.println("mainView.setFieldAsFlagged(position);");
+					// mainView.setFieldAsFlagged(position);
+					info(log, "mainView.setFieldAsFlagged(position);");
 				} else {
 					// TODO COMMIT
-					//mainView.setFieldAsFlagged(position);
-					System.out.println("mainView.setFieldAsFlagged(position);");
+					// mainView.setFieldAsFlagged(position);
+					info(log, "mainView.setFieldAsFlagged(position);");
 				}
 			} else {
 				// TODO COMMIT
-				//log.debug("Clicked field, user=" + gameState.getUserNick());
+				// log.debug("Clicked field, user=" + gameState.getUserNick());
 
-//				Result res = netManager.shot(gameState.getUserNick(), position);
-//				if (res == Result.BOMB) {
-//					// TODO COMMIT
-//					//mainView.setFieldAsBomb(position);
-//					System.out.println("mainView.setFieldAsBomb(position);");
-//				} else {
-//					// TODO COMMIT
-//					//mainView.setFieldAsEmpty(position);
-//					System.out.println("mainView.setFieldAsEmpty(position);");
-//				}
+				// Result res = netManager.shot(gameState.getUserNick(),
+				// position);
+				// if (res == Result.BOMB) {
+				// // TODO COMMIT
+				// //mainView.setFieldAsBomb(position);
+				// System.out.println("mainView.setFieldAsBomb(position);");
+				// } else {
+				// // TODO COMMIT
+				// //mainView.setFieldAsEmpty(position);
+				// System.out.println("mainView.setFieldAsEmpty(position);");
+				// }
 			}
 		}
 		pressed = false;

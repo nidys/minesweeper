@@ -1,8 +1,5 @@
 package client.views;
 
-import static client.internationalization.ButtonNames.HOST;
-import static client.internationalization.ButtonNames.JOIN;
-
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -21,6 +18,7 @@ import javax.swing.JToggleButton;
 import javax.swing.border.TitledBorder;
 
 import client.internationalization.DialogText;
+
 import common.enums.GameDifficulty;
 import common.enums.GameMode;
 
@@ -62,10 +60,10 @@ public class NewGameDialog extends DialogBase {
 	private void buildGUI() {
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0};
-		gridBagLayout.rowHeights = new int[]{20, 0, 10, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[] { 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 20, 0, 10, 0 };
+		gridBagLayout.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		getContentPane().setLayout(gridBagLayout);
 
 		contentPanel = new JPanel();
@@ -76,11 +74,10 @@ public class NewGameDialog extends DialogBase {
 		gbc_contentPanel.gridy = 0;
 		getContentPane().add(contentPanel, gbc_contentPanel);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
-		gbl_contentPanel.columnWidths = new int[]{15, 15, 15, 0};
-		gbl_contentPanel.rowHeights = new int[]{0, 0, 0};
-		gbl_contentPanel.columnWeights = new double[]{1.0, 1.0, 1.0,
-				Double.MIN_VALUE};
-		gbl_contentPanel.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPanel.columnWidths = new int[] { 15, 15, 15, 0 };
+		gbl_contentPanel.rowHeights = new int[] { 0, 0, 0 };
+		gbl_contentPanel.columnWeights = new double[] { 1.0, 1.0, 1.0, Double.MIN_VALUE };
+		gbl_contentPanel.rowWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
 		contentPanel.setLayout(gbl_contentPanel);
 
 		classicGameButton = new JToggleButton("Classic");
@@ -114,8 +111,8 @@ public class NewGameDialog extends DialogBase {
 		contentPanel.add(perksGameButton, gbc_perksGameButton);
 
 		difficultyPanel = new JPanel();
-		difficultyPanel.setBorder(new TitledBorder(null, "Difficulty",
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		difficultyPanel.setBorder(new TitledBorder(null, "Difficulty", TitledBorder.LEADING,
+				TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_difficultyPanel = new GridBagConstraints();
 		gbc_difficultyPanel.insets = new Insets(0, 0, 5, 0);
 		gbc_difficultyPanel.fill = GridBagConstraints.BOTH;
@@ -123,11 +120,10 @@ public class NewGameDialog extends DialogBase {
 		gbc_difficultyPanel.gridy = 1;
 		getContentPane().add(difficultyPanel, gbc_difficultyPanel);
 		GridBagLayout gbl_difficultyPanel = new GridBagLayout();
-		gbl_difficultyPanel.columnWidths = new int[]{0, 0, 0, 0};
-		gbl_difficultyPanel.rowHeights = new int[]{0, 0};
-		gbl_difficultyPanel.columnWeights = new double[]{1.0, 1.0, 1.0,
-				Double.MIN_VALUE};
-		gbl_difficultyPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_difficultyPanel.columnWidths = new int[] { 0, 0, 0, 0 };
+		gbl_difficultyPanel.rowHeights = new int[] { 0, 0 };
+		gbl_difficultyPanel.columnWeights = new double[] { 1.0, 1.0, 1.0, Double.MIN_VALUE };
+		gbl_difficultyPanel.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
 		difficultyPanel.setLayout(gbl_difficultyPanel);
 
 		easyRbtn = new JRadioButton("Easy");
@@ -164,11 +160,10 @@ public class NewGameDialog extends DialogBase {
 		gbc_buttonPanel.gridy = 2;
 		getContentPane().add(buttonPanel, gbc_buttonPanel);
 		GridBagLayout gbl_buttonPanel = new GridBagLayout();
-		gbl_buttonPanel.columnWidths = new int[]{0, 0, 0, 0};
-		gbl_buttonPanel.rowHeights = new int[]{0, 0, 0};
-		gbl_buttonPanel.columnWeights = new double[]{1.0, 1.0, 1.0,
-				Double.MIN_VALUE};
-		gbl_buttonPanel.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		gbl_buttonPanel.columnWidths = new int[] { 0, 0, 0, 0 };
+		gbl_buttonPanel.rowHeights = new int[] { 0, 0, 0 };
+		gbl_buttonPanel.columnWeights = new double[] { 1.0, 1.0, 1.0, Double.MIN_VALUE };
+		gbl_buttonPanel.rowWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
 		buttonPanel.setLayout(gbl_buttonPanel);
 
 		hostGameButton = new JButton("Host");
@@ -254,8 +249,8 @@ public class NewGameDialog extends DialogBase {
 	// TODO AGA Add getting info from grouped buttons. Mind that only 1 mode can
 	// be active at a time.
 	public GameMode getGameMode() {
-		for (Enumeration<AbstractButton> buttons = gameTypeButtonGroup
-				.getElements(); buttons.hasMoreElements();) {
+		for (Enumeration<AbstractButton> buttons = gameTypeButtonGroup.getElements(); buttons
+				.hasMoreElements();) {
 			AbstractButton button = buttons.nextElement();
 
 			if (button.isSelected()) {

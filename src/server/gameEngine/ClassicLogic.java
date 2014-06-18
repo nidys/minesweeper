@@ -1,6 +1,5 @@
 package server.gameEngine;
 
-import static common.utils.LoggingHelper.debug;
 import static common.utils.LoggingHelper.error;
 import static common.utils.LoggingHelper.info;
 
@@ -27,7 +26,7 @@ public class ClassicLogic extends BaseLogicImpl {
 	@Override
 	public List<ShotResult> shot(String userNick, int position) throws RemoteException,
 			PositionOutOfRange {
-		debug(log, "Got shot for user[%s], pos[%d]", userNick, position);
+		info(log, "Got shot for user[%s], pos[%d]", userNick, position);
 		PlayerData pData = players.get(userNick);
 		Board board = pData.board;
 		// PlayerHandler handler = pData.playerHandler;
@@ -43,7 +42,9 @@ public class ClassicLogic extends BaseLogicImpl {
 
 		for (String otherPlayer : players.keySet()) {
 			if (otherPlayer.equals(userNick) == false) {
-				players.get(otherPlayer).playerHandler.setProgress(board.getProgress()); //TODO whos progress?
+				players.get(otherPlayer).playerHandler.setProgress(board.getProgress()); // TODO
+																							// whos
+																							// progress?
 			}
 		}
 		error(log, "implement correct shot result response");
@@ -53,7 +54,7 @@ public class ClassicLogic extends BaseLogicImpl {
 	@Override
 	public void resetBoard(String userNick) throws RemoteException {
 		// TODO implement logic
-		debug(log, "Reset from player[%s]", userNick);
+		info(log, "Reset from player[%s]", userNick);
 		// players.get(userNick).generateBombs(bombsNum);
 	}
 

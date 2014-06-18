@@ -1,7 +1,5 @@
 package client.controllers.base;
 
-import java.awt.event.ActionListener;
-
 import client.gameRules.GameState;
 import client.network.NetworkManager;
 import client.utils.ComponentsFactory;
@@ -10,7 +8,7 @@ public abstract class BaseController {
 	protected ComponentsFactory componentsFactory;
 	protected NetworkManager netManager;
 	protected GameState gameState;
-	
+
 	public void setNetManager(NetworkManager netManager) {
 		this.netManager = netManager;
 	}

@@ -11,5 +11,4 @@ public class DialogText {
 	public static final String GAMEROOM_TITLE = "Game room:";
 	public static final String PLAYERSTATE_READY = "Ready";
 	public static final String PLAYERSTATE_WAITING = "Waiting...";
-	
 }

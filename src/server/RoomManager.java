@@ -1,6 +1,6 @@
 package server;
 
-import static common.utils.LoggingHelper.debug;
+import static common.utils.LoggingHelper.info;
 
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
@@ -29,9 +29,9 @@ public class RoomManager {
 			UnicastRemoteObject.exportObject(gs, 0);
 			String urlName = "rmi://" + ServerAddress.LOCALHOST.getValue()
 					+ ServerAddress.RMI_PLACE;
-			debug(log, "Connecting[%s]", urlName);
+			info(log, "Connecting[%s]", urlName);
 			Naming.rebind(urlName, gs);
-			debug(log, "Server started...");
+			info(log, "Server started...");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
