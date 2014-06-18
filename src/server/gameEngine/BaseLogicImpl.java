@@ -118,7 +118,7 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 		}
 		debug(log, "setting boardSizeX[%d], boardSizeY[%d], bombsNumber[%d]", boardSizeX,
 				boardSizeY, bombsNumber);
-		generatedBoards = Generator.generate(10, null, bombsNumber, boardSizeX, boardSizeY);
+		generatedBoards = Generator.generate(5, null, bombsNumber, boardSizeX, boardSizeY);
 		players.put(hostUserId, new PlayerData(new Board(getCopyOfFirstBoard(), boardSizeX
 				* boardSizeY), gameConfig.getPlayerHandler()));
 	}

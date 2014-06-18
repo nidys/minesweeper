@@ -8,88 +8,60 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 public class GraphicsFactory {
+	private final static String IMAGE_PREFIX = "images/";
+	private final static String BOMB = IMAGE_PREFIX + "bomb.png";
+	private final static String FLAG = IMAGE_PREFIX + "flag.png";
+	private final static String HAPPY_FACE = IMAGE_PREFIX + "happyFace.png";
+	private final static String SAD_FACE = IMAGE_PREFIX + "sadFace.png";
+	private final static String COOL_FACE = IMAGE_PREFIX + "coolFace.png";
+	private final static String DEAD_FACE = IMAGE_PREFIX + "deadFace.png";
 
 	public static ImageIcon getLogoIcon() {
 		BufferedImage image;
 		try {
 			image = ImageIO.read(ClassLoader.getSystemResourceAsStream("images/logo.png"));
-			
-			
+
 			return new ImageIcon(image);
-	    } catch (IOException ex) {
-	    	ex.printStackTrace();
-	    }
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 		return null;
 	}
-	
+
 	public static ImageIcon getBombIcon() {
-		Image image;
-		try {
-			image = ImageIO.read(ClassLoader.getSystemResourceAsStream("images/bomb.png"));
-			image = image.getScaledInstance(32, 32,  java.awt.Image.SCALE_SMOOTH);
-			return new ImageIcon(image);
-	    } catch (IOException ex) {
-	    	ex.printStackTrace();
-	    }
-		return null;
+		return getAsImageIcon(BOMB);
 	}
-	
+
 	public static ImageIcon getFlagIcon() {
-		Image image;
-		try {
-			image = ImageIO.read(ClassLoader.getSystemResourceAsStream("images/flag.png"));
-			image = image.getScaledInstance(32, 32,  java.awt.Image.SCALE_SMOOTH);
-			return new ImageIcon(image);
-	    } catch (IOException ex) {
-	    	ex.printStackTrace();
-	    }
-		return null;
+		return getAsImageIcon(FLAG);
 	}
-	
-	
+
 	public static ImageIcon getHappyFaceIcon() {
-		Image image;
-		try {
-			image = ImageIO.read(ClassLoader.getSystemResourceAsStream("images/happyFace.png"));
-			image = image.getScaledInstance(32, 32,  java.awt.Image.SCALE_SMOOTH);
-			return new ImageIcon(image);
-	    } catch (IOException ex) {
-	    	ex.printStackTrace();
-	    }
-		return null;
+		return getAsImageIcon(HAPPY_FACE);
 	}
+
 	public static ImageIcon getSadFaceIcon() {
-		Image image;
-		try {
-			image = ImageIO.read(ClassLoader.getSystemResourceAsStream("images/sadFace.png"));
-			image = image.getScaledInstance(32, 32,  java.awt.Image.SCALE_SMOOTH);
-			return new ImageIcon(image);
-	    } catch (IOException ex) {
-	    	ex.printStackTrace();
-	    }
-		return null;
+		return getAsImageIcon(SAD_FACE);
 	}
+
 	public static ImageIcon getCoolFaceIcon() {
-		Image image;
-		try {
-			image = ImageIO.read(ClassLoader.getSystemResourceAsStream("images/coolFace.png"));
-			image = image.getScaledInstance(32, 32,  java.awt.Image.SCALE_SMOOTH);
-			return new ImageIcon(image);
-	    } catch (IOException ex) {
-	    	ex.printStackTrace();
-	    }
-		return null;
+		return getAsImageIcon(COOL_FACE);
 	}
+
 	public static ImageIcon getDeadFaceIcon() {
+		return getAsImageIcon(DEAD_FACE);
+	}
+
+	public static ImageIcon getAsImageIcon(String DEAD_FACE) {
 		Image image;
 		try {
-			image = ImageIO.read(ClassLoader.getSystemResourceAsStream("images/deadFace.png"));
-			image = image.getScaledInstance(32, 32,  java.awt.Image.SCALE_SMOOTH);
+			image = ImageIO.read(ClassLoader.getSystemResourceAsStream(DEAD_FACE));
+			image = image.getScaledInstance(32, 32, java.awt.Image.SCALE_SMOOTH);
 			return new ImageIcon(image);
-	    } catch (IOException ex) {
-	    	ex.printStackTrace();
-	    }
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 		return null;
 	}
-	
+
 }
