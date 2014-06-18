@@ -55,15 +55,9 @@ public class ClassicGamePanel extends GamePanelBase {
 		add(progressPanel, gbc_progressPanel);		
 	}
 	
-	public void setGameBoard(PlayerGameBoardPanel gameBoard) {
-		this.gameBoard = gameBoard;
-		
-		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.fill = GridBagConstraints.BOTH;
-		gbc_panel.gridx = 0;
-		gbc_panel.gridy = 0;
-		add(gameBoard, gbc_panel);
-	}
+//	public void setGameBoard(PlayerGameBoardPanel gameBoard) {
+//
+//	}
 	
 	public void addOpponent(String opponentName) {
 		Opponent opponent = new Opponent();
@@ -120,7 +114,7 @@ public class ClassicGamePanel extends GamePanelBase {
 		
 	}
 
-	public void setFieldAsValues(int position, int value) {
+	public void setFieldAsEmptyWithValue(int position, int value) {
 		gameBoard.setFieldAsValued(position, value);
 		
 	}
@@ -140,19 +134,17 @@ public class ClassicGamePanel extends GamePanelBase {
 		
 	}
 	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					JFrame frame = new JFrame();
-					frame.setBounds(50, 50, 800, 400);
-					ClassicGamePanel gamePanel = new ClassicGamePanel(100);
-					frame.add(gamePanel);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+
+	@Override
+	public void addPlayer(PlayerGameBoardPanel playerGameBoardPanel) {
+		this.gameBoard = playerGameBoardPanel;
+
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.gridx = 0;
+		gbc_panel.gridy = 0;
+		add(this.gameBoard, gbc_panel);
+		
 	}
+
 }

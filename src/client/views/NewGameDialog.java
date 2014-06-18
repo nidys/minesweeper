@@ -1,178 +1,227 @@
 package client.views;
 
-import java.awt.event.ActionListener;
+import static client.internationalization.ButtonNames.HOST;
+import static client.internationalization.ButtonNames.JOIN;
 
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Toolkit;
+import java.awt.event.ActionListener;
+import java.util.Enumeration;
+
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JRadioButton;
+import javax.swing.JToggleButton;
+import javax.swing.border.TitledBorder;
 
-import org.apache.log4j.Logger;
-
-import static client.internationalization.ButtonNames.CANCEL;
-import static client.internationalization.ButtonNames.HOST;
-import static client.internationalization.ButtonNames.JOIN;
-import static client.internationalization.ButtonNames.OK;
+import client.internationalization.DialogText;
 import common.enums.GameDifficulty;
 import common.enums.GameMode;
-
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JRadioButton;
-import javax.swing.ButtonGroup;
-import javax.swing.border.TitledBorder;
-import javax.swing.UIManager;
-
-import java.awt.event.ActionEvent;
 
 /**
  * View for the NewGame component (view with the game board). A dialog.
  */
 public class NewGameDialog extends DialogBase {
 	private static final long serialVersionUID = 8080261200762371915L;
-	private final JPanel contentPanel = new JPanel();
-	private JButton classicGameButton;
-	private JButton sharedGameButton;
-	private JButton perksGameButton;
-	private JButton hostGameButton;
-	private JButton joinGameButton;
-	private JPanel panelSettings;
-	private JLabel lblBoardSize;
-	private JTextField txtBoardSize;
+
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JPanel contentPanel;
+	private JPanel difficultyPanel;
+	private JPanel buttonPanel;
+
+	private JToggleButton classicGameButton;
+	private JToggleButton sharedGameButton;
+	private JToggleButton perksGameButton;
+
+	private JPanel panelSettings;
+
 	private JRadioButton easyRbtn;
 	private JRadioButton mediumRbtn;
 	private JRadioButton hardRbtn;
+	private JButton hostGameButton;
+	private JButton joinGameButton;
+	private final ButtonGroup gameTypeButtonGroup = new ButtonGroup();
 
 	public NewGameDialog(JFrame owner, boolean isModal) {
 		super(owner, isModal);
-		// TODO Aga Move to internationalization
-		setTitle("Minesweeper: New game");
-		buildGUI();
+		setAlwaysOnTop(true);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				NewGameDialog.class.getResource("/resources/images/flag.png")));
+		setTitle(DialogText.NEW_GAME_TITLE);
 		setLocationRelativeTo(owner);
+		buildGUI();
+
 	}
 
 	private void buildGUI() {
-		setAlwaysOnTop(true);
-		setResizable(false);
-		setBounds(100, 100, 299, 319);
-		getContentPane().setLayout(null);
-		{
-			panelSettings = new JPanel();
-			panelSettings.setBounds(0, 92, 293, 95);
-			getContentPane().add(panelSettings);
-			panelSettings.setLayout(null);
 
-			// Currently not used.
-//			{
-//				lblBoardSize = new JLabel("Board size:");
-//				lblBoardSize.setBounds(10, 14, 53, 14);
-//				panelSettings.add(lblBoardSize);
-//			}
-//			
-//			txtBoardSize = new JTextField();
-//			txtBoardSize.setText("2");
-//			txtBoardSize.setBounds(73, 11, 210, 20);
-//			panelSettings.add(txtBoardSize);
-//			txtBoardSize.setColumns(10);
-			
-			JPanel Type = new JPanel();
-			Type.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Type:", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-			Type.setBounds(10, 38, 273, 46);
-			panelSettings.add(Type);
-			Type.setLayout(null);
-			
-			easyRbtn = new JRadioButton("Easy");
-			easyRbtn.setSelected(true);
-			easyRbtn.setBounds(6, 16, 49, 23);
-			Type.add(easyRbtn);
-			buttonGroup.add(easyRbtn);
-			
-			mediumRbtn = new JRadioButton("Medium");
-			mediumRbtn.setBounds(100, 16, 61, 23);
-			Type.add(mediumRbtn);
-			buttonGroup.add(mediumRbtn);
-			
-			hardRbtn = new JRadioButton("Hard");
-			hardRbtn.setBounds(218, 16, 49, 23);
-			Type.add(hardRbtn);
-			buttonGroup.add(hardRbtn);
-		}
-		contentPanel.setBounds(0, 0, 293, 95);
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel);
-		{
-			classicGameButton = new JButton(GameMode.CLASSIC.toString());
-			classicGameButton.setBounds(10, 10, 75, 75);
-		}
-		{
-			sharedGameButton = new JButton(GameMode.SHARED.toString());
-			sharedGameButton.setBounds(107, 10, 75, 75);
-		}
-		{
-			perksGameButton = new JButton(GameMode.PERKS.toString());
-			perksGameButton.setBounds(208, 10, 75, 75);
-		}
-		contentPanel.setLayout(null);
-		contentPanel.add(classicGameButton);
-		contentPanel.add(sharedGameButton);
-		contentPanel.add(perksGameButton);
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setBounds(0, 255, 293, 35);
-			getContentPane().add(buttonPane);
-			{
-				hostGameButton = new JButton(HOST);
-				hostGameButton.setBounds(10, 5, 117, 25);
-				buttonPane.setLayout(null);
-				hostGameButton.setActionCommand(OK);
-				buttonPane.add(hostGameButton);
-				getRootPane().setDefaultButton(hostGameButton);
-			}
-			{
-				joinGameButton = new JButton(JOIN);
-				joinGameButton.setBounds(166, 5, 117, 25);
-				joinGameButton.setActionCommand(CANCEL);
-				buttonPane.add(joinGameButton);
-			}
-		}
-		
-		JPanel panelAdditionalSettings = new JPanel();
-		panelAdditionalSettings.setBounds(0, 187, 293, 68);
-		getContentPane().add(panelAdditionalSettings);
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[]{0, 0};
+		gridBagLayout.rowHeights = new int[]{20, 0, 10, 0};
+		gridBagLayout.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		getContentPane().setLayout(gridBagLayout);
+
+		contentPanel = new JPanel();
+		GridBagConstraints gbc_contentPanel = new GridBagConstraints();
+		gbc_contentPanel.insets = new Insets(0, 0, 5, 0);
+		gbc_contentPanel.fill = GridBagConstraints.BOTH;
+		gbc_contentPanel.gridx = 0;
+		gbc_contentPanel.gridy = 0;
+		getContentPane().add(contentPanel, gbc_contentPanel);
+		GridBagLayout gbl_contentPanel = new GridBagLayout();
+		gbl_contentPanel.columnWidths = new int[]{15, 15, 15, 0};
+		gbl_contentPanel.rowHeights = new int[]{0, 0, 0};
+		gbl_contentPanel.columnWeights = new double[]{1.0, 1.0, 1.0,
+				Double.MIN_VALUE};
+		gbl_contentPanel.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		contentPanel.setLayout(gbl_contentPanel);
+
+		classicGameButton = new JToggleButton("Classic");
+		gameTypeButtonGroup.add(classicGameButton);
+		GridBagConstraints gbc_classicGameButton = new GridBagConstraints();
+		gbc_classicGameButton.fill = GridBagConstraints.BOTH;
+		gbc_classicGameButton.gridheight = 2;
+		gbc_classicGameButton.insets = new Insets(0, 0, 5, 5);
+		gbc_classicGameButton.gridx = 0;
+		gbc_classicGameButton.gridy = 0;
+		contentPanel.add(classicGameButton, gbc_classicGameButton);
+
+		sharedGameButton = new JToggleButton("Shared");
+		gameTypeButtonGroup.add(sharedGameButton);
+		GridBagConstraints gbc_sharedGameButton = new GridBagConstraints();
+		gbc_sharedGameButton.fill = GridBagConstraints.BOTH;
+		gbc_sharedGameButton.gridheight = 2;
+		gbc_sharedGameButton.insets = new Insets(0, 0, 5, 5);
+		gbc_sharedGameButton.gridx = 1;
+		gbc_sharedGameButton.gridy = 0;
+		contentPanel.add(sharedGameButton, gbc_sharedGameButton);
+
+		perksGameButton = new JToggleButton("Perks");
+		gameTypeButtonGroup.add(perksGameButton);
+		GridBagConstraints gbc_perksGameButton = new GridBagConstraints();
+		gbc_perksGameButton.fill = GridBagConstraints.BOTH;
+		gbc_perksGameButton.gridheight = 2;
+		gbc_perksGameButton.insets = new Insets(0, 0, 5, 0);
+		gbc_perksGameButton.gridx = 2;
+		gbc_perksGameButton.gridy = 0;
+		contentPanel.add(perksGameButton, gbc_perksGameButton);
+
+		difficultyPanel = new JPanel();
+		difficultyPanel.setBorder(new TitledBorder(null, "Difficulty",
+				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		GridBagConstraints gbc_difficultyPanel = new GridBagConstraints();
+		gbc_difficultyPanel.insets = new Insets(0, 0, 5, 0);
+		gbc_difficultyPanel.fill = GridBagConstraints.BOTH;
+		gbc_difficultyPanel.gridx = 0;
+		gbc_difficultyPanel.gridy = 1;
+		getContentPane().add(difficultyPanel, gbc_difficultyPanel);
+		GridBagLayout gbl_difficultyPanel = new GridBagLayout();
+		gbl_difficultyPanel.columnWidths = new int[]{0, 0, 0, 0};
+		gbl_difficultyPanel.rowHeights = new int[]{0, 0};
+		gbl_difficultyPanel.columnWeights = new double[]{1.0, 1.0, 1.0,
+				Double.MIN_VALUE};
+		gbl_difficultyPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		difficultyPanel.setLayout(gbl_difficultyPanel);
+
+		easyRbtn = new JRadioButton("Easy");
+		easyRbtn.setSelected(true);
+		buttonGroup.add(easyRbtn);
+		GridBagConstraints gbc_easyRbtn = new GridBagConstraints();
+		gbc_easyRbtn.fill = GridBagConstraints.BOTH;
+		gbc_easyRbtn.insets = new Insets(0, 0, 0, 5);
+		gbc_easyRbtn.gridx = 0;
+		gbc_easyRbtn.gridy = 0;
+		difficultyPanel.add(easyRbtn, gbc_easyRbtn);
+
+		mediumRbtn = new JRadioButton("Medium");
+		buttonGroup.add(mediumRbtn);
+		GridBagConstraints gbc_mediumRbtn = new GridBagConstraints();
+		gbc_mediumRbtn.fill = GridBagConstraints.BOTH;
+		gbc_mediumRbtn.insets = new Insets(0, 0, 0, 5);
+		gbc_mediumRbtn.gridx = 1;
+		gbc_mediumRbtn.gridy = 0;
+		difficultyPanel.add(mediumRbtn, gbc_mediumRbtn);
+
+		hardRbtn = new JRadioButton("Hard");
+		buttonGroup.add(hardRbtn);
+		GridBagConstraints gbc_hardRbtn = new GridBagConstraints();
+		gbc_hardRbtn.fill = GridBagConstraints.BOTH;
+		gbc_hardRbtn.gridx = 2;
+		gbc_hardRbtn.gridy = 0;
+		difficultyPanel.add(hardRbtn, gbc_hardRbtn);
+
+		buttonPanel = new JPanel();
+		GridBagConstraints gbc_buttonPanel = new GridBagConstraints();
+		gbc_buttonPanel.fill = GridBagConstraints.BOTH;
+		gbc_buttonPanel.gridx = 0;
+		gbc_buttonPanel.gridy = 2;
+		getContentPane().add(buttonPanel, gbc_buttonPanel);
+		GridBagLayout gbl_buttonPanel = new GridBagLayout();
+		gbl_buttonPanel.columnWidths = new int[]{0, 0, 0, 0};
+		gbl_buttonPanel.rowHeights = new int[]{0, 0, 0};
+		gbl_buttonPanel.columnWeights = new double[]{1.0, 1.0, 1.0,
+				Double.MIN_VALUE};
+		gbl_buttonPanel.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		buttonPanel.setLayout(gbl_buttonPanel);
+
+		hostGameButton = new JButton("Host");
+		GridBagConstraints gbc_hostGameButton = new GridBagConstraints();
+		gbc_hostGameButton.fill = GridBagConstraints.BOTH;
+		gbc_hostGameButton.gridheight = 2;
+		gbc_hostGameButton.insets = new Insets(0, 0, 5, 5);
+		gbc_hostGameButton.gridx = 0;
+		gbc_hostGameButton.gridy = 0;
+		buttonPanel.add(hostGameButton, gbc_hostGameButton);
+
+		joinGameButton = new JButton("Join");
+		GridBagConstraints gbc_joinGameButton = new GridBagConstraints();
+		gbc_joinGameButton.fill = GridBagConstraints.BOTH;
+		gbc_joinGameButton.gridheight = 2;
+		gbc_joinGameButton.insets = new Insets(0, 0, 5, 0);
+		gbc_joinGameButton.gridx = 2;
+		gbc_joinGameButton.gridy = 0;
+		buttonPanel.add(joinGameButton, gbc_joinGameButton);
+
+		Dimension d = this.getLayout().preferredLayoutSize(this);
+		this.setSize(new Dimension(280, 158));
 	}
 
-	// Currently not used, as we use Easy/Normal/Hard tpye of the game. May be used in a future.
-//	public int getBoardSize(){
-//		if (txtBoardSize.getText().isEmpty())
-//		{
-//			return -1;
-//		}
-//		return Integer.parseInt(txtBoardSize.getText());
-//	}
-	
-	// Currently not used, as we use Easy/Normal/Hard tpye of the game. May be used in a future.
-//	public int getBombsNumber(){
-//		int size = Integer.parseInt(txtBoardSize.getText());
-//		if( size <= 0)
-//			return -1;
-//		if (rdbtnEasy.isSelected()){
-//			return (int) Math.floor(0.25 * size);
-//		}else if (rdbtnMedium.isSelected()){
-//			return (int) Math.floor(0.50 * size);
-//		}else if (rdbtnHard.isSelected()){
-//			return (int) Math.floor(0.75 * size);
-//		}else{
-//			return -1;
-//		}
-//	}
-	
-	
-	public void addGameModeBtnListener(ActionListener listener) {
-		classicGameButton.addActionListener(listener);
-		sharedGameButton.addActionListener(listener);
-		perksGameButton.addActionListener(listener);
-	}
+	// Currently not used, as we use Easy/Normal/Hard tpye of the game. May be
+	// used in a future.
+	// public int getBoardSize(){
+
+	// if (txtBoardSize.getText().isEmpty())
+	// {
+	// return -1;
+	// }
+	// return Integer.parseInt(txtBoardSize.getText());
+
+	// }
+
+	// Currently not used, as we use Easy/Normal/Hard tpye of the game. May be
+	// used in a future.
+	// public int getBombsNumber(){
+
+	// int size = Integer.parseInt(txtBoardSize.getText());
+	// if( size <= 0)
+	// return -1;
+	// if (rdbtnEasy.isSelected()){
+	// return (int) Math.floor(0.25 * size);
+	// }else if (rdbtnMedium.isSelected()){
+	// return (int) Math.floor(0.50 * size);
+	// }else if (rdbtnHard.isSelected()){
+	// return (int) Math.floor(0.75 * size);
+	// }else{
+	// return -1;
+	// }
+	// }
 
 	public void addHostBtnListener(ActionListener listener) {
 		hostGameButton.addActionListener(listener);
@@ -181,11 +230,38 @@ public class NewGameDialog extends DialogBase {
 	public void addJoinBtnListener(ActionListener listener) {
 		joinGameButton.addActionListener(listener);
 	}
-	
-	public void addGameDifficultyListeners(
-			ActionListener easyListener, ActionListener mediumListener, ActionListener hardListener) {
-		easyRbtn.addActionListener(easyListener);
-		mediumRbtn.addActionListener(mediumListener);
-		hardRbtn.addActionListener(hardListener);
+
+	// TODO AGA To be replaced with the input Text Field for the Game
+	// Name(id)?
+	public String getGameId() {
+		return "MOCK_GAME_ID";
+	}
+
+	// TODO AGA Add getting info from grouped rounded buttons. Mind that only 1
+	// mode can be active at a time.
+	public GameDifficulty getGameDifficulty() {
+		for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons
+				.hasMoreElements();) {
+			AbstractButton button = buttons.nextElement();
+
+			if (button.isSelected()) {
+				return GameDifficulty.valueOf(button.getText().toUpperCase());
+			}
+		}
+		return null;
+	}
+
+	// TODO AGA Add getting info from grouped buttons. Mind that only 1 mode can
+	// be active at a time.
+	public GameMode getGameMode() {
+		for (Enumeration<AbstractButton> buttons = gameTypeButtonGroup
+				.getElements(); buttons.hasMoreElements();) {
+			AbstractButton button = buttons.nextElement();
+
+			if (button.isSelected()) {
+				return GameMode.valueOf(button.getText().toUpperCase());
+			}
+		}
+		return null;
 	}
 }

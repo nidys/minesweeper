@@ -43,10 +43,10 @@ public class GameResultDialog extends JPanel{
 		add(goToMenuButton, gbc_goToMenuButton);
 		
 		if (gameResult == GameResult.SUCCESS) {
-			pictureLabel = new JLabel(graphicsFactory.getWinIcon());
+			pictureLabel = new JLabel(graphicsFactory.getCoolFaceIcon());
 			add(pictureLabel);
 		} else if (gameResult == GameResult.FAIL) {
-			pictureLabel = new JLabel(graphicsFactory.getLoseIcon());
+			pictureLabel = new JLabel(graphicsFactory.getDeadFaceIcon());
 			add(pictureLabel);
 		} else {
 			
