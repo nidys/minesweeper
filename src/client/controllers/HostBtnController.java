@@ -12,7 +12,6 @@ import client.utils.ControllerGenerator;
 import client.views.MainWindow;
 import client.views.component.PlayerGameBoardPanel;
 
-import common.enums.GameDifficulty;
 import common.enums.GameMode;
 import common.exceptions.create.InvalidGameNameException;
 import common.exceptions.create.MaxOpponentSizeIsTooLarge;
@@ -24,7 +23,8 @@ public class HostBtnController extends BaseControllerForDialog {
 	private static Logger log = Logger.getLogger(HostBtnController.class);
 	private MainWindow mainView;
 
-	public HostBtnController(ControllerGenerator listenerGenerator, MainWindow mainView) {
+	public HostBtnController(ControllerGenerator listenerGenerator,
+			MainWindow mainView) {
 		super();
 		this.mainView = mainView;
 		listenerGenerator.setFieldsForDialog(this);
@@ -32,42 +32,40 @@ public class HostBtnController extends BaseControllerForDialog {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		debug(log, "Sending create game for user[%s]", gameState.getUserNick());
 		try {
-			// TODO pass here all required parameters
-			GameDifficultyFactors gameDifficultyFactors 
-				= netManager.createGame(createGameConfig());
+			String playerName = mainView.getUserNick();
+			GameMode gameMode = newGameView.getGameMode();
 			
+			debug(log, "Sending create game for user[%s]", playerName);
+			GameDifficultyFactors gameDifficultyFactors = netManager
+					.createGame(createGameConfig(playerName, gameMode));
+
 			newGameView.setVisible(false);
-			initializeGameBoard(gameDifficultyFactors);
-		} catch (RemoteException | InvalidGameNameException |
-				 MaximumRoomExceededException | MaxOpponentSizeIsTooLarge ex) {
+			initializeGameBoard(gameDifficultyFactors, playerName, gameMode);
+		} catch (RemoteException | InvalidGameNameException
+				| MaximumRoomExceededException | MaxOpponentSizeIsTooLarge ex) {
 			// TODO Handle exceptions
 			ex.printStackTrace();
 		}
 	}
 
-	public void initializeGameBoard(GameDifficultyFactors gameDifficultyFactors) {
+	private void initializeGameBoard(
+			GameDifficultyFactors gameDifficultyFactors, String playerName,
+			GameMode gameMode) {
 		mainView.drawGameBoard();
-		mainView.initializeGameBoard(gameState.getMode());
-		gameDifficultyFactors.setBoardSizeX(16);
-		gameDifficultyFactors.setBoardSizeY(16);
-		gameDifficultyFactors.setBombsNumber(40);
-		mainView.addNewPlayerToView(new PlayerGameBoardPanel(gameDifficultyFactors, gameState.getUserNick())); // TODO Przekazac dane z Config'a
-
+		mainView.initializeGameBoard(gameMode);
+		mainView.addNewPlayerToView(new PlayerGameBoardPanel(
+				gameDifficultyFactors, playerName)); 
 		componentsFactory.initializeBoardListeners();
 	}
-	
-	// TODO MALY 
-	// Temporary filling Config with mock data. 
-	// To be removed (replaced with data from the view).
-	private Config createGameConfig()
-	{
+
+	// TODO Add initialization of the missing Config fields
+	private Config createGameConfig(String playerName, GameMode gameMode) {
 		Config config = new Config();
-		config.setGameDifficulty(GameDifficulty.MEDIUM); // TODO Change it
-		config.setGameId("MOCK_GAME_ID");
-		config.setGameMode(GameMode.CLASSIC);
-		config.setUserNick("MOCK_USER_NICK");
+		config.setGameDifficulty(newGameView.getGameDifficulty());
+		config.setGameId(newGameView.getGameId());
+		config.setGameMode(gameMode);
+		config.setUserNick(playerName);
 		config.setPlayerHandler(gameState.getPlayerHandler());
 		return config;
 	}

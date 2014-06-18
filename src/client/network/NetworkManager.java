@@ -67,43 +67,24 @@ public class NetworkManager {
 		return null;
 	}
 
-	public Boolean joinGame(String userNick, PlayerHandler playerHandler) 
+	public GameDifficultyFactors joinGame(String userNick, PlayerHandler playerHandler, String gameId) 
 			throws RemoteException, MaximumPlayerExceededException, 
 				   InvalidGameNameException, PlayerWithIdenticalNickAlreadyInGame {
 		// TODO used in JoinBtnController
-		// TODO must pass gameId too. Is engine deprecated? 
+		// TODO must pass gameId too.
 		error(log, "Finish implementation!!!");
-//		engine = remoteGameManager.joinGame(userNick, playerHandler);
-		gameSettings = remoteGameManager.joinGame(userNick, "MOCK_GAME_ID", playerHandler);
+		gameSettings = remoteGameManager.joinGame(userNick, gameId, playerHandler);
+		engine = gameSettings.getEngine();
 		
-		return gameSettings != null;
+		return gameSettings.getFactors();
 	}
 
 	public List<ShotResult> shot(String userNick, int position) throws RemoteException, PositionOutOfRange {
-		// TODO used in MyBombFielsBtnController
-		// TODO from now shot from engine return list of fields to discover
-		// try {
-		// log.debug(String.format("Engine null=%b", engine == null));
-		// Result res = null;//engine.shot(userNick, position);
-		// log.debug("Got shot result = " + res);
-		// return res;
-		// } catch (RemoteException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		
+		// log.debug(String.format("Engine null=%b", engine == null));	
 		return engine.shot(userNick, position);
 	}
 
-	public void resetBoard(String userNick) {
-		try {
-			debug(log, "Sending reset board");
-			// If engine is deprecated, NullPointer will occur here, replace with new logic
-			engine.resetBoard(userNick);
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+	public void resetBoard(String userNick) throws RemoteException {
+		engine.resetBoard(userNick);
 	}
 }
