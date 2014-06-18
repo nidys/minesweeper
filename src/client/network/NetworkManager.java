@@ -67,13 +67,13 @@ public class NetworkManager {
 		return null;
 	}
 
-	public GameDifficultyFactors joinGame(String userNick, PlayerHandler playerHandler) 
+	public GameDifficultyFactors joinGame(String userNick, PlayerHandler playerHandler, String gameId) 
 			throws RemoteException, MaximumPlayerExceededException, 
 				   InvalidGameNameException, PlayerWithIdenticalNickAlreadyInGame {
 		// TODO used in JoinBtnController
 		// TODO must pass gameId too.
 		error(log, "Finish implementation!!!");
-		gameSettings = remoteGameManager.joinGame(userNick, "MOCK_GAME_ID", playerHandler);
+		gameSettings = remoteGameManager.joinGame(userNick, gameId, playerHandler);
 		engine = gameSettings.getEngine();
 		
 		return gameSettings.getFactors();
