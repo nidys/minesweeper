@@ -11,16 +11,15 @@ public class GraphicsFactory {
 	private final static String IMAGE_PREFIX = "images/";
 	private final static String BOMB = IMAGE_PREFIX + "bomb.png";
 	private final static String FLAG = IMAGE_PREFIX + "flag.png";
-	private final static String WIN = IMAGE_PREFIX + "win.png";
+	private final static String HAPPY_FACE = IMAGE_PREFIX + "happyFace.png";
 	private final static String SAD_FACE = IMAGE_PREFIX + "sadFace.png";
-	private final static String lose = IMAGE_PREFIX + "lose.png";
+	private final static String COOL_FACE = IMAGE_PREFIX + "coolFace.png";
 	private final static String DEAD_FACE = IMAGE_PREFIX + "deadFace.png";
 
 	public static ImageIcon getLogoIcon() {
 		BufferedImage image;
 		try {
 			image = ImageIO.read(ClassLoader.getSystemResourceAsStream("images/logo.png"));
-
 			return new ImageIcon(image);
 		} catch (IOException ex) {
 			ex.printStackTrace();
@@ -36,16 +35,16 @@ public class GraphicsFactory {
 		return getAsImageIcon(FLAG);
 	}
 
-	public static ImageIcon getWinIcon() {
-		return getAsImageIcon(WIN);
+	public static ImageIcon getHappyFaceIcon() {
+		return getAsImageIcon(HAPPY_FACE);
 	}
 
 	public static ImageIcon getSadFaceIcon() {
 		return getAsImageIcon(SAD_FACE);
 	}
 
-	public static ImageIcon getLoseIcon() {
-		return getAsImageIcon(lose);
+	public static ImageIcon getCoolFaceIcon() {
+		return getAsImageIcon(COOL_FACE);
 	}
 
 	public static ImageIcon getDeadFaceIcon() {

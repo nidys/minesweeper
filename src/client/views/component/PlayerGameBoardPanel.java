@@ -80,7 +80,7 @@ public class PlayerGameBoardPanel extends JPanel {
 		statusPanel.add(lblUserNick, gbc_lblUserNick);
 
 		lblFace = new JLabel("");
-		lblFace.setIcon(GraphicsFactory.getWinIcon());
+		lblFace.setIcon(GraphicsFactory.getHappyFaceIcon());
 		GridBagConstraints gbc_lblFace = new GridBagConstraints();
 		gbc_lblFace.insets = new Insets(0, 0, 0, 5);
 		gbc_lblFace.gridx = 3;
