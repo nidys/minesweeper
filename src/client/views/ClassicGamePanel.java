@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 import client.controllers.MyBombFielsBtnController;
+import client.views.GameResultDialog.GameResult;
 import client.views.component.PlayerGameBoardPanel;
 
 import java.awt.GridBagConstraints;
@@ -33,7 +34,7 @@ public class ClassicGamePanel extends GamePanelBase {
 		
 		this.progressMaxValue = progressMaxValue;
 		
-		opponentsMap = new HashMap<String, Opponent>();		
+		opponentsMap = new HashMap<String, Opponent>();
 	}
 	
 	private void initUI() {
@@ -94,6 +95,14 @@ public class ClassicGamePanel extends GamePanelBase {
 	
 	public void setProgress(String opponentName, int progressValue) {
 		opponentsMap.get(opponentName).progressBar.setValue(progressValue);
+		hasOpponentWon(opponentName, progressValue);
+	}
+	
+	public void hasOpponentWon(String opponentName, int progress) {
+		if (progress == progressMaxValue) {
+			GameResultDialog gameResultDialog = new GameResultDialog(GameResult.FAIL, opponentName);
+			gameResultDialog.setVisible(true);
+		}
 	}
 	
 	public void addBombFieldBtnListener(MyBombFielsBtnController listener){

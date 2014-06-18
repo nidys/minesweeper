@@ -35,7 +35,7 @@ public class GraphicsFactory {
 	public static ImageIcon getFlagIcon() {
 		return getAsImageIcon(FLAG);
 	}
-
+	
 	public static ImageIcon getHappyFaceIcon() {
 		return getAsImageIcon(HAPPY_FACE);
 	}
