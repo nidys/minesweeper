@@ -14,8 +14,17 @@ public class FieldButton extends JButton {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	int position;
+	private int position;
+	boolean isFlagged = false;
 	
+
+	public boolean isFlagged() {
+		return isFlagged;
+	}
+
+	public void setFlagged(boolean isFlagged) {
+		this.isFlagged = isFlagged;
+	}
 
 	public int getPosition() {
 		return position;

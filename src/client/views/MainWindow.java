@@ -12,6 +12,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,6 +30,11 @@ import client.utils.GraphicsFactory;
 import client.views.component.PlayerGameBoardPanel;
 import common.enums.GameMode;
 import common.network.ServerAddress;
+
+import java.awt.Component;
+
+import javax.swing.Box;
+import java.awt.Dialog.ModalExclusionType;
 
 /**
  * View for the Main component (view with the game board). Standard window.
@@ -48,6 +54,7 @@ public class MainWindow extends WindowBase {
 	 * Create the frame.
 	 */
 	public MainWindow() {
+		setTitle("Minesweeper");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				MainWindow.class.getResource("/resources/images/bomb.png")));
 		setResizable(false);
@@ -81,37 +88,51 @@ public class MainWindow extends WindowBase {
 
 	private void drawEntryScreen() {
 		setBounds(100, 100, 463, 288);
-		this.setResizable(false);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{43, 1, 55, 86, 31, 41, 0, 0, 0,
-				0};
-		gridBagLayout.rowHeights = new int[]{34, 1, 36, 29, 20, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0,
-				0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0,
+		gridBagLayout.columnWidths = new int[]{20, 1, 55, 86, 31, 41, 0, 20, 0};
+		gridBagLayout.rowHeights = new int[]{10, 80, 10, 29, 20, 20, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 1.0, 0.0,
+				0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 				Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
 
-		JLabel lblMinesweeper = new JLabel(graphicsFactory.getLogoIcon());
-		lblMinesweeper.setText("");
-		lblMinesweeper.setFont(new Font("Tahoma", Font.PLAIN, 56));
+		Component horizontalStrut = Box.createHorizontalStrut(20);
+		GridBagConstraints gbc_horizontalStrut = new GridBagConstraints();
+		gbc_horizontalStrut.gridwidth = 8;
+		gbc_horizontalStrut.insets = new Insets(0, 0, 5, 0);
+		gbc_horizontalStrut.gridx = 0;
+		gbc_horizontalStrut.gridy = 0;
+		getContentPane().add(horizontalStrut, gbc_horizontalStrut);
+
+		ImageIcon logo = graphicsFactory.getLogoIcon();
+		JLabel lblMinesweeper = new JLabel(logo);
+		lblMinesweeper.setSize(logo.getIconWidth(), logo.getIconHeight());
+		
 		GridBagConstraints gbc_lblMinesweeper = new GridBagConstraints();
-		gbc_lblMinesweeper.gridwidth = 7;
-		gbc_lblMinesweeper.anchor = GridBagConstraints.NORTHWEST;
+		gbc_lblMinesweeper.insets = new Insets(0, 0, 5, 5);
+		gbc_lblMinesweeper.gridwidth = 6;
+		gbc_lblMinesweeper.fill = GridBagConstraints.BOTH;
 		gbc_lblMinesweeper.insets = new Insets(0, 0, 5, 5);
 		gbc_lblMinesweeper.gridx = 1;
 		gbc_lblMinesweeper.gridy = 1;
 		getContentPane().add(lblMinesweeper, gbc_lblMinesweeper);
 
+		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
+		GridBagConstraints gbc_horizontalStrut_1 = new GridBagConstraints();
+		gbc_horizontalStrut_1.gridwidth = 8;
+		gbc_horizontalStrut_1.insets = new Insets(0, 0, 5, 0);
+		gbc_horizontalStrut_1.gridx = 0;
+		gbc_horizontalStrut_1.gridy = 2;
+		getContentPane().add(horizontalStrut_1, gbc_horizontalStrut_1);
+
 		JLabel lblServerAdress = new JLabel("Server adress:");
 		GridBagConstraints gbc_lblServerAdress = new GridBagConstraints();
-		gbc_lblServerAdress.fill = GridBagConstraints.VERTICAL;
-		gbc_lblServerAdress.anchor = GridBagConstraints.WEST;
+		gbc_lblServerAdress.fill = GridBagConstraints.BOTH;
 		gbc_lblServerAdress.insets = new Insets(0, 0, 5, 5);
-		gbc_lblServerAdress.gridwidth = 2;
-		gbc_lblServerAdress.gridx = 1;
+		gbc_lblServerAdress.gridx = 2;
 		gbc_lblServerAdress.gridy = 3;
 		getContentPane().add(lblServerAdress, gbc_lblServerAdress);
 
@@ -128,21 +149,20 @@ public class MainWindow extends WindowBase {
 		newGameBtn = new JButton(NEW_GAME);
 		newGameBtn.setBackground(UIManager.getColor("Button.background"));
 		GridBagConstraints gbc_newGameBtn = new GridBagConstraints();
+		gbc_newGameBtn.anchor = GridBagConstraints.WEST;
 		gbc_newGameBtn.fill = GridBagConstraints.VERTICAL;
 		gbc_newGameBtn.gridwidth = 2;
 		gbc_newGameBtn.gridheight = 2;
-		gbc_newGameBtn.anchor = GridBagConstraints.WEST;
 		gbc_newGameBtn.insets = new Insets(0, 0, 5, 5);
-		gbc_newGameBtn.gridx = 6;
+		gbc_newGameBtn.gridx = 5;
 		gbc_newGameBtn.gridy = 3;
 		getContentPane().add(newGameBtn, gbc_newGameBtn);
 
 		JLabel lblUserName = new JLabel("User name:");
 		GridBagConstraints gbc_lblUserName = new GridBagConstraints();
-		gbc_lblUserName.gridwidth = 2;
-		gbc_lblUserName.anchor = GridBagConstraints.WEST;
+		gbc_lblUserName.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblUserName.insets = new Insets(0, 0, 5, 5);
-		gbc_lblUserName.gridx = 1;
+		gbc_lblUserName.gridx = 2;
 		gbc_lblUserName.gridy = 4;
 		getContentPane().add(lblUserName, gbc_lblUserName);
 
@@ -158,8 +178,17 @@ public class MainWindow extends WindowBase {
 		gbc_userNick.gridx = 3;
 		gbc_userNick.gridy = 4;
 		getContentPane().add(userNick, gbc_userNick);
-		getContentPane().validate();
 
+		Component horizontalStrut_2 = Box.createHorizontalStrut(20);
+		GridBagConstraints gbc_horizontalStrut_2 = new GridBagConstraints();
+		gbc_horizontalStrut_2.gridwidth = 8;
+		gbc_horizontalStrut_2.gridx = 0;
+		gbc_horizontalStrut_2.gridy = 5;
+		getContentPane().add(horizontalStrut_2, gbc_horizontalStrut_2);
+
+		Dimension d = this.getLayout().preferredLayoutSize(this);
+		this.setSize(d);
+		this.setResizable(false);
 	}
 
 	/**
@@ -174,8 +203,6 @@ public class MainWindow extends WindowBase {
 	public void addResetBtnListener(ActionListener listener) {
 		btnReset.addActionListener(listener);
 	}
-
-	
 
 	public String getServerAddress() {
 		return serverAddress.getText();
@@ -208,20 +235,19 @@ public class MainWindow extends WindowBase {
 		}
 	}
 
-	
 	public void addBombFieldBtnListener(MyBombFielsBtnController listener) {
 		gamePanel.addBombFieldBtnListener(listener);
 	}
 
+	// TODO Aga -> change this method to sth like
+	// create/addNewPlayerGameBoardPanel
 	public void addNewPlayerToView(PlayerGameBoardPanel playerGameBoardPanel) {
 		gamePanel.addPlayer(playerGameBoardPanel);
 		Dimension d = this.getLayout().preferredLayoutSize(this);
 		this.setSize(d);
 	}
-	
-	
-	
 
+	// TODO -> change it to sth more "changeable" so it will be showing
 	private void displayEndGameMessage() {
 		int option = JOptionPane.showConfirmDialog(this,
 				DialogText.END_GAME_TITLE, DialogText.END_GAME_MESSAGE,
@@ -244,8 +270,6 @@ public class MainWindow extends WindowBase {
 		// oponentBombField[pos - 1].setBackground(Color.RED);
 	}
 
-	
-
 	/**
 	 * TODO PlayerHandler.opponentShot, commented until SHARED,PERKS will be
 	 * developed
@@ -266,19 +290,19 @@ public class MainWindow extends WindowBase {
 	public void setFieldAsEmpty(int position) {
 		gamePanel.setFieldAsEmpty(position);
 	}
-	
+
 	public void setFieldAsEmptyWithValue(int position, int value) {
 		gamePanel.setFieldAsEmptyWithValue(position, value);
 	}
-	
+
 	public void setFieldAsBomb(int position) {
 		gamePanel.setFieldAsBomb(position);
 
 		// TODO Aga Delete magic strings (use internationalization)
 		displayEndGameMessage();
 	}
-	
-	public void setProgress(String userNick, int progressValue){
+
+	public void setProgress(String userNick, int progressValue) {
 		gamePanel.setProgress(userNick, progressValue);
 	}
 }

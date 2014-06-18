@@ -14,7 +14,7 @@ public class GameModeBtnController extends BaseControllerForDialog {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		gameState.setCurrentMode(GameMode.valueOf(e.getActionCommand()));
+		gameState.setCurrentMode(GameMode.valueOf(e.getActionCommand().toUpperCase()));
 	}
 
 }
