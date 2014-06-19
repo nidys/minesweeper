@@ -81,7 +81,7 @@ public class NetworkManager {
 		return gameSettings.getFactors();
 	}
 
-	public List<ShotResult> shot(String userNick, int position) throws RemoteException,
+	public ShotResult shot(String userNick, int position) throws RemoteException,
 			PositionOutOfRange {
 		return engine.shot(userNick, position);
 	}

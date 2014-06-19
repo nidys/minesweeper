@@ -9,6 +9,7 @@ import static common.utils.LoggingHelper.info;
 import client.views.MainWindow;
 import common.enums.GameInterruptMessage;
 import common.model.GameSummary;
+import common.model.LostReason;
 import common.model.Result;
 import common.network.callbacks.PlayerHandler;
 import common.network.protocols.GameLogic;
@@ -71,6 +72,13 @@ public class PlayerHandlerImpl extends UnicastRemoteObject implements PlayerHand
 	public void setEngine(GameLogic engine) throws RemoteException {
 		netManager.setEngine(engine);
 		// TODO invoke some window or set enable on board view?
+	}
+
+	@Override
+	public void playerLost(LostReason reason) throws RemoteException {
+		// TODO Look at 'ending scenarios' defined in gdoc for information what
+		// should be done here
+
 	}
 
 	// @Override

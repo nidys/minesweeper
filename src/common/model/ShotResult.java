@@ -1,40 +1,62 @@
 package common.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class ShotResult implements Serializable {
+	private List<DiscoveredFields> unrevealed;
+	private int lifeLeft;
+	private int timeLeft;
+	private boolean canGameBeContinued;
+
+	public ShotResult(List<DiscoveredFields> unrevealed, int lifeLeft, int timeLeft,
+			boolean canGameBeContinued) {
+		super();
+		this.unrevealed = unrevealed;
+		this.lifeLeft = lifeLeft;
+		this.timeLeft = timeLeft;
+		this.canGameBeContinued = canGameBeContinued;
+	}
+
+	public ShotResult() {
+		super();
+	}
+
+	public List<DiscoveredFields> getUnrevealed() {
+		return unrevealed;
+	}
+
+	public void setUnrevealed(List<DiscoveredFields> unrevealed) {
+		this.unrevealed = unrevealed;
+	}
+
+	public int getLifeLeft() {
+		return lifeLeft;
+	}
+
+	public void setLifeLeft(int lifeLeft) {
+		this.lifeLeft = lifeLeft;
+	}
+
+	public int getTimeLeft() {
+		return timeLeft;
+	}
+
+	public void setTimeLeft(int timeLeft) {
+		this.timeLeft = timeLeft;
+	}
+
+	public boolean isCanGameBeContinued() {
+		return canGameBeContinued;
+	}
+
+	public void setCanGameBeContinued(boolean canGameBeContinued) {
+		this.canGameBeContinued = canGameBeContinued;
+	}
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 5529025823063141283L;
-	private int position;
-	/**
-	 * -1 - bomb field<br>
-	 * 0 - empty<br>
-	 * 1-8 -bombs in neighbour
-	 */
-	private int value;
-
-	public ShotResult(int position, int value) {
-		super();
-		this.position = position;
-		this.value = value;
-	}
-
-	public int getPosition() {
-		return position;
-	}
-
-	public void setPosition(int position) {
-		this.position = position;
-	}
-
-	public int getValue() {
-		return value;
-	}
-
-	public void setValue(int value) {
-		this.value = value;
-	}
+	private static final long serialVersionUID = -4320527015687567544L;
 
 }

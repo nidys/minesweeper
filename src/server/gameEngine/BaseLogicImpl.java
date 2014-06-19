@@ -168,7 +168,7 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 
 	// GameLogic Interface
 	@Override
-	public abstract List<ShotResult> shot(String userNick, int position) throws RemoteException,
+	public abstract ShotResult shot(String userNick, int position) throws RemoteException,
 			PositionOutOfRange;
 
 	@Override
@@ -181,6 +181,13 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 		for (PlayerData playerData : players.values()) {
 			playerData.playerHandler.setEngine(this);
 		}
+		gammeRunning = true;
+	}
+
+	private boolean gammeRunning = false;
+
+	public boolean isGameRunning() {
+		return gammeRunning;
 	}
 
 	// #############################################################

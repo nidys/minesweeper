@@ -17,7 +17,7 @@ public interface GameLogic extends Remote {
 	 * @return
 	 * @throws RemoteException
 	 */
-	public List<ShotResult> shot(String userNick, int position) throws RemoteException,
+	public ShotResult shot(String userNick, int position) throws RemoteException,
 			PositionOutOfRange;
 
 	public void resetBoard(String userNick) throws RemoteException;

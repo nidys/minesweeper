@@ -6,6 +6,7 @@ import java.rmi.RemoteException;
 
 import common.enums.GameInterruptMessage;
 import common.model.GameSummary;
+import common.model.LostReason;
 import common.network.protocols.GameLogic;
 
 public interface PlayerHandler extends Remote, Serializable {
@@ -25,6 +26,8 @@ public interface PlayerHandler extends Remote, Serializable {
 	 *            TODO
 	 */
 	public void setProgress(int progress, String playerNick) throws RemoteException;
+
+	public void playerLost(LostReason reason) throws RemoteException;
 
 	/**
 	 * Used during game

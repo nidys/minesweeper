@@ -26,7 +26,7 @@ public class PerksLogic extends BaseLogicImpl {
 	}
 
 	@Override
-	public List<ShotResult> shot(String userNick, int position) throws RemoteException {
+	public ShotResult shot(String userNick, int position) throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
 	}

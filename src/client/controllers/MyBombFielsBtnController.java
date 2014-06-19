@@ -15,6 +15,7 @@ import client.utils.ControllerGenerator;
 import client.views.component.FieldButton;
 
 import common.exceptions.shot.PositionOutOfRange;
+import common.model.DiscoveredFields;
 import common.model.ShotResult;
 
 public class MyBombFielsBtnController extends BaseControllerForField {
@@ -64,11 +65,14 @@ public class MyBombFielsBtnController extends BaseControllerForField {
 				mainView.setFieldAsFlagged(position);
 			} else {
 				try {
-					List<ShotResult> results = netManager.shot(gameState.getUserNick(), position);
-					for (ShotResult result : results)
+					ShotResult shotResult = netManager.shot(gameState.getUserNick(), position);
+					// TODO handle other fields, should game be continued,
+					// update inside clock etc.
+					List<DiscoveredFields> results = shotResult.getUnrevealed();
+					for (DiscoveredFields result : results)
 						setField(result);
 
-					ShotResult result = results.get(0);
+					DiscoveredFields result = results.get(0);
 					info(log, "Clicked field, user[%s], pos[%d], val[%d]", gameState.getUserNick(),
 							result.getPosition(), result.getValue());
 				} catch (RemoteException | PositionOutOfRange e) {
@@ -80,7 +84,7 @@ public class MyBombFielsBtnController extends BaseControllerForField {
 		pressed = false;
 	}
 
-	private void setField(ShotResult result) {
+	private void setField(DiscoveredFields result) {
 		int fieldValue = result.getValue();
 		switch (fieldValue) {
 		case -1:

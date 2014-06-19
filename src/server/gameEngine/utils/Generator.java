@@ -11,14 +11,14 @@ import org.apache.log4j.Logger;
 
 import server.gameEngine.model.Field;
 
-import common.model.ShotResult;
+import common.model.DiscoveredFields;
 import common.utils.PositionConverter;
 
 public class Generator {
 
 	public static void main(String... args) {
 		List<Field[][]> tab = generate(1, null, 3, 6, 6);
-		List<ShotResult> resu = shot(tab.get(0), 17);
+		List<DiscoveredFields> resu = shot(tab.get(0), 17);
 		System.out.println("resu = " + resu.size());
 		// for (ShotResult sr : resu) {
 		// System.out.println(String.format("pos[%d] - %d", sr.getPosition(),
@@ -28,12 +28,12 @@ public class Generator {
 		debugFieldSett(String.format("after shot\n"), tab.get(0));
 	}
 
-	public static List<ShotResult> shot(Field[][] mineField, int pos) {
-		List<ShotResult> arr = new ArrayList<ShotResult>();
+	public static List<DiscoveredFields> shot(Field[][] mineField, int pos) {
+		List<DiscoveredFields> arr = new ArrayList<DiscoveredFields>();
 		int x = PositionConverter.getXFromPosition(pos, mineField.length);
 		int y = PositionConverter.getYFromPosition(pos, mineField.length);
 		if (mineField[x][y] == Field.BOMB) {
-			arr.add(new ShotResult(pos, Field.BOMB.getValue()));
+			arr.add(new DiscoveredFields(pos, Field.BOMB.getValue()));
 			return arr;
 		}
 		// TODO check if shot is on already shot place

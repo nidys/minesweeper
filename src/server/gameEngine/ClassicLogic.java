@@ -14,6 +14,7 @@ import server.gameEngine.utils.Generator;
 
 import common.enums.GameMode;
 import common.exceptions.shot.PositionOutOfRange;
+import common.model.DiscoveredFields;
 import common.model.ShotResult;
 
 public class ClassicLogic extends BaseLogicImpl {
@@ -24,7 +25,7 @@ public class ClassicLogic extends BaseLogicImpl {
 	}
 
 	@Override
-	public List<ShotResult> shot(String userNick, int position) throws RemoteException,
+	public ShotResult shot(String userNick, int position) throws RemoteException,
 			PositionOutOfRange {
 		info(log, "Got shot for user[%s], pos[%d]", userNick, position);
 		PlayerData pData = players.get(userNick);
@@ -39,7 +40,7 @@ public class ClassicLogic extends BaseLogicImpl {
 		// TODO for now no algo to collect neighbour empty fields
 		// List<ShotResult> arr = new ArrayList<ShotResult>();
 		// arr.add(new ShotResult(position, board.getShotResult(position)));
-		List<ShotResult> arr = Generator.shot(board.mineField, position);
+		List<DiscoveredFields> arr = Generator.shot(board.mineField, position);
 
 		for (String otherPlayer : players.keySet()) {
 			if (otherPlayer.equals(userNick) == false) {
@@ -48,7 +49,9 @@ public class ClassicLogic extends BaseLogicImpl {
 			}
 		}
 		error(log, "implement correct shot result response");
-		return arr;
+
+		// TODO return Shotresutl
+		return null;
 	}
 
 	@Override
