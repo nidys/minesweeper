@@ -1,12 +1,16 @@
 package client.utils;
 
 import client.controllers.HostBtnController;
-import client.controllers.JoinBtnController;
+import client.controllers.JoinGamesBtnController;
+import client.controllers.JoinRoomBtnController;
 import client.controllers.MyBombFielsBtnController;
 import client.controllers.NewGameBtnController;
 import client.controllers.ResetBtnController;
+import client.controllers.StartGameBtnController;
 import client.gameRules.GameState;
 import client.network.NetworkManager;
+import client.views.GameRoomDialog;
+import client.views.GamesListDialog;
 import client.views.MainWindow;
 import client.views.NewGameDialog;
 
@@ -15,11 +19,15 @@ import client.views.NewGameDialog;
  * Component means a view, a controller, and a model(s).
  */
 public class ComponentsFactory {
+	private ControllerGenerator listenerGenerator;
 	private MainWindow mainView;
+	private NewGameDialog newGameView;
+	private GamesListDialog gamesListView;
+	private GameRoomDialog gameRoomView;
 	private NetworkManager netManager;
 	private GameState gameState;
-	private ControllerGenerator listenerGenerator;
-	private NewGameDialog newGameView;
+
+
 
 	/**
 	 * Creates the Main component. This method cannot be called within the
@@ -52,7 +60,20 @@ public class ComponentsFactory {
 		return newGameView;
 	}
 
-	// Temporarily here
+	public GamesListDialog createGamesListComponent() {
+		gamesListView = new GamesListDialog(mainView, true);
+		initializeJoinGameListeners();
+		return gamesListView;
+	}
+	
+	public GameRoomDialog createGameRoomComponent(String hostName, String gameId) {
+		gameRoomView = new GameRoomDialog(gameId, hostName, mainView, true);
+		initializeStartGameListeners();
+		
+		return gameRoomView;
+	}
+	
+	// TODO MALY Temporarily here. Maybe move it to createMainComponent()?
 	public void initializeBoardListeners() {
 		mainView.addResetBtnListener(new ResetBtnController(listenerGenerator));
 		mainView.addBombFieldBtnListener(new MyBombFielsBtnController(listenerGenerator));
@@ -67,6 +88,14 @@ public class ComponentsFactory {
 
 	private void initializeNewGameListeners() {
 		newGameView.addHostBtnListener(new HostBtnController(listenerGenerator, mainView));
-		newGameView.addJoinBtnListener(new JoinBtnController(listenerGenerator, mainView));
+		newGameView.addJoinBtnListener(new JoinGamesBtnController(listenerGenerator, mainView));
+	}
+	
+	private void initializeStartGameListeners() {
+		gameRoomView.addStartGameBtnListener(new StartGameBtnController(listenerGenerator, mainView, gameRoomView));
+	}
+	
+	private void initializeJoinGameListeners() {
+		gamesListView.addJoinGameBtnListener(new JoinRoomBtnController(listenerGenerator, mainView, gamesListView));
 	}
 }

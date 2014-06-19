@@ -2,6 +2,7 @@ package client.gameRules;
 
 import common.enums.GameDifficulty;
 import common.enums.GameMode;
+import common.model.GameDifficultyFactors;
 import common.network.callbacks.PlayerHandler;
 
 public class GameState {
@@ -9,12 +10,13 @@ public class GameState {
 	private String userNick;
 	private PlayerHandler playerHandler;
 	private GameDifficulty difficulty;
+	private GameDifficultyFactors difficultyFactors;
 
 	public GameMode getMode() {
 		return currentMode;
 	}
 
-	public void setCurrentMode(GameMode currentMode) {
+	public void setMode(GameMode currentMode) {
 		this.currentMode = currentMode;
 	}
 
@@ -40,5 +42,13 @@ public class GameState {
 
 	public void setDifficulty(GameDifficulty difficulty) {
 		this.difficulty = difficulty;
+	}
+
+	public GameDifficultyFactors getDifficultyFactors() {
+		return difficultyFactors;
+	}
+
+	public void setDifficultyFactors(GameDifficultyFactors difficultyFactors) {
+		this.difficultyFactors = difficultyFactors;
 	}
 }

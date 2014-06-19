@@ -54,11 +54,8 @@ public class NetworkManager {
 		return gameSettings.getFactors();
 	}
 
-	public List<AvailableGameInfo> getGameList() {
-		// TODO implement!!!
-		error(log, "implement!!!");
-		// gm.getGameList();
-		return null;
+	public List<AvailableGameInfo> getGameList() throws RemoteException {
+		return remoteGameManager.getGameList();
 	}
 
 	public GameDifficultyFactors joinGame(String userNick, PlayerHandler playerHandler,

@@ -28,9 +28,9 @@ public class NewGameBtnController extends BaseControllerForWindow {
 		gameState.setUserNick(userNick);
 		try {
 			gameState.setPlayerHandler(new PlayerHandlerImpl(mainView));
-		} catch (RemoteException e1) {
+		} catch (RemoteException ex) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			ex.printStackTrace();
 		}
 		info(log, "New Game button user[%s]", gameState.getUserNick());
 		NewGameDialog newGameView = componentsFactory.createNewGameComponent();

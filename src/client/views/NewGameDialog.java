@@ -7,6 +7,7 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
+import java.util.Random;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
@@ -18,9 +19,11 @@ import javax.swing.JToggleButton;
 import javax.swing.border.TitledBorder;
 
 import client.internationalization.DialogText;
-
 import common.enums.GameDifficulty;
 import common.enums.GameMode;
+
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 /**
  * View for the NewGame component (view with the game board). A dialog.
@@ -45,6 +48,9 @@ public class NewGameDialog extends DialogBase {
 	private JButton hostGameButton;
 	private JButton joinGameButton;
 	private final ButtonGroup gameTypeButtonGroup = new ButtonGroup();
+	private JPanel namePanel;
+	private JLabel gameNameLbl;
+	private JTextField gameNameTextField;
 
 	public NewGameDialog(JFrame owner, boolean isModal) {
 		super(owner, isModal);
@@ -61,9 +67,9 @@ public class NewGameDialog extends DialogBase {
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0 };
-		gridBagLayout.rowHeights = new int[] { 20, 0, 10, 0 };
+		gridBagLayout.rowHeights = new int[] { 20, 0, 10, 0, 0 };
 		gridBagLayout.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		getContentPane().setLayout(gridBagLayout);
 
 		contentPanel = new JPanel();
@@ -155,6 +161,7 @@ public class NewGameDialog extends DialogBase {
 
 		buttonPanel = new JPanel();
 		GridBagConstraints gbc_buttonPanel = new GridBagConstraints();
+		gbc_buttonPanel.insets = new Insets(0, 0, 5, 0);
 		gbc_buttonPanel.fill = GridBagConstraints.BOTH;
 		gbc_buttonPanel.gridx = 0;
 		gbc_buttonPanel.gridy = 2;
@@ -183,9 +190,25 @@ public class NewGameDialog extends DialogBase {
 		gbc_joinGameButton.gridx = 2;
 		gbc_joinGameButton.gridy = 0;
 		buttonPanel.add(joinGameButton, gbc_joinGameButton);
-
+		
+		namePanel = new JPanel();
+		GridBagConstraints gbc_namePanel = new GridBagConstraints();
+		gbc_namePanel.fill = GridBagConstraints.BOTH;
+		gbc_namePanel.gridx = 0;
+		gbc_namePanel.gridy = 3;
+		getContentPane().add(namePanel, gbc_namePanel);
+		
+		gameNameLbl = new JLabel("Nazwa gry:");
+		namePanel.add(gameNameLbl);
+		
+		gameNameTextField = new JTextField();
+		namePanel.add(gameNameTextField);
+		// generate random game name so that user don't need to write it all the
+		// time
+		gameNameTextField.setText("Game Name " + String.valueOf(new Random().nextInt(100)));
+		
 		Dimension d = this.getLayout().preferredLayoutSize(this);
-		this.setSize(new Dimension(280, 158));
+		this.setSize(new Dimension(280, 210));
 	}
 
 	// Currently not used, as we use Easy/Normal/Hard tpye of the game. May be
@@ -226,14 +249,10 @@ public class NewGameDialog extends DialogBase {
 		joinGameButton.addActionListener(listener);
 	}
 
-	// TODO AGA To be replaced with the input Text Field for the Game
-	// Name(id)?
 	public String getGameId() {
-		return "MOCK_GAME_ID";
+		return gameNameTextField.getText();
 	}
 
-	// TODO AGA Add getting info from grouped rounded buttons. Mind that only 1
-	// mode can be active at a time.
 	public GameDifficulty getGameDifficulty() {
 		for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons
 				.hasMoreElements();) {
@@ -243,11 +262,11 @@ public class NewGameDialog extends DialogBase {
 				return GameDifficulty.valueOf(button.getText().toUpperCase());
 			}
 		}
-		return null;
+		
+		// DEBUG For debug purposes. 
+		return GameDifficulty.EASY;
 	}
 
-	// TODO AGA Add getting info from grouped buttons. Mind that only 1 mode can
-	// be active at a time.
 	public GameMode getGameMode() {
 		for (Enumeration<AbstractButton> buttons = gameTypeButtonGroup.getElements(); buttons
 				.hasMoreElements();) {
@@ -257,6 +276,7 @@ public class NewGameDialog extends DialogBase {
 				return GameMode.valueOf(button.getText().toUpperCase());
 			}
 		}
-		return null;
+		// DEBUG For debug purposes. 
+		return GameMode.CLASSIC;
 	}
 }

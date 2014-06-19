@@ -9,9 +9,9 @@ import org.apache.log4j.Logger;
 
 import client.controllers.base.BaseControllerForDialog;
 import client.utils.ControllerGenerator;
+import client.views.GameRoomDialog;
 import client.views.MainWindow;
 import client.views.component.PlayerGameBoardPanel;
-
 import common.enums.GameMode;
 import common.exceptions.create.InvalidGameNameException;
 import common.exceptions.create.MaxOpponentSizeIsTooLarge;
@@ -33,14 +33,18 @@ public class HostBtnController extends BaseControllerForDialog {
 	public void actionPerformed(ActionEvent e) {
 		try {
 			String playerName = mainView.getUserNick();
+			String gameId = newGameView.getGameId();
 			GameMode gameMode = newGameView.getGameMode();
-
+			
 			info(log, "Sending create game for user[%s]", playerName);
-			GameDifficultyFactors gameDifficultyFactors = netManager.createGame(createGameConfig(
-					playerName, gameMode));
-
+			GameDifficultyFactors difficultyFactors = netManager.createGame(createGameConfig(
+					playerName, gameMode, gameId));
+			gameState.setDifficultyFactors(difficultyFactors);
+			gameState.setMode(gameMode);
 			newGameView.setVisible(false);
-			initializeGameBoard(gameDifficultyFactors, playerName, gameMode);
+			
+			GameRoomDialog gameRoomView = componentsFactory.createGameRoomComponent(playerName, gameId);
+			gameRoomView.setVisible(true);
 		} catch (RemoteException | InvalidGameNameException | MaximumRoomExceededException
 				| MaxOpponentSizeIsTooLarge ex) {
 			// TODO Handle exceptions
@@ -48,19 +52,11 @@ public class HostBtnController extends BaseControllerForDialog {
 		}
 	}
 
-	private void initializeGameBoard(GameDifficultyFactors gameDifficultyFactors,
-			String playerName, GameMode gameMode) {
-		mainView.drawGameBoard();
-		mainView.initializeGameBoard(gameMode);
-		mainView.addNewPlayerToView(new PlayerGameBoardPanel(gameDifficultyFactors, playerName));
-		componentsFactory.initializeBoardListeners();
-	}
-
 	// TODO Add initialization of the missing Config fields
-	private Config createGameConfig(String playerName, GameMode gameMode) {
+	private Config createGameConfig(String playerName, GameMode gameMode, String gameId) {
 		Config config = new Config();
 		config.setGameDifficulty(newGameView.getGameDifficulty());
-		config.setGameId(newGameView.getGameId());
+		config.setGameId(gameId);
 		config.setGameMode(gameMode);
 		config.setUserNick(playerName);
 		config.setPlayerHandler(gameState.getPlayerHandler());
