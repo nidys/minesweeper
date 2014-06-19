@@ -8,5 +8,6 @@ public final class ButtonNames {
 	public static final String OK = "OK";
 	public static final String HOST = "Host";
 	public static final String RESET = "Reset";
+	public static final String REFRESH = "Refresh";
 
 }
