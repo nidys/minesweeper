@@ -1,7 +1,6 @@
 package client.network;
 
 import static common.utils.LoggingHelper.error;
-import static common.utils.LoggingHelper.info;
 
 import java.rmi.Naming;
 import java.rmi.RemoteException;
@@ -12,6 +11,9 @@ import org.apache.log4j.Logger;
 import common.exceptions.create.InvalidGameNameException;
 import common.exceptions.create.MaxOpponentSizeIsTooLarge;
 import common.exceptions.create.MaximumRoomExceededException;
+import common.exceptions.gameManager.NotAllPlayersYetAreReady;
+import common.exceptions.gameManager.UnknownGameId;
+import common.exceptions.gameManager.UnknownUserId;
 import common.exceptions.join.MaximumPlayerExceededException;
 import common.exceptions.join.PlayerWithIdenticalNickAlreadyInGame;
 import common.exceptions.shot.PositionOutOfRange;
@@ -49,7 +51,23 @@ public class NetworkManager {
 		// engine = remoteGameManager.createNewGame(userNick, gm,
 		// playerHandler);
 		gameSettings = remoteGameManager.createNewGame(config);
-		engine = gameSettings.getEngine();
+
+		// --TODO DELETE THIS, only temporarly added here, ready gdoc and method
+		// comments-
+		try {
+			remoteGameManager.ready(config.getUserNick(), config.getGameId());
+			remoteGameManager.start(config.getUserNick(), config.getGameId());
+		} catch (UnknownGameId e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotAllPlayersYetAreReady e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnknownUserId e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// ------ @up ------------------------
 
 		return gameSettings.getFactors();
 	}
@@ -65,17 +83,34 @@ public class NetworkManager {
 		// TODO must pass gameId too.
 		error(log, "Finish implementation!!!");
 		gameSettings = remoteGameManager.joinGame(userNick, gameId, playerHandler);
-		engine = gameSettings.getEngine();
 
 		return gameSettings.getFactors();
 	}
 
-	public List<ShotResult> shot(String userNick, int position) throws RemoteException,
+	public ShotResult shot(String userNick, int position) throws RemoteException,
 			PositionOutOfRange {
 		return engine.shot(userNick, position);
 	}
 
 	public void resetBoard(String userNick) throws RemoteException {
 		engine.resetBoard(userNick);
+	}
+
+	public void start(String userNick, String gameId) throws RemoteException, UnknownGameId,
+			NotAllPlayersYetAreReady, UnknownUserId {
+		// TODO after that server will invoke setEngine on PlayerHandler which
+		// should set engine field in networkmanager class
+		remoteGameManager.start(userNick, gameId);
+	}
+
+	public void ready(String userNick, String gameId) throws RemoteException, UnknownGameId,
+			UnknownUserId {
+		// TODO when host click start, server will invoke setEngine on
+		// PlayerHandler which should set engine field in networkmanager class
+		remoteGameManager.ready(userNick, gameId);
+	}
+
+	public void setEngine(GameLogic engine) {
+		this.engine = engine;
 	}
 }

@@ -27,7 +27,7 @@ public class NewGameBtnController extends BaseControllerForWindow {
 		netManager.connectToServer(serverAddr, userNick);
 		gameState.setUserNick(userNick);
 		try {
-			gameState.setPlayerHandler(new PlayerHandlerImpl(mainView));
+			gameState.setPlayerHandler(new PlayerHandlerImpl(mainView, netManager));
 		} catch (RemoteException ex) {
 			// TODO Auto-generated catch block
 			ex.printStackTrace();

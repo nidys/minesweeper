@@ -6,6 +6,8 @@ import java.rmi.RemoteException;
 
 import common.enums.GameInterruptMessage;
 import common.model.GameSummary;
+import common.model.LostReason;
+import common.network.protocols.GameLogic;
 
 public interface PlayerHandler extends Remote, Serializable {
 	// TODO for SHARED/PERKS mode?
@@ -20,8 +22,12 @@ public interface PlayerHandler extends Remote, Serializable {
 	 * 100% = boardSize - bombAmount
 	 * 
 	 * @param progress
+	 * @param playerNick
+	 *            TODO
 	 */
-	public void setProgress(int progress) throws RemoteException;
+	public void setProgress(int progress, String playerNick) throws RemoteException;
+
+	public void playerLost(LostReason reason) throws RemoteException;
 
 	/**
 	 * Used during game
@@ -29,4 +35,6 @@ public interface PlayerHandler extends Remote, Serializable {
 	 * @param errorMsg
 	 */
 	public void reportError(GameInterruptMessage errorMsg) throws RemoteException;
+
+	public void setEngine(GameLogic engine) throws RemoteException;
 }

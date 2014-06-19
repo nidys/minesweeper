@@ -52,7 +52,8 @@ public class HostBtnController extends BaseControllerForDialog {
 		}
 	}
 
-	// TODO Add initialization of the missing Config fields
+	// TODO Add initialization of the missing Config fields !!!
+	//isNormal;isLifecount;isTimed;gameDuration;lifeAmount; maxOpponentAmount;
 	private Config createGameConfig(String playerName, GameMode gameMode, String gameId) {
 		Config config = new Config();
 		config.setGameDifficulty(newGameView.getGameDifficulty());

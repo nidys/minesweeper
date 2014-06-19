@@ -1,7 +1,6 @@
 package server.gameEngine;
 
 import java.rmi.RemoteException;
-import java.util.List;
 
 import common.enums.GameMode;
 import common.model.ShotResult;
@@ -26,7 +25,7 @@ public class PerksLogic extends BaseLogicImpl {
 	}
 
 	@Override
-	public List<ShotResult> shot(String userNick, int position) throws RemoteException {
+	public ShotResult shot(String userNick, int position) throws RemoteException {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -38,21 +37,8 @@ public class PerksLogic extends BaseLogicImpl {
 	}
 
 	@Override
-	public void ready(String userNick) throws RemoteException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void start(String userNick) throws RemoteException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void leaveBeforeEnd(String userNick) throws RemoteException {
 		// TODO Auto-generated method stub
 
 	}
-
 }

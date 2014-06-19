@@ -1,5 +1,6 @@
 package server.gameEngine;
 
+import static common.utils.LoggingHelper.debug;
 import static common.utils.LoggingHelper.info;
 
 import java.rmi.RemoteException;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
 
@@ -18,6 +20,8 @@ import server.gameEngine.utils.Generator;
 
 import common.enums.GameMode;
 import common.exceptions.create.MaxOpponentSizeIsTooLarge;
+import common.exceptions.gameManager.NotAllPlayersYetAreReady;
+import common.exceptions.gameManager.UnknownUserId;
 import common.exceptions.join.MaximumPlayerExceededException;
 import common.exceptions.join.PlayerWithIdenticalNickAlreadyInGame;
 import common.exceptions.shot.PositionOutOfRange;
@@ -40,6 +44,7 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 	protected boolean isTimed = false;
 	protected long gameDuration;
 	protected int lifeAmount;
+	protected int boardAmount;
 	protected int maxOpponentAmount;
 	protected List<Field[][]> generatedBoards;
 
@@ -55,6 +60,7 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 		}
 		gameDuration = gameConfig.getGameDuration();
 		lifeAmount = gameConfig.getLifeAmount();
+		boardAmount = gameConfig.getBoardAmount();
 		maxOpponentAmount = gameConfig.getMaxOpponentAmount();
 		if (maxOpponentAmount > MAX_PLAYERS) {
 			info(log,
@@ -73,7 +79,7 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 		info(log, "Player[%s] setting boardSizeX[%d], boardSizeY[%d], bombsNumber[%d]", userNick,
 				boardSizeX, boardSizeY, bombsNumber);
 
-		players.put(userNick, new PlayerData(new Board(getCopyOfFirstBoard(), boardSizeX
+		players.put(userNick, new PlayerData(new Board(getCopyOfGeneratedBoard(0), boardSizeX
 				* boardSizeY), playerHandler));
 
 		setOpponentInOtherPlayers(userNick);
@@ -119,12 +125,17 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 		info(log, "setting boardSizeX[%d], boardSizeY[%d], bombsNumber[%d]", boardSizeX,
 				boardSizeY, bombsNumber);
 		generatedBoards = Generator.generate(5, null, bombsNumber, boardSizeX, boardSizeY);
-		players.put(hostUserId, new PlayerData(new Board(getCopyOfFirstBoard(), boardSizeX
+		players.put(hostUserId, new PlayerData(new Board(getCopyOfGeneratedBoard(0), boardSizeX
 				* boardSizeY), gameConfig.getPlayerHandler()));
 	}
 
-	private Field[][] getCopyOfFirstBoard() {
-		Field[][] templBoard = generatedBoards.get(0);
+	private Field[][] getCopyOfGeneratedBoard(int num) {
+		if (num >= generatedBoards.size()) {
+			debug(log, "Generate additional boards");
+			generatedBoards = Generator.generate(5, generatedBoards, bombsNumber, boardSizeX,
+					boardSizeY);
+		}
+		Field[][] templBoard = generatedBoards.get(num);
 		Field[][] userBoard = new Field[boardSizeX][boardSizeY];
 		for (int i = 0; i < templBoard.length; i++) {
 			System.arraycopy(templBoard[i], 0, userBoard[i], 0, templBoard[0].length);
@@ -162,20 +173,41 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 
 	// GameLogic Interface
 	@Override
-	public abstract List<ShotResult> shot(String userNick, int position) throws RemoteException,
+	public abstract ShotResult shot(String userNick, int position) throws RemoteException,
 			PositionOutOfRange;
 
 	@Override
 	public abstract void resetBoard(String userNick) throws RemoteException;
 
 	@Override
-	public abstract void ready(String userNick) throws RemoteException;
-
-	@Override
-	public abstract void start(String userNick) throws RemoteException;
-
-	@Override
 	public abstract void leaveBeforeEnd(String userNick) throws RemoteException;
+
+	public void setEngine() throws RemoteException, NotAllPlayersYetAreReady {
+		for (Entry<String, PlayerData> entry : players.entrySet()) {
+			if (entry.getValue().selectedReady == false) {
+				throw new NotAllPlayersYetAreReady();
+			}
+		}
+
+		for (PlayerData playerData : players.values()) {
+			playerData.playerHandler.setEngine(this);
+		}
+		gammeRunning = true;
+	}
+
+	private boolean gammeRunning = false;
+
+	public boolean isGameRunning() {
+		return gammeRunning;
+	}
+
+	public void markAsReady(String userNick) throws UnknownUserId {
+		if (players.get(userNick) == null) {
+			debug(log, "Player[%s] is not in game", userNick);
+			throw new UnknownUserId();
+		}
+		players.get(userNick).selectedReady = true;
+	}
 
 	// #############################################################
 	private static final long serialVersionUID = 1320613550415878733L;

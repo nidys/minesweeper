@@ -10,24 +10,14 @@ public class GameSettings implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -1084967509635332417L;
-	private GameLogic engine;
 	private GameDifficultyFactors factors;
 	private List<String> currentlyLoggedUsers; // null for createNewGame
 
 	public GameSettings(GameLogic engine, GameDifficultyFactors factors,
 			List<String> currentlyLoggedUsers) {
 		super();
-		this.engine = engine;
 		this.factors = factors;
 		this.currentlyLoggedUsers = currentlyLoggedUsers;
-	}
-
-	public GameLogic getEngine() {
-		return engine;
-	}
-
-	public void setEngine(GameLogic engine) {
-		this.engine = engine;
 	}
 
 	public GameDifficultyFactors getFactors() {

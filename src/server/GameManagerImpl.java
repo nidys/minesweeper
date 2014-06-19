@@ -15,9 +15,13 @@ import org.apache.log4j.Logger;
 
 import server.gameEngine.BaseLogicImpl;
 import server.gameEngine.ClassicLogic;
+
 import common.exceptions.create.InvalidGameNameException;
 import common.exceptions.create.MaxOpponentSizeIsTooLarge;
 import common.exceptions.create.MaximumRoomExceededException;
+import common.exceptions.gameManager.NotAllPlayersYetAreReady;
+import common.exceptions.gameManager.UnknownGameId;
+import common.exceptions.gameManager.UnknownUserId;
 import common.exceptions.join.MaximumPlayerExceededException;
 import common.exceptions.join.PlayerWithIdenticalNickAlreadyInGame;
 import common.model.AvailableGameInfo;
@@ -54,9 +58,11 @@ public class GameManagerImpl implements GameManager {
 		List<AvailableGameInfo> gameList = new ArrayList<AvailableGameInfo>();
 		for (Entry<String, BaseLogicImpl> pair : games.entrySet()) {
 			BaseLogicImpl engine = pair.getValue();
-			gameList.add(new AvailableGameInfo(pair.getKey(), engine.getGameMode(), engine
-					.getHostUserId(), engine.getMaxOpponentAmount(), engine
-					.getCurrentlyConnectedPlayers()));
+			if (engine.isGameRunning() == false) {
+				gameList.add(new AvailableGameInfo(pair.getKey(), engine.getGameMode(), engine
+						.getHostUserId(), engine.getMaxOpponentAmount(), engine
+						.getCurrentlyConnectedPlayers()));
+			}
 		}
 		printGameList(gameList);
 		return gameList;
@@ -125,5 +131,25 @@ public class GameManagerImpl implements GameManager {
 
 		}
 		debug(log, sb.toString());
+	}
+
+	@Override
+	public void ready(String userNick, String gameId) throws RemoteException, UnknownGameId,
+			UnknownUserId {
+		if (games.get(gameId) == null) {
+			throw new UnknownGameId();
+		}
+		games.get(gameId).markAsReady(userNick);
+
+	}
+
+	@Override
+	public void start(String userNick, String gameId) throws RemoteException, UnknownGameId,
+			NotAllPlayersYetAreReady {
+		if (games.get(gameId) == null) {
+			throw new UnknownGameId();
+		}
+		games.get(gameId).setEngine();
+
 	}
 }

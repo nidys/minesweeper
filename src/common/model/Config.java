@@ -26,6 +26,7 @@ public class Config implements Serializable {
 	private boolean isTimed;
 	private long gameDuration;
 	private int lifeAmount;
+	private int boardAmount;
 	private int maxOpponentAmount;
 
 	public Config(String userNick, GameMode gameMode, PlayerHandler playerHandler,
@@ -135,6 +136,14 @@ public class Config implements Serializable {
 
 	public void setMaxOpponentAmount(int maxOpponentAmount) {
 		this.maxOpponentAmount = maxOpponentAmount;
+	}
+
+	public int getBoardAmount() {
+		return boardAmount;
+	}
+
+	public void setBoardAmount(int boardAmount) {
+		this.boardAmount = boardAmount;
 	}
 
 }
