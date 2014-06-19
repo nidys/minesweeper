@@ -9,7 +9,7 @@ import client.views.component.PlayerGameBoardPanel;
 @SuppressWarnings("serial")
 public class PerksGamePanel extends GamePanelBase {
 	private GridLayout layout;
-	ArrayList<PlayerGameBoardPanel> playerPanels = new ArrayList<PlayerGameBoardPanel>();
+	ArrayList<PlayerGameBoardPanel> playerGameBoardPanels = new ArrayList<PlayerGameBoardPanel>();
 
 	public PerksGamePanel() {
 		super();
@@ -25,43 +25,42 @@ public class PerksGamePanel extends GamePanelBase {
 
 	public void addPlayer(PlayerGameBoardPanel playerGameBoardPanel) {
 		add(playerGameBoardPanel);
-		playerPanels.add(playerGameBoardPanel);
+		playerGameBoardPanels.add(playerGameBoardPanel);
 
 	}
 
 	public void addBombFieldBtnListener(MyBombFielsBtnController listener) {
-		for (PlayerGameBoardPanel board : playerPanels) {
-			board.addBombFieldBtnListener(listener);
-		}
+		playerGameBoardPanels.get(playerGameBoardPanels.size() - 1).addBombFieldBtnListener(listener);
+		
 	}
 
 	public void setFieldAsBomb(int position) {
-		playerPanels.get(0).setFieldAsBomb(position);
+		playerGameBoardPanels.get(0).setFieldAsBomb(position);
 
 	}
 
 	public void setFieldAsEmpty(int position) {
-		playerPanels.get(0).setFieldAsEmpty(position);
+		playerGameBoardPanels.get(0).setFieldAsEmpty(position);
 
 	}
 
 	public void resetFields() {
-		playerPanels.get(0).resetFields();
+		playerGameBoardPanels.get(0).resetFields();
 
 	}
 
 	public void setFieldAsFlagged(int position) {
-		playerPanels.get(0).setFieldAsFlagged(position);
+		playerGameBoardPanels.get(0).setFieldAsFlagged(position);
 
 	}
 
 	public void setFieldAsEmptyWithValue(int position, int value) {
-		playerPanels.get(0).setFieldAsEmptyWithValue(position, value);
+		playerGameBoardPanels.get(0).setFieldAsEmptyWithValue(position, value);
 
 	}
 
 	@Override
-	public void setProgress(String opponentName, int progressValue) {
+	public void setProgress(String opponentName, int progressValue) { 
 		// TODO Auto-generated method stub
 
 	}

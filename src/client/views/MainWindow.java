@@ -26,8 +26,8 @@ import client.controllers.MyBombFielsBtnController;
 import client.internationalization.ButtonNames;
 import client.internationalization.DialogText;
 import client.utils.GraphicsFactory;
+import client.views.GameResultDialog.GameResult;
 import client.views.component.PlayerGameBoardPanel;
-
 import common.enums.GameMode;
 import common.network.ServerAddress;
 
@@ -49,18 +49,22 @@ public class MainWindow extends WindowBase {
 	 * Create the frame.
 	 */
 	public MainWindow() {
-		setTitle("Minesweeper");
+		setTitle(DialogText.MAINWINDOW_TITLE);
 		// TODO extract to constant!!!
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				MainWindow.class.getResource("/resources/images/bomb.png")));
 		setResizable(false);
 		drawEntryScreen();
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 		// drawGameBoard();
 	}
 
 	public void drawGameBoard() {
 		clearWindow();
 		drawComponents();
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 	}
 
 	private void clearWindow() {
@@ -224,6 +228,8 @@ public class MainWindow extends WindowBase {
 			getContentPane().add(gamePanel);
 			this.setTitle(DialogText.MAINWINDOW_CLASSIC_TITLE);
 		} else if (mode == GameMode.SHARED) {
+			gamePanel = new SharedGamePanel();
+			getContentPane().add(gamePanel);
 			this.setTitle(DialogText.MAINWINDOW_SHARED_TITLE);
 		} else {
 
@@ -291,9 +297,6 @@ public class MainWindow extends WindowBase {
 
 	public void setFieldAsBomb(int position) {
 		gamePanel.setFieldAsBomb(position);
-
-		// TODO Aga Delete magic strings (use internationalization)
-		displayEndGameMessage();
 	}
 
 	public void setProgress(String userNick, int progressValue) {

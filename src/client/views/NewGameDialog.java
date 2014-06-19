@@ -6,27 +6,26 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Enumeration;
 import java.util.Random;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.border.TitledBorder;
 
 import client.internationalization.DialogText;
+
 import common.enums.GameDifficulty;
 import common.enums.GameMode;
-
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 /**
  * View for the NewGame component (view with the game board). A dialog.
@@ -65,6 +64,8 @@ public class NewGameDialog extends DialogBase {
 		setLocationRelativeTo(owner);
 		buildGUI();
 		this.pack();
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 
 	}
 

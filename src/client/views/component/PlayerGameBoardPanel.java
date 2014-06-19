@@ -1,6 +1,8 @@
 package client.views.component;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -15,7 +17,6 @@ import javax.swing.border.BevelBorder;
 
 import client.controllers.MyBombFielsBtnController;
 import client.utils.GraphicsFactory;
-
 import common.model.GameDifficultyFactors;
 
 @SuppressWarnings("serial")
@@ -42,7 +43,7 @@ public class PlayerGameBoardPanel extends JPanel {
 		this.duration = 100;
 
 		createBasicComponents();
-		generateBoard();
+		generatePlayeGameBoard();
 	}
 
 	private void createBasicComponents() {
@@ -69,7 +70,7 @@ public class PlayerGameBoardPanel extends JPanel {
 		gbl_statusPanel.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
 		statusPanel.setLayout(gbl_statusPanel);
 
-		lblUserNick = new JLabel("UserNick");
+		lblUserNick = new JLabel(this.userNick);
 		lblUserNick.setFont(new Font("Segoe WP", Font.BOLD, 11));
 		GridBagConstraints gbc_lblUserNick = new GridBagConstraints();
 		gbc_lblUserNick.fill = GridBagConstraints.BOTH;
@@ -111,26 +112,26 @@ public class PlayerGameBoardPanel extends JPanel {
 		gbc_gameBoardPanel.gridx = 0;
 		gbc_gameBoardPanel.gridy = 1;
 		add(gameBoardPanel, gbc_gameBoardPanel);
-		gameBoardPanel.setLayout(new GridLayout(boardSizeX, boardSizeY));
+		gameBoardPanel.setLayout(new GridLayout(boardSizeX, boardSizeY, 0, 10));
 
 	}
 
-	private void generateBoard() {
+	private void generatePlayeGameBoard() {
 
 		board = new FieldButton[boardSizeX * boardSizeY];
 		for (int i = 0; i < boardSizeX; ++i) {
 			for (int j = 0; j < boardSizeY; ++j) {
-				board[i * boardSizeX + j] = createBombFieldBtn(i * boardSizeX + j + 1 + "", i, j);
+				board[i * boardSizeX + j] = createAndAddBombFieldBtn(i, j);
 			}
 		}
 
 	}
 
-	private FieldButton createBombFieldBtn(String name, int i, int j) {
+	private FieldButton createAndAddBombFieldBtn(int i, int j) {
 		FieldButton btn = new FieldButton(i * boardSizeX + j);
-		btn.setPreferredSize(new Dimension(50, 50));
+		btn.setPreferredSize(new Dimension(40, 40));
+		btn.setFont(new Font("Tahoma", Font.BOLD, 20));
 		gameBoardPanel.add(btn);
-		// btn.setText(name);
 		return btn;
 	}
 
@@ -146,6 +147,7 @@ public class PlayerGameBoardPanel extends JPanel {
 		board[pos].setPreferredSize(new Dimension(32, 32));
 		board[pos].setText("");
 		lblFace.setIcon(GraphicsFactory.getDeadFaceIcon());
+		enableComponents(gameBoardPanel, false);
 	}
 
 	public void setFieldAsValued(int pos, int value) {
@@ -157,16 +159,18 @@ public class PlayerGameBoardPanel extends JPanel {
 	}
 
 	public void resetFields() {
+		
 		for (int i = 0; i < board.length; i++) {
 			board[i].setBackground(null);
+			board[i].setText("");
+			board[i].setIcon(null);
 		}
+		enableComponents(gameBoardPanel, true);
 	}
 
 	public void setFieldAsFlagged(int pos) {
 		if (!board[pos].isFlagged) { // so its not already discovered field
-			// board[pos - 1].setText("F");
 			board[pos].setBackground(UIManager.getColor("Button.shadow"));
-			board[pos].setText("");
 			board[pos].setIcon(GraphicsFactory.getFlagIcon());
 			board[pos].setPreferredSize(new Dimension(32, 32));
 
@@ -174,10 +178,11 @@ public class PlayerGameBoardPanel extends JPanel {
 			board[pos].isFlagged = true;
 
 		} else if (board[pos].isFlagged) { // so we want to unset flag
-			board[pos].setText("" + pos);
 			board[pos].setBackground(UIManager.getColor("Button.background"));
 			board[pos].setIcon(null);
+			
 			lblBombs.setText((Integer.parseInt(lblBombs.getText()) + 1) + "");
+			
 			board[pos].isFlagged = false;
 		} else {
 
@@ -185,7 +190,37 @@ public class PlayerGameBoardPanel extends JPanel {
 	}
 
 	public void setFieldAsEmptyWithValue(int pos, int value) {
+		switch (value)
+		{
+			case 1:
+				board[pos].setForeground(Color.BLUE);
+				break;
+			case 2:
+				board[pos].setForeground(Color.GREEN);
+				break;
+			case 3:
+				board[pos].setForeground(Color.RED);
+				break;
+			case 4:
+				board[pos].setForeground(Color.YELLOW);
+				break;
+			case 5:
+				board[pos].setForeground(Color.PINK);
+				break;
+			default :
+				break;
+		}
 		board[pos].setText("" + value);
 	}
 
+	public void enableComponents(Container container, boolean enable) {
+        Component[] components = container.getComponents();
+        for (Component component : components) {
+            component.setEnabled(enable);
+            if (component instanceof Container) {
+                enableComponents((Container)component, enable);
+            }
+        }
+    }
+	
 }
