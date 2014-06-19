@@ -152,7 +152,7 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 		GameDifficultyFactors factors = new GameDifficultyFactors(boardSizeX, boardSizeY,
 				bombsNumber);
 		List<String> opponents = getOtherPlayers(userNick);
-		return new GameSettings((GameLogic) this, factors, opponents);
+		return new GameSettings((GameLogic) this, factors, opponents, hostUserId);
 	}
 
 	private List<String> getOtherPlayers(String userNick) {

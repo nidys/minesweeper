@@ -1,7 +1,9 @@
 package common.network;
 
 public enum ServerAddress {
-	LOCALHOST("127.0.0.1", Port.DEFAULT);
+	LOCALHOST("127.0.0.1", Port.DEFAULT),
+
+	TMP("89.79.21.3", Port.DEFAULT);
 	private String addr;
 	public static final String RMI_PLACE = "/roommanager";
 
