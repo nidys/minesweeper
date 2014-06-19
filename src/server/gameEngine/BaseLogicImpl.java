@@ -44,6 +44,7 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 	protected boolean isTimed = false;
 	protected long gameDuration;
 	protected int lifeAmount;
+	protected int boardAmount;
 	protected int maxOpponentAmount;
 	protected List<Field[][]> generatedBoards;
 
@@ -59,6 +60,7 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 		}
 		gameDuration = gameConfig.getGameDuration();
 		lifeAmount = gameConfig.getLifeAmount();
+		boardAmount = gameConfig.getBoardAmount();
 		maxOpponentAmount = gameConfig.getMaxOpponentAmount();
 		if (maxOpponentAmount > MAX_PLAYERS) {
 			info(log,

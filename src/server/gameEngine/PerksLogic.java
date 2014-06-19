@@ -1,7 +1,6 @@
 package server.gameEngine;
 
 import java.rmi.RemoteException;
-import java.util.List;
 
 import common.enums.GameMode;
 import common.model.ShotResult;

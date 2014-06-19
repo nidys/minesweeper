@@ -37,10 +37,8 @@ public class ClassicLogic extends BaseLogicImpl {
 			throw new PositionOutOfRange();
 		}
 
-		// TODO for now no algo to collect neighbour empty fields
-		// List<ShotResult> arr = new ArrayList<ShotResult>();
-		// arr.add(new ShotResult(position, board.getShotResult(position)));
-		List<DiscoveredFields> arr = Generator.shot(board.mineField, position);
+		// TODO implement full shot logic
+		List<DiscoveredFields> unrevealed = Generator.shot(board.mineField, position);
 
 		for (String otherPlayer : players.keySet()) {
 			if (otherPlayer.equals(userNick) == false) {
@@ -51,7 +49,7 @@ public class ClassicLogic extends BaseLogicImpl {
 		error(log, "implement correct shot result response");
 
 		// TODO return Shotresutl
-		return null;
+		return new ShotResult(unrevealed, 10, 10, true);
 	}
 
 	@Override

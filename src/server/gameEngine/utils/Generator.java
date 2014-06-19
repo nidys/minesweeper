@@ -18,13 +18,8 @@ public class Generator {
 
 	public static void main(String... args) {
 		List<Field[][]> tab = generate(1, null, 3, 6, 6);
+		@SuppressWarnings("unused")
 		List<DiscoveredFields> resu = shot(tab.get(0), 17);
-		System.out.println("resu = " + resu.size());
-		// for (ShotResult sr : resu) {
-		// System.out.println(String.format("pos[%d] - %d", sr.getPosition(),
-		// sr.getValue()));
-		// }
-
 		debugFieldSett(String.format("after shot\n"), tab.get(0));
 	}
 
