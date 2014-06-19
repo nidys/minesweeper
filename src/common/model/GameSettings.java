@@ -12,12 +12,14 @@ public class GameSettings implements Serializable {
 	private static final long serialVersionUID = -1084967509635332417L;
 	private GameDifficultyFactors factors;
 	private List<String> currentlyLoggedUsers; // null for createNewGame
+	private String hostUserId;
 
 	public GameSettings(GameLogic engine, GameDifficultyFactors factors,
-			List<String> currentlyLoggedUsers) {
+			List<String> currentlyLoggedUsers, String hostUserId) {
 		super();
 		this.factors = factors;
 		this.currentlyLoggedUsers = currentlyLoggedUsers;
+		this.hostUserId = hostUserId;
 	}
 
 	public GameDifficultyFactors getFactors() {
@@ -34,6 +36,14 @@ public class GameSettings implements Serializable {
 
 	public void setCurrentlyLoggedUsers(List<String> currentlyLoggedUsers) {
 		this.currentlyLoggedUsers = currentlyLoggedUsers;
+	}
+
+	public String getHostUserId() {
+		return hostUserId;
+	}
+
+	public void setHostUserId(String hostUserId) {
+		this.hostUserId = hostUserId;
 	}
 
 }
