@@ -236,7 +236,7 @@ public class MainWindow extends WindowBase {
 
 	// TODO Aga -> change this method to sth like
 	// create/addNewPlayerGameBoardPanel
-	public void addNewPlayerToView(PlayerGameBoardPanel playerGameBoardPanel) {
+	public void addPlayer(PlayerGameBoardPanel playerGameBoardPanel) {
 		gamePanel.addPlayer(playerGameBoardPanel);
 		Dimension d = this.getLayout().preferredLayoutSize(this);
 		this.setSize(d);

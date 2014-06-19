@@ -5,6 +5,7 @@ import java.awt.Toolkit;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 
+import client.controllers.JoinRoomBtnController;
 import client.internationalization.ButtonNames;
 import client.internationalization.DialogText;
 
@@ -16,11 +17,11 @@ import java.awt.GridBagConstraints;
 
 import javax.swing.JList;
 
-import common.enums.GameMode;
-
-import java.awt.Insets;
+import common.model.AvailableGameInfo;
+import common.enums.GameMode;import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.List;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 
@@ -48,18 +49,18 @@ public class GamesListDialog extends DialogBase {
 		}
 	}
 
+	// TODO Skwara To be replaced Game -> AvailableGameInfo 
 	private JList<Game> gamesList;
 	private DefaultListModel<Game> model;
+	private JButton joinBtn;
 
 	public GamesListDialog(JFrame owner, boolean isModal) {
 		super(owner, isModal);
-
 		buildGUI(owner);
 	}
 
 	private void buildGUI(JFrame owner) {
 		setBounds(100, 100, 400, 300);
-		;
 		setAlwaysOnTop(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				NewGameDialog.class.getResource("/resources/images/flag.png")));
@@ -77,7 +78,7 @@ public class GamesListDialog extends DialogBase {
 		gamesList = new JList<Game>(model);
 		gamesList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				joinButton.setEnabled(true);
+				//joinButton.setEnabled(true);
 			}
 		});
 		GridBagConstraints gbc_list = new GridBagConstraints();
@@ -88,45 +89,63 @@ public class GamesListDialog extends DialogBase {
 		gbc_list.gridwidth = 3;
 		getContentPane().add(gamesList, gbc_list);
 
-		joinButton = new JButton(ButtonNames.JOIN);
-		joinButton.setEnabled(false);
-		joinButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				joinGame();
-			}
-		});
-		GridBagConstraints gbc_joinButton = new GridBagConstraints();
-		gbc_joinButton.anchor = GridBagConstraints.EAST;
-		gbc_joinButton.gridx = 0;
-		gbc_joinButton.gridy = 1;
-		getContentPane().add(joinButton, gbc_joinButton);
-		
-		JButton refreshButton = new JButton(ButtonNames.REFRESH);
-		refreshButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				refresh();
-			}
-		});
-		GridBagConstraints gbc_refreshButton = new GridBagConstraints();
-		gbc_refreshButton.gridx = 1;
-		gbc_refreshButton.gridy = 1;
-		getContentPane().add(refreshButton, gbc_refreshButton);
-		
-		JButton cancelButton = new JButton(ButtonNames.CANCEL);
-		cancelButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				cancel();
-			}
-		});
-		GridBagConstraints gbc_cancelButton = new GridBagConstraints();
-		gbc_cancelButton.gridx = 2;
-		gbc_cancelButton.gridy = 1;
-		getContentPane().add(cancelButton, gbc_cancelButton);
+		joinBtn = new JButton("Join");
+		GridBagConstraints gbc_joinBtn = new GridBagConstraints();
+		gbc_joinBtn.gridx = 0;
+		gbc_joinBtn.gridy = 1;
+		getContentPane().add(joinBtn, gbc_joinBtn);
+
+		//joinButton = new JButton(ButtonNames.JOIN);
+		//joinButton.setEnabled(false);
+		//joinButton.addActionListener(new ActionListener() {
+		//	public void actionPerformed(ActionEvent e) {
+		//		joinGame();
+		//	}
+		//});
+		//GridBagConstraints gbc_joinButton = new GridBagConstraints();
+		//gbc_joinButton.anchor = GridBagConstraints.EAST;
+		//gbc_joinButton.gridx = 0;
+		//gbc_joinButton.gridy = 1;
+		//getContentPane().add(joinButton, gbc_joinButton);
+		//
+		//JButton refreshButton = new JButton(ButtonNames.REFRESH);
+		//refreshButton.addActionListener(new ActionListener() {
+		//	public void actionPerformed(ActionEvent e) {
+		//		refresh();
+		//	}
+		//});
+		//GridBagConstraints gbc_refreshButton = new GridBagConstraints();
+		//gbc_refreshButton.gridx = 1;
+		//gbc_refreshButton.gridy = 1;
+		//getContentPane().add(refreshButton, gbc_refreshButton);
+		//
+		//JButton cancelButton = new JButton(ButtonNames.CANCEL);
+		//cancelButton.addActionListener(new ActionListener() {
+		//	public void actionPerformed(ActionEvent e) {
+		//		cancel();
+		//	}
+		//});
+		//GridBagConstraints gbc_cancelButton = new GridBagConstraints();
+		//gbc_cancelButton.gridx = 2;
+		//gbc_cancelButton.gridy = 1;
+		//getContentPane().add(cancelButton, gbc_cancelButton);
 	}
 
 	public void addGame(String gameName, String gameAddress, String hostName, int players) {
 		Game game = new Game(gameName, gameAddress, hostName, players);
 		model.addElement(game);
+	}
+
+	public void addJoinGameBtnListener(JoinRoomBtnController listener) {
+		joinBtn.addActionListener(listener);
+
+	}
+	
+	public void setGames(List<AvailableGameInfo> games) {
+		for(AvailableGameInfo game : games) {
+			// TODO Skwara To be replaced Game -> AvailableGameInfo 
+			model.addElement(new Game(game.getGameId(), "gameAddress", game.getHostUser(), 1 ));
+		}
 	}
 
 	public void removeGame(String gameName) {
@@ -145,6 +164,9 @@ public class GamesListDialog extends DialogBase {
 		}
 	}
 
+	public String getSelectedGame() {
+		return gamesList.getSelectedValue().name;
+	}
 	public void joinGame() {
 		Game selectedGame = (Game) gamesList.getSelectedValue();
 		//TODO send selected game to server
