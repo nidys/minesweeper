@@ -21,10 +21,14 @@ import common.enums.GameMode;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 @SuppressWarnings("serial")
 public class GamesListDialog extends DialogBase {
 
+	private JButton joinButton;
+	
 	public class Game {
 		String name;
 		String address;
@@ -71,6 +75,11 @@ public class GamesListDialog extends DialogBase {
 
 		model = new DefaultListModel<Game>();
 		gamesList = new JList<Game>(model);
+		gamesList.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				joinButton.setEnabled(true);
+			}
+		});
 		GridBagConstraints gbc_list = new GridBagConstraints();
 		gbc_list.insets = new Insets(0, 0, 5, 0);
 		gbc_list.fill = GridBagConstraints.BOTH;
@@ -79,7 +88,8 @@ public class GamesListDialog extends DialogBase {
 		gbc_list.gridwidth = 3;
 		getContentPane().add(gamesList, gbc_list);
 
-		JButton joinButton = new JButton(ButtonNames.JOIN);
+		joinButton = new JButton(ButtonNames.JOIN);
+		joinButton.setEnabled(false);
 		joinButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				joinGame();
