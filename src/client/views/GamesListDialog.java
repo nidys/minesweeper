@@ -56,7 +56,7 @@ public class GamesListDialog extends DialogBase {
 		setLocationRelativeTo(owner);
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 0, 0 };
+		gridBagLayout.columnWidths = new int[] { 181, 0 };
 		gridBagLayout.rowHeights = new int[] { 0, 0, 0 };
 		gridBagLayout.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
 		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
@@ -69,18 +69,31 @@ public class GamesListDialog extends DialogBase {
 		gbc_list.fill = GridBagConstraints.BOTH;
 		gbc_list.gridx = 0;
 		gbc_list.gridy = 0;
+		gbc_list.gridwidth = 2;
 		getContentPane().add(gamesList, gbc_list);
 
-		JButton btnNewButton = new JButton("Join");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton joinButton = new JButton("Join");
+		joinButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				joinGame();
 			}
 		});
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.gridx = 0;
-		gbc_btnNewButton.gridy = 1;
-		getContentPane().add(btnNewButton, gbc_btnNewButton);
+		GridBagConstraints gbc_joinButton = new GridBagConstraints();
+		gbc_joinButton.anchor = GridBagConstraints.EAST;
+		gbc_joinButton.gridx = 0;
+		gbc_joinButton.gridy = 1;
+		getContentPane().add(joinButton, gbc_joinButton);
+		
+		JButton refreshButton = new JButton("Refresh");
+		refreshButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				joinGame();
+			}
+		});
+		GridBagConstraints gbc_refreshButton = new GridBagConstraints();
+		gbc_refreshButton.gridx = 1;
+		gbc_refreshButton.gridy = 1;
+		getContentPane().add(refreshButton, gbc_refreshButton);
 	}
 
 	public void addGame(String gameName, String gameAddress) {
@@ -98,7 +111,11 @@ public class GamesListDialog extends DialogBase {
 
 	public void joinGame() {
 		Game selectedGame = (Game) gamesList.getSelectedValue();
-		System.out.println(selectedGame.toString());
+		//TODO send selected game to server
+	}
+	
+	public void refresh() {
+		//TODO send refresh request to server
 	}
 
 }
