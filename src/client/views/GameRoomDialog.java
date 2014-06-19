@@ -1,77 +1,66 @@
 package client.views;
 
-import java.awt.Toolkit;
-
-import javax.swing.JFrame;
-
-import client.controllers.ReadyBtnController;
-import client.controllers.StartGameBtnController;
-import client.internationalization.DialogText;
-
-import java.awt.GridBagLayout;
-
-import javax.swing.JPanel;
-
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-
-import javax.swing.JLabel;
-import javax.swing.JButton;
-
+import java.awt.Color;
 import java.awt.Component;
-
-import javax.swing.Box;
-
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JSeparator;
-
-import java.awt.Color;
-
 import javax.swing.SwingConstants;
-import javax.swing.JList;
 
-import client.views.GamesListDialog.Game;
+import client.controllers.ReadyBtnController;
+import client.controllers.StartGameBtnController;
+import client.internationalization.DialogText;
 
-import javax.swing.ListModel;
-
+//TODO GUI Internationalization
 public class GameRoomDialog extends DialogBase {
 
 	public class Opponent {
 		public JLabel nameLabel;
 		public JLabel stateLabel;
 	}
-	
+
 	private JPanel opponentsPanel;
 	private JButton startBtn;
 	private Map<String, Opponent> opponentsMap = new HashMap<String, Opponent>();
 	private JButton readyBtn;
-	
-	public GameRoomDialog(String gameName, String hostName, JFrame owner, boolean isModal) {
+
+	public GameRoomDialog(String gameName, String hostName, JFrame owner,
+			boolean isModal) {
 		super(owner, isModal);
-		
+
 		buildGUI(gameName, hostName, owner);
 	}
-	
+
 	private void buildGUI(String gameName, String hostName, JFrame owner) {
-		setBounds(100, 100, 400, 300);;
+		setBounds(100, 100, 400, 300);
+		;
 		setAlwaysOnTop(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				NewGameDialog.class.getResource("/resources/images/flag.png")));
 		setTitle(DialogText.GAMEROOM_TITLE + " " + gameName);
 		setLocationRelativeTo(owner);
-		
+
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0};
-		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[] { 0, 0, 0, 0 };
+		gridBagLayout.rowHeights = new int[] { 0, 0 };
+		gridBagLayout.columnWeights = new double[] { 1.0, 0.0, 1.0,
+				Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
 		getContentPane().setLayout(gridBagLayout);
-		
+
 		JPanel playerPanel = new JPanel();
 		GridBagConstraints gbc_playerPanel = new GridBagConstraints();
 		gbc_playerPanel.insets = new Insets(0, 0, 0, 5);
@@ -80,26 +69,27 @@ public class GameRoomDialog extends DialogBase {
 		gbc_playerPanel.gridy = 0;
 		getContentPane().add(playerPanel, gbc_playerPanel);
 		GridBagLayout gbl_playerPanel = new GridBagLayout();
-		gbl_playerPanel.columnWidths = new int[]{0};
-		gbl_playerPanel.rowHeights = new int[]{0, 0, 0, 0};
-		gbl_playerPanel.columnWeights = new double[]{Double.MIN_VALUE};
-		gbl_playerPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE, 0.0};
+		gbl_playerPanel.columnWidths = new int[] { 0 };
+		gbl_playerPanel.rowHeights = new int[] { 0, 0, 0, 0 };
+		gbl_playerPanel.columnWeights = new double[] { Double.MIN_VALUE };
+		gbl_playerPanel.rowWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE,
+				0.0 };
 		playerPanel.setLayout(gbl_playerPanel);
-		
+
 		Component verticalStrut = Box.createVerticalStrut(20);
 		GridBagConstraints gbc_verticalStrut = new GridBagConstraints();
 		gbc_verticalStrut.insets = new Insets(0, 0, 5, 0);
 		gbc_verticalStrut.gridx = 0;
 		gbc_verticalStrut.gridy = 0;
 		playerPanel.add(verticalStrut, gbc_verticalStrut);
-		
+
 		JLabel hostNameLbl = new JLabel(hostName);
 		GridBagConstraints gbc_hostNameLbl = new GridBagConstraints();
 		gbc_hostNameLbl.insets = new Insets(0, 0, 5, 0);
 		gbc_hostNameLbl.gridx = 0;
 		gbc_hostNameLbl.gridy = 1;
 		playerPanel.add(hostNameLbl, gbc_hostNameLbl);
-		
+
 		readyBtn = new JButton(DialogText.PLAYERSTATE_READY);
 		readyBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -113,14 +103,15 @@ public class GameRoomDialog extends DialogBase {
 		gbc_readyBtn.gridx = 0;
 		gbc_readyBtn.gridy = 2;
 		playerPanel.add(readyBtn, gbc_readyBtn);
-		
+
+		// TODO GUI Internationalization
 		startBtn = new JButton("Start");
 		startBtn.setFont(new Font("Dialog", Font.PLAIN, 20));
 		GridBagConstraints gbc_startBtn = new GridBagConstraints();
 		gbc_startBtn.gridx = 0;
 		gbc_startBtn.gridy = 3;
 		playerPanel.add(startBtn, gbc_startBtn);
-		
+
 		JSeparator separator = new JSeparator();
 		separator.setBackground(Color.BLACK);
 		separator.setOrientation(SwingConstants.VERTICAL);
@@ -131,7 +122,7 @@ public class GameRoomDialog extends DialogBase {
 		gbc_separator.gridx = 1;
 		gbc_separator.gridy = 0;
 		getContentPane().add(separator, gbc_separator);
-		
+
 		opponentsPanel = new JPanel();
 		GridBagConstraints gbc_opponentsPanel = new GridBagConstraints();
 		gbc_opponentsPanel.fill = GridBagConstraints.BOTH;
@@ -139,35 +130,35 @@ public class GameRoomDialog extends DialogBase {
 		gbc_opponentsPanel.gridy = 0;
 		getContentPane().add(opponentsPanel, gbc_opponentsPanel);
 		GridBagLayout gbl_opponentsPanel = new GridBagLayout();
-		gbl_opponentsPanel.columnWidths = new int[]{0};
-		gbl_opponentsPanel.rowHeights = new int[]{0};
-		gbl_opponentsPanel.columnWeights = new double[]{1.0};
-		gbl_opponentsPanel.rowWeights = new double[]{1.0};
+		gbl_opponentsPanel.columnWidths = new int[] { 0 };
+		gbl_opponentsPanel.rowHeights = new int[] { 0 };
+		gbl_opponentsPanel.columnWeights = new double[] { 1.0 };
+		gbl_opponentsPanel.rowWeights = new double[] { 1.0 };
 		opponentsPanel.setLayout(gbl_opponentsPanel);
-		
-//		JList<Game> opponentsList = new JList<Game>((ListModel) null);
-//		GridBagConstraints gbc_opponentsList = new GridBagConstraints();
-//		gbc_opponentsList.fill = GridBagConstraints.BOTH;
-//		gbc_opponentsList.gridx = 0;
-//		gbc_opponentsList.gridy = 0;
-//		opponentsPanel.add(opponentsList, gbc_opponentsList);
+
+		// JList<Game> opponentsList = new JList<Game>((ListModel) null);
+		// GridBagConstraints gbc_opponentsList = new GridBagConstraints();
+		// gbc_opponentsList.fill = GridBagConstraints.BOTH;
+		// gbc_opponentsList.gridx = 0;
+		// gbc_opponentsList.gridy = 0;
+		// opponentsPanel.add(opponentsList, gbc_opponentsList);
 	}
-	
+
 	public void addStartGameBtnListener(StartGameBtnController listener) {
 		startBtn.addActionListener(listener);
 	}
-	
-	
+
 	public void addReadyBtnListener(ReadyBtnController listener) {
 		readyBtn.addActionListener(listener);
 	}
+
 	public void setPlayerReady() {
-		//TODO send playerIsReady message
+		// TODO send playerIsReady message
 	}
-	
+
 	public void addOpponent(String opponentName) {
 		Opponent opponent = new Opponent();
-		
+
 		opponent.nameLabel = new JLabel(opponentName);
 		GridBagConstraints gbc_opponentNameLabel = new GridBagConstraints();
 		gbc_opponentNameLabel.insets = new Insets(10, 10, 10, 10);
@@ -175,7 +166,7 @@ public class GameRoomDialog extends DialogBase {
 		gbc_opponentNameLabel.gridx = 0;
 		gbc_opponentNameLabel.gridy = opponentsMap.size();
 		opponentsPanel.add(opponent.nameLabel, gbc_opponentNameLabel);
-		
+
 		opponent.stateLabel = new JLabel("Waiting...");
 		GridBagConstraints gbc_opponentPointsLabel = new GridBagConstraints();
 		gbc_opponentPointsLabel.insets = new Insets(10, 10, 10, 10);
@@ -183,39 +174,42 @@ public class GameRoomDialog extends DialogBase {
 		gbc_opponentPointsLabel.gridx = 1;
 		gbc_opponentPointsLabel.gridy = opponentsMap.size();
 		opponentsPanel.add(opponent.stateLabel, gbc_opponentPointsLabel);
-		
-		opponentsMap.put(opponentName, opponent);		
+
+		opponentsMap.put(opponentName, opponent);
 	}
-	
+
 	public void removeOpponent(String opponentName) {
 		Opponent opponent = opponentsMap.get(opponentName);
-		
+
 		opponentsMap.remove(opponentName);
 		opponentsPanel.remove(opponent.nameLabel);
 		opponentsPanel.remove(opponent.stateLabel);
 	}
-	
+
 	public void setOpponentReady(String opponentName) {
-		opponentsMap.get(opponentName).stateLabel.setText(DialogText.PLAYERSTATE_READY);
+		opponentsMap.get(opponentName).stateLabel
+				.setText(DialogText.PLAYERSTATE_READY);
 		if (isEveryoneIsReady()) {
 			onEveryoneIsReady();
 		}
 	}
-	
+
 	public boolean isEveryoneIsReady() {
 		for (String key : opponentsMap.keySet()) {
-			if (!opponentsMap.get(key).nameLabel.getText().equals(DialogText.PLAYERSTATE_READY)) {
+			if (!opponentsMap.get(key).nameLabel.getText().equals(
+					DialogText.PLAYERSTATE_READY)) {
 				return false;
 			}
 		}
 		return true;
 	}
-	
+
 	public void onEveryoneIsReady() {
-		//TODO send everyoneIsReady message
+		// TODO send everyoneIsReady message
 	}
-	
+
 	public void setOpponentWaiting(String opponentName) {
-		opponentsMap.get(opponentName).stateLabel.setText(DialogText.PLAYERSTATE_WAITING);
+		opponentsMap.get(opponentName).stateLabel
+				.setText(DialogText.PLAYERSTATE_WAITING);
 	}
 }

@@ -14,7 +14,7 @@ import server.gameEngine.utils.Generator;
 
 import common.enums.GameMode;
 import common.exceptions.shot.PositionOutOfRange;
-import common.model.DiscoveredFields;
+import common.model.DiscoveredField;
 import common.model.ShotResult;
 
 public class ClassicLogic extends BaseLogicImpl {
@@ -38,7 +38,7 @@ public class ClassicLogic extends BaseLogicImpl {
 		}
 
 		// TODO implement full shot logic
-		List<DiscoveredFields> unrevealed = Generator.shot(board.mineField, position);
+		List<DiscoveredField> unrevealed = Generator.shot(board.mineField, position);
 
 		for (String otherPlayer : players.keySet()) {
 			if (otherPlayer.equals(userNick) == false) {

@@ -4,12 +4,12 @@ import java.awt.GridLayout;
 import java.util.ArrayList;
 
 import client.controllers.MyBombFielsBtnController;
-import client.views.component.PlayerGameBoardPanel;
+import client.views.component.GameBoardPanel;
 
 @SuppressWarnings("serial")
 public class PerksGamePanel extends GamePanelBase {
 	private GridLayout layout;
-	ArrayList<PlayerGameBoardPanel> playerPanels = new ArrayList<PlayerGameBoardPanel>();
+	ArrayList<GameBoardPanel> playerPanels = new ArrayList<GameBoardPanel>();
 
 	public PerksGamePanel() {
 		super();
@@ -23,14 +23,14 @@ public class PerksGamePanel extends GamePanelBase {
 		setLayout(layout);
 	}
 
-	public void addPlayer(PlayerGameBoardPanel playerGameBoardPanel) {
+	public void addPlayer(GameBoardPanel playerGameBoardPanel) {
 		add(playerGameBoardPanel);
 		playerPanels.add(playerGameBoardPanel);
 
 	}
 
 	public void addBombFieldBtnListener(MyBombFielsBtnController listener) {
-		for (PlayerGameBoardPanel board : playerPanels) {
+		for (GameBoardPanel board : playerPanels) {
 			board.addBombFieldBtnListener(listener);
 		}
 	}
@@ -51,7 +51,7 @@ public class PerksGamePanel extends GamePanelBase {
 	}
 
 	public void setFieldAsFlagged(int position) {
-		playerPanels.get(0).setFieldAsFlagged(position);
+		playerPanels.get(0).setFieldFlagged(position);
 
 	}
 

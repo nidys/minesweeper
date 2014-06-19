@@ -3,13 +3,13 @@ package client.views;
 import javax.swing.JPanel;
 
 import client.controllers.MyBombFielsBtnController;
-import client.views.component.PlayerGameBoardPanel;
+import client.views.component.GameBoardPanel;
 
 // TODO when all will be working -> change it to interface and change method names so anybody will now whats going on inside them
 @SuppressWarnings("serial")
 public abstract class GamePanelBase extends JPanel {
 
-	public abstract void addPlayer(PlayerGameBoardPanel playerGameBoardPanel);
+	public abstract void addPlayer(GameBoardPanel playerGameBoardPanel);
 
 	public abstract void addBombFieldBtnListener(MyBombFielsBtnController listener);
 

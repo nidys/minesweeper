@@ -19,26 +19,27 @@ import client.utils.GraphicsFactory;
 import common.model.GameDifficultyFactors;
 
 @SuppressWarnings("serial")
-public class PlayerGameBoardPanel extends JPanel {
+public class GameBoardPanel extends JPanel {
 
-	private String userNick;
-	private int boardSizeX = 5;
-	private int boardSizeY = 5;
-	private int bombsNumber;
+	private String playerName; // TODO Is it used?
+	private int boardSizeX;
+	private int boardSizeY;
+	private int bombsAmount;
 	private long duration;
 	private FieldButton[] board;
 	private JPanel statusPanel;
 	private JPanel gameBoardPanel;
-	private JLabel lblUserNick;
-	private JLabel lblBombs;
-	private JLabel lblDuration;
-	private JLabel lblFace;
+	private JLabel playerNameLbl;
+	private JLabel bombsLbl;
+	private JLabel durationLbl;
+	private JLabel faceLbl;
 
-	public PlayerGameBoardPanel(GameDifficultyFactors gameDifficultyFactors, String userNick) {
-		this.userNick = userNick;
+	public GameBoardPanel(GameDifficultyFactors gameDifficultyFactors, String playerName) {
+		this.playerName = playerName;
 		this.boardSizeX = gameDifficultyFactors.getBoardSizeX();
 		this.boardSizeY = gameDifficultyFactors.getBoardSizeY();
-		this.bombsNumber = gameDifficultyFactors.getBombsNumber();
+		this.bombsAmount = gameDifficultyFactors.getBombsAmount();
+		// TODO MALY Add duration
 		this.duration = 100;
 
 		createBasicComponents();
@@ -69,41 +70,43 @@ public class PlayerGameBoardPanel extends JPanel {
 		gbl_statusPanel.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
 		statusPanel.setLayout(gbl_statusPanel);
 
-		lblUserNick = new JLabel("UserNick");
-		lblUserNick.setFont(new Font("Segoe WP", Font.BOLD, 11));
+		// TODO GUI Internationalization
+		playerNameLbl = new JLabel("UserNick");
+		playerNameLbl.setFont(new Font("Segoe WP", Font.BOLD, 11));
 		GridBagConstraints gbc_lblUserNick = new GridBagConstraints();
 		gbc_lblUserNick.fill = GridBagConstraints.BOTH;
 		gbc_lblUserNick.gridwidth = 2;
 		gbc_lblUserNick.insets = new Insets(0, 0, 0, 5);
 		gbc_lblUserNick.gridx = 0;
 		gbc_lblUserNick.gridy = 0;
-		statusPanel.add(lblUserNick, gbc_lblUserNick);
+		statusPanel.add(playerNameLbl, gbc_lblUserNick);
 
-		lblFace = new JLabel("");
-		lblFace.setIcon(GraphicsFactory.getHappyFaceIcon());
+		faceLbl = new JLabel("");
+		faceLbl.setIcon(GraphicsFactory.getHappyFaceIcon());
 		GridBagConstraints gbc_lblFace = new GridBagConstraints();
 		gbc_lblFace.insets = new Insets(0, 0, 0, 5);
 		gbc_lblFace.gridx = 3;
 		gbc_lblFace.gridy = 0;
-		statusPanel.add(lblFace, gbc_lblFace);
+		statusPanel.add(faceLbl, gbc_lblFace);
 
-		lblBombs = new JLabel("" + this.bombsNumber);
-		lblBombs.setFont(new Font("Segoe WP", Font.BOLD, 11));
-		lblBombs.setIcon(GraphicsFactory.getFlagIcon());
+		bombsLbl = new JLabel("" + this.bombsAmount);
+		bombsLbl.setFont(new Font("Segoe WP", Font.BOLD, 11));
+		bombsLbl.setIcon(GraphicsFactory.getFlagIcon());
 		GridBagConstraints gbc_lblBombs = new GridBagConstraints();
 		gbc_lblBombs.fill = GridBagConstraints.BOTH;
 		gbc_lblBombs.insets = new Insets(0, 0, 0, 5);
 		gbc_lblBombs.gridx = 5;
 		gbc_lblBombs.gridy = 0;
-		statusPanel.add(lblBombs, gbc_lblBombs);
+		statusPanel.add(bombsLbl, gbc_lblBombs);
 
-		lblDuration = new JLabel("Duration: " + this.duration);
-		lblDuration.setFont(new Font("Segoe WP", Font.BOLD, 11));
+		// TODO GUI Internationalization
+		durationLbl = new JLabel("Duration: " + this.duration);
+		durationLbl.setFont(new Font("Segoe WP", Font.BOLD, 11));
 		GridBagConstraints gbc_lblDuration = new GridBagConstraints();
 		gbc_lblDuration.fill = GridBagConstraints.BOTH;
 		gbc_lblDuration.gridx = 6;
 		gbc_lblDuration.gridy = 0;
-		statusPanel.add(lblDuration, gbc_lblDuration);
+		statusPanel.add(durationLbl, gbc_lblDuration);
 
 		gameBoardPanel = new JPanel();
 		GridBagConstraints gbc_gameBoardPanel = new GridBagConstraints();
@@ -115,37 +118,21 @@ public class PlayerGameBoardPanel extends JPanel {
 
 	}
 
-	private void generateBoard() {
-
-		board = new FieldButton[boardSizeX * boardSizeY];
-		for (int i = 0; i < boardSizeX; ++i) {
-			for (int j = 0; j < boardSizeY; ++j) {
-				board[i * boardSizeX + j] = createBombFieldBtn(i * boardSizeX + j + 1 + "", i, j);
-			}
-		}
-
-	}
-
-	private FieldButton createBombFieldBtn(String name, int i, int j) {
-		FieldButton btn = new FieldButton(i * boardSizeX + j);
-		btn.setPreferredSize(new Dimension(50, 50));
-		gameBoardPanel.add(btn);
-		// btn.setText(name);
-		return btn;
-	}
-
 	public void addBombFieldBtnListener(MyBombFielsBtnController listener) {
 		for (int i = 0; i < board.length; i++) {
 			board[i].addMouseListener(listener);
 		}
 	}
 
+	// TODO All of those setFieldAs.. methods should me merged as one
+	// method setField(..) with proper parameters. Check MainView.SetField() 
+	// for reference.
 	public void setFieldAsBomb(int pos) {
 		board[pos].setBackground(Color.RED);
 		board[pos].setIcon(GraphicsFactory.getBombIcon());
 		board[pos].setPreferredSize(new Dimension(32, 32));
 		board[pos].setText("");
-		lblFace.setIcon(GraphicsFactory.getDeadFaceIcon());
+		faceLbl.setIcon(GraphicsFactory.getDeadFaceIcon());
 	}
 
 	public void setFieldAsValued(int pos, int value) {
@@ -156,13 +143,11 @@ public class PlayerGameBoardPanel extends JPanel {
 		board[pos].setBackground(Color.GRAY);
 	}
 
-	public void resetFields() {
-		for (int i = 0; i < board.length; i++) {
-			board[i].setBackground(null);
-		}
+	public void setFieldAsEmptyWithValue(int pos, int value) {
+		board[pos].setText("" + value);
 	}
-
-	public void setFieldAsFlagged(int pos) {
+	
+	public void setFieldFlagged(int pos) {
 		if (!board[pos].isFlagged) { // so its not already discovered field
 			// board[pos - 1].setText("F");
 			board[pos].setBackground(UIManager.getColor("Button.shadow"));
@@ -170,22 +155,39 @@ public class PlayerGameBoardPanel extends JPanel {
 			board[pos].setIcon(GraphicsFactory.getFlagIcon());
 			board[pos].setPreferredSize(new Dimension(32, 32));
 
-			lblBombs.setText((Integer.parseInt(lblBombs.getText()) - 1) + "");
+			bombsLbl.setText((Integer.parseInt(bombsLbl.getText()) - 1) + "");
 			board[pos].isFlagged = true;
 
 		} else if (board[pos].isFlagged) { // so we want to unset flag
 			board[pos].setText("" + pos);
 			board[pos].setBackground(UIManager.getColor("Button.background"));
 			board[pos].setIcon(null);
-			lblBombs.setText((Integer.parseInt(lblBombs.getText()) + 1) + "");
+			bombsLbl.setText((Integer.parseInt(bombsLbl.getText()) + 1) + "");
 			board[pos].isFlagged = false;
 		} else {
-
+			// ?????
+		}
+	}
+	
+	// TODO What about clearing the images?
+	public void resetFields() {
+		for (int i = 0; i < board.length; i++)
+			board[i].setBackground(null);
+	}
+	
+	private void generateBoard() {
+		board = new FieldButton[boardSizeX * boardSizeY];
+		for (int i = 0; i < boardSizeX; ++i) {
+			for (int j = 0; j < boardSizeY; ++j) {
+				board[i * boardSizeX + j] = createBombFieldBtn(i * boardSizeX + j + 1 + "", i, j);
+			}
 		}
 	}
 
-	public void setFieldAsEmptyWithValue(int pos, int value) {
-		board[pos].setText("" + value);
+	private FieldButton createBombFieldBtn(String name, int i, int j) {
+		FieldButton btn = new FieldButton(i * boardSizeX + j);
+		btn.setPreferredSize(new Dimension(50, 50));
+		gameBoardPanel.add(btn);
+		return btn;
 	}
-
 }

@@ -2,7 +2,7 @@ package common.model;
 
 import java.io.Serializable;
 
-public class DiscoveredFields implements Serializable {
+public class DiscoveredField implements Serializable {
 	private int position;
 	/**
 	 * -1 - bomb field<br>
@@ -11,7 +11,7 @@ public class DiscoveredFields implements Serializable {
 	 */
 	private int value;
 
-	public DiscoveredFields(int position, int value) {
+	public DiscoveredField(int position, int value) {
 		super();
 		this.position = position;
 		this.value = value;

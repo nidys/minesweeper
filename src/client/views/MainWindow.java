@@ -26,9 +26,9 @@ import client.controllers.MyBombFielsBtnController;
 import client.internationalization.ButtonNames;
 import client.internationalization.DialogText;
 import client.utils.GraphicsFactory;
-import client.views.component.PlayerGameBoardPanel;
-
+import client.views.component.GameBoardPanel;
 import common.enums.GameMode;
+import common.model.DiscoveredField;
 import common.network.ServerAddress;
 
 /**
@@ -36,31 +36,26 @@ import common.network.ServerAddress;
  */
 @SuppressWarnings("serial")
 public class MainWindow extends WindowBase {
-	private static GraphicsFactory graphicsFactory = new GraphicsFactory();
-
 	private JButton newGameBtn;
-	private JButton btnReset;
-	private JTextField serverAddress;
-	private JTextField userNick;
-
+	private JButton resetBtn;
+	private JTextField serverAddressTxtFld;
+	private JTextField playerNameTxtFld;
 	private GamePanelBase gamePanel;
 
-	/**
-	 * Create the frame.
-	 */
 	public MainWindow() {
+		// TODO GUI Internationalization
 		setTitle("Minesweeper");
 		// TODO extract to constant!!!
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				MainWindow.class.getResource("/resources/images/bomb.png")));
 		setResizable(false);
 		drawEntryScreen();
-		// drawGameBoard();
 	}
 
-	public void drawGameBoard() {
+	public void initializeGameBoard(GameMode mode) {
 		clearWindow();
 		drawComponents();
+		drawGameBoard(mode);
 	}
 
 	private void clearWindow() {
@@ -76,8 +71,8 @@ public class MainWindow extends WindowBase {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
-		btnReset = new JButton(ButtonNames.RESET);
-		menuBar.add(btnReset);
+		resetBtn = new JButton(ButtonNames.RESET);
+		menuBar.add(resetBtn);
 		getContentPane().setBounds(0, 0, 450, 301);
 		this.setResizable(true);
 	}
@@ -87,11 +82,13 @@ public class MainWindow extends WindowBase {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 20, 1, 55, 86, 31, 41, 0, 20, 0 };
+		gridBagLayout.columnWidths = new int[] { 20, 1, 55, 86, 31, 41, 0, 20,
+				0 };
 		gridBagLayout.rowHeights = new int[] { 10, 80, 10, 29, 20, 20, 0 };
-		gridBagLayout.columnWeights = new double[] { 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0,
+		gridBagLayout.columnWeights = new double[] { 0.0, 1.0, 0.0, 1.0, 0.0,
+				0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
 				Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		getContentPane().setLayout(gridBagLayout);
 
 		Component horizontalStrut = Box.createHorizontalStrut(20);
@@ -102,7 +99,7 @@ public class MainWindow extends WindowBase {
 		gbc_horizontalStrut.gridy = 0;
 		getContentPane().add(horizontalStrut, gbc_horizontalStrut);
 
-		ImageIcon logo = graphicsFactory.getLogoIcon();
+		ImageIcon logo = GraphicsFactory.getLogoIcon();
 		JLabel lblMinesweeper = new JLabel(logo);
 		lblMinesweeper.setSize(logo.getIconWidth(), logo.getIconHeight());
 
@@ -123,6 +120,7 @@ public class MainWindow extends WindowBase {
 		gbc_horizontalStrut_1.gridy = 2;
 		getContentPane().add(horizontalStrut_1, gbc_horizontalStrut_1);
 
+		// TODO GUI Internationalization
 		JLabel lblServerAdress = new JLabel("Server adress:");
 		GridBagConstraints gbc_lblServerAdress = new GridBagConstraints();
 		gbc_lblServerAdress.fill = GridBagConstraints.BOTH;
@@ -131,15 +129,15 @@ public class MainWindow extends WindowBase {
 		gbc_lblServerAdress.gridy = 3;
 		getContentPane().add(lblServerAdress, gbc_lblServerAdress);
 
-		serverAddress = new JTextField();
-		serverAddress.setText(ServerAddress.LOCALHOST.getValue());
-		serverAddress.setColumns(10);
+		serverAddressTxtFld = new JTextField();
+		serverAddressTxtFld.setText(ServerAddress.LOCALHOST.getValue());
+		serverAddressTxtFld.setColumns(10);
 		GridBagConstraints gbc_serverAddress = new GridBagConstraints();
 		gbc_serverAddress.fill = GridBagConstraints.BOTH;
 		gbc_serverAddress.insets = new Insets(0, 0, 5, 5);
 		gbc_serverAddress.gridx = 3;
 		gbc_serverAddress.gridy = 3;
-		getContentPane().add(serverAddress, gbc_serverAddress);
+		getContentPane().add(serverAddressTxtFld, gbc_serverAddress);
 
 		newGameBtn = new JButton(NEW_GAME);
 		newGameBtn.setBackground(UIManager.getColor("Button.background"));
@@ -153,6 +151,7 @@ public class MainWindow extends WindowBase {
 		gbc_newGameBtn.gridy = 3;
 		getContentPane().add(newGameBtn, gbc_newGameBtn);
 
+		// TODO GUI Internationalization
 		JLabel lblUserName = new JLabel("User name:");
 		GridBagConstraints gbc_lblUserName = new GridBagConstraints();
 		gbc_lblUserName.fill = GridBagConstraints.HORIZONTAL;
@@ -161,18 +160,19 @@ public class MainWindow extends WindowBase {
 		gbc_lblUserName.gridy = 4;
 		getContentPane().add(lblUserName, gbc_lblUserName);
 
-		userNick = new JTextField();
+		playerNameTxtFld = new JTextField();
 		// generate random user name so that user don't need to write it all the
 		// time
-		userNick.setText("user" + String.valueOf(new Random().nextInt(100)));
-		userNick.setColumns(10);
+		playerNameTxtFld.setText("user"
+				+ String.valueOf(new Random().nextInt(100)));
+		playerNameTxtFld.setColumns(10);
 		GridBagConstraints gbc_userNick = new GridBagConstraints();
 		gbc_userNick.fill = GridBagConstraints.HORIZONTAL;
 		gbc_userNick.anchor = GridBagConstraints.NORTH;
 		gbc_userNick.insets = new Insets(0, 0, 5, 5);
 		gbc_userNick.gridx = 3;
 		gbc_userNick.gridy = 4;
-		getContentPane().add(userNick, gbc_userNick);
+		getContentPane().add(playerNameTxtFld, gbc_userNick);
 
 		Component horizontalStrut_2 = Box.createHorizontalStrut(20);
 		GridBagConstraints gbc_horizontalStrut_2 = new GridBagConstraints();
@@ -182,84 +182,43 @@ public class MainWindow extends WindowBase {
 		getContentPane().add(horizontalStrut_2, gbc_horizontalStrut_2);
 
 		Dimension d = this.getLayout().preferredLayoutSize(this);
-		this.setSize(d);
-		this.setResizable(false);
+		setSize(d);
+		setResizable(false);
 	}
 
-	/**
-	 * @param listener
-	 *            Listener for an action when the user clicks the "New Game"
-	 *            button.
-	 */
 	public void addNewGameBtnListener(ActionListener listener) {
 		newGameBtn.addActionListener(listener);
 	}
 
 	public void addResetBtnListener(ActionListener listener) {
-		btnReset.addActionListener(listener);
-	}
-
-	public String getServerAddress() {
-		return serverAddress.getText();
-	}
-
-	public String getUserNick() {
-		return userNick.getText();
-	}
-
-	// TODO MALY COMMIT
-	public void setMyFieldAsBomb(int pos) {
-		// TODO from now shot return list of fields to discover
-		// myBombField[pos - 1].setBackground(Color.RED);
-	}
-
-	public void initializeGameBoard(GameMode mode) {
-		if (mode == GameMode.PERKS) {
-			gamePanel = new PerksGamePanel();
-			getContentPane().add(gamePanel);
-			this.setTitle(DialogText.MAINWINDOW_PERKS_TITLE);
-		} else if (mode == GameMode.CLASSIC) {
-			// TODO AGA, for testing here
-			gamePanel = new ClassicGamePanel(100);
-			getContentPane().add(gamePanel);
-			this.setTitle(DialogText.MAINWINDOW_CLASSIC_TITLE);
-		} else if (mode == GameMode.SHARED) {
-			this.setTitle(DialogText.MAINWINDOW_SHARED_TITLE);
-		} else {
-
-		}
+		resetBtn.addActionListener(listener);
 	}
 
 	public void addBombFieldBtnListener(MyBombFielsBtnController listener) {
 		gamePanel.addBombFieldBtnListener(listener);
 	}
 
-	// TODO Aga -> change this method to sth like
-	// create/addNewPlayerGameBoardPanel
-	public void addPlayer(PlayerGameBoardPanel playerGameBoardPanel) {
-		gamePanel.addPlayer(playerGameBoardPanel);
-		Dimension d = this.getLayout().preferredLayoutSize(this);
-		this.setSize(d);
+	public String getServerAddress() {
+		return serverAddressTxtFld.getText();
 	}
 
-	// TODO -> change it to sth more "changeable" so it will be showing
-	private void displayEndGameMessage() {
-		int option = JOptionPane.showConfirmDialog(this, DialogText.END_GAME_TITLE,
-				DialogText.END_GAME_MESSAGE, JOptionPane.YES_NO_OPTION);
+	public String getPlayerName() {
+		return playerNameTxtFld.getText();
+	}
 
-		if (option == 0) { // YES
-
-		} else if (option == 1) { // NO
-
-		}
-
+	// TODO Aga -> change this method to sth like
+	// create/addNewPlayerGameBoardPanel
+	public void addPlayer(GameBoardPanel playerGameBoardPanel) {
+		gamePanel.addPlayer(playerGameBoardPanel);
+		Dimension d = this.getLayout().preferredLayoutSize(this);
+		setSize(d);
 	}
 
 	/**
 	 * TODO PlayerHandler.opponentShot, commented until SHARED,PERKS will be
 	 * developed
 	 */
-	// TODO MALY COMMIT
+	// TODO MALY Check if it's obsolete
 	public void setOpponentAsBomb(int pos) {
 		// oponentBombField[pos - 1].setBackground(Color.RED);
 	}
@@ -268,35 +227,73 @@ public class MainWindow extends WindowBase {
 	 * TODO PlayerHandler.opponentShot, commented until SHARED,PERKS will be
 	 * developed
 	 */
-	// TODO MALY COMMIT
+	// TODO MALY Check if it's obsolete
 	public void setOpponentAsEmpty(int pos) {
 		// oponentBombField[pos - 1].setBackground(Color.GRAY);
+	}
+
+	public void setProgress(String userNick, int progressValue) {
+		gamePanel.setProgress(userNick, progressValue);
 	}
 
 	public void resetFields() {
 		gamePanel.resetFields();
 	}
 
-	public void setFieldAsFlagged(int position) {
+	public void setFieldFlagged(int position) {
 		gamePanel.setFieldAsFlagged(position);
 	}
 
-	public void setFieldAsEmpty(int position) {
-		gamePanel.setFieldAsEmpty(position);
+	public void setField(DiscoveredField field) {
+		int fieldValue = field.getValue();
+
+		switch (fieldValue) {
+		case -1:
+			gamePanel.setFieldAsBomb(field.getPosition());
+			displayEndGameMessage();
+			break;
+		case 0:
+			gamePanel.setFieldAsEmpty(field.getPosition());
+			break;
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+		case 6:
+		case 7:
+		case 8:
+			gamePanel.setFieldAsEmptyWithValue(field.getPosition(), fieldValue);
+			break;
+		}
 	}
 
-	public void setFieldAsEmptyWithValue(int position, int value) {
-		gamePanel.setFieldAsEmptyWithValue(position, value);
+	private void drawGameBoard(GameMode mode) {
+		switch (mode) {
+		case CLASSIC:
+			gamePanel = new ClassicGamePanel(100);
+			setTitle(DialogText.MAINWINDOW_CLASSIC_TITLE);
+			break;
+		case PERKS:
+			gamePanel = new PerksGamePanel();
+			setTitle(DialogText.MAINWINDOW_SHARED_TITLE);
+			break;
+		case SHARED:
+			throw new UnsupportedOperationException("NYI");
+		}
+		getContentPane().add(gamePanel);
 	}
 
-	public void setFieldAsBomb(int position) {
-		gamePanel.setFieldAsBomb(position);
+	// TODO -> change it to sth more "changeable" so it will be showing
+	private void displayEndGameMessage() {
+		int option = JOptionPane.showConfirmDialog(this,
+				DialogText.END_GAME_TITLE, DialogText.END_GAME_MESSAGE,
+				JOptionPane.YES_NO_OPTION);
 
-		// TODO Aga Delete magic strings (use internationalization)
-		displayEndGameMessage();
-	}
+		if (option == 0) { // YES
 
-	public void setProgress(String userNick, int progressValue) {
-		gamePanel.setProgress(userNick, progressValue);
+		} else if (option == 1) { // NO
+
+		}
 	}
 }

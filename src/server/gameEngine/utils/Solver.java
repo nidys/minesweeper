@@ -4,7 +4,7 @@ import java.util.List;
 
 import server.gameEngine.model.Field;
 
-import common.model.DiscoveredFields;
+import common.model.DiscoveredField;
 import common.utils.PositionConverter;
 
 public class Solver {
@@ -16,8 +16,8 @@ public class Solver {
 	}
 
 	// assuming shot is not on bomb
-	public void shot(List<DiscoveredFields> arr, int x, int y) {
-		arr.add(new DiscoveredFields(PositionConverter.getPositionFromXY(x, y, mineField.length),
+	public void shot(List<DiscoveredField> arr, int x, int y) {
+		arr.add(new DiscoveredField(PositionConverter.getPositionFromXY(x, y, mineField.length),
 				mineField[x][y].getValue()));
 		if (mineField[x][y] == Field.EMPTY) {
 			mineField[x][y] = mineField[x][y].getMarked();
@@ -27,7 +27,7 @@ public class Solver {
 		}
 	}
 
-	public void f(List<DiscoveredFields> arr, int currX, int currY) {
+	public void f(List<DiscoveredField> arr, int currX, int currY) {
 		for (int y = 0; y < steps.length; y++) {
 			int yy = currY + steps[y];
 			for (int x = 0; x < steps.length; x++) {

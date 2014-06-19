@@ -13,7 +13,7 @@ import client.controllers.base.BaseControllerForDialog;
 import client.utils.ControllerGenerator;
 import client.views.GamesListDialog;
 import client.views.MainWindow;
-import client.views.component.PlayerGameBoardPanel;
+import client.views.component.GameBoardPanel;
 import common.enums.GameMode;
 import common.exceptions.create.InvalidGameNameException;
 import common.exceptions.join.MaximumPlayerExceededException;

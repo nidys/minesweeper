@@ -21,7 +21,7 @@ import client.utils.ControllerGenerator;
 import client.views.GameRoomDialog;
 import client.views.GamesListDialog;
 import client.views.MainWindow;
-import client.views.component.PlayerGameBoardPanel;
+import client.views.component.GameBoardPanel;
 
 public class JoinRoomBtnController extends BaseControllerForDialog {
 	private static Logger log = Logger.getLogger(JoinRoomBtnController.class);
@@ -64,10 +64,9 @@ public class JoinRoomBtnController extends BaseControllerForDialog {
 	}
 
 	private void initializeGameBoard(GameDifficultyFactors gameDifficultyFactors,
-			String playerName, GameMode gameMode) {
-		mainView.drawGameBoard();
-		mainView.initializeGameBoard(gameMode);
-		mainView.addPlayer(new PlayerGameBoardPanel(gameDifficultyFactors, playerName));
+			String playerName, GameMode mode) {
+		mainView.initializeGameBoard(mode);
+		mainView.addPlayer(new GameBoardPanel(gameDifficultyFactors, playerName));
 		componentsFactory.initializeBoardListeners();
 	}
 }

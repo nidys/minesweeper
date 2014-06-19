@@ -4,12 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 public class ShotResult implements Serializable {
-	private List<DiscoveredFields> unrevealed;
+	private List<DiscoveredField> unrevealed;
 	private int lifeLeft;
 	private int timeLeft;
 	private boolean canGameBeContinued;
 
-	public ShotResult(List<DiscoveredFields> unrevealed, int lifeLeft, int timeLeft,
+	public ShotResult(List<DiscoveredField> unrevealed, int lifeLeft, int timeLeft,
 			boolean canGameBeContinued) {
 		super();
 		this.unrevealed = unrevealed;
@@ -22,11 +22,11 @@ public class ShotResult implements Serializable {
 		super();
 	}
 
-	public List<DiscoveredFields> getUnrevealed() {
+	public List<DiscoveredField> getUnrevealed() {
 		return unrevealed;
 	}
 
-	public void setUnrevealed(List<DiscoveredFields> unrevealed) {
+	public void setUnrevealed(List<DiscoveredField> unrevealed) {
 		this.unrevealed = unrevealed;
 	}
 

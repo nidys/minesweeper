@@ -34,7 +34,7 @@ public class GameDifficultyFactors implements Serializable {
 		this.boardSizeY = boardSizeY;
 	}
 
-	public int getBombsNumber() {
+	public int getBombsAmount() {
 		return bombsNumber;
 	}
 

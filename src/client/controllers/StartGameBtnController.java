@@ -12,7 +12,7 @@ import client.controllers.base.BaseControllerForDialog;
 import client.utils.ControllerGenerator;
 import client.views.GameRoomDialog;
 import client.views.MainWindow;
-import client.views.component.PlayerGameBoardPanel;
+import client.views.component.GameBoardPanel;
 
 public class StartGameBtnController extends BaseControllerForDialog {
 	private MainWindow mainView;
@@ -30,9 +30,8 @@ public class StartGameBtnController extends BaseControllerForDialog {
 	public void actionPerformed(ActionEvent e) {
 		try {
 			netManager.start(gameState.getUserNick(), gameState.getGameId());
-			mainView.drawGameBoard();
 			mainView.initializeGameBoard(gameState.getMode());
-			mainView.addPlayer(new PlayerGameBoardPanel(gameState.getDifficultyFactors(), gameState.getUserNick()));
+			mainView.addPlayer(new GameBoardPanel(gameState.getDifficultyFactors(), gameState.getUserNick()));
 			componentsFactory.initializeBoardListeners();
 
 			gameRoomView.setVisible(false);
