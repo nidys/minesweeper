@@ -11,10 +11,12 @@ import org.apache.log4j.Logger;
 import common.exceptions.create.InvalidGameNameException;
 import common.exceptions.create.MaxOpponentSizeIsTooLarge;
 import common.exceptions.create.MaximumRoomExceededException;
+import common.exceptions.gameManager.NotAllPlayersYetAreReady;
+import common.exceptions.gameManager.UnknownGameId;
+import common.exceptions.gameManager.UnknownUserId;
 import common.exceptions.join.MaximumPlayerExceededException;
 import common.exceptions.join.PlayerWithIdenticalNickAlreadyInGame;
 import common.exceptions.shot.PositionOutOfRange;
-import common.exceptions.start.UnknownGameHost;
 import common.model.AvailableGameInfo;
 import common.model.Config;
 import common.model.GameDifficultyFactors;
@@ -53,8 +55,15 @@ public class NetworkManager {
 		// --TODO DELETE THIS, only temporarly added here, ready gdoc and method
 		// comments-
 		try {
-			remoteGameManager.start(config.getGameId(), config.getGameId());
-		} catch (UnknownGameHost e) {
+			remoteGameManager.ready(config.getUserNick(), config.getGameId());
+			remoteGameManager.start(config.getUserNick(), config.getGameId());
+		} catch (UnknownGameId e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NotAllPlayersYetAreReady e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnknownUserId e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -90,13 +99,15 @@ public class NetworkManager {
 		engine.resetBoard(userNick);
 	}
 
-	public void start(String userNick, String gameId) throws RemoteException, UnknownGameHost {
+	public void start(String userNick, String gameId) throws RemoteException, UnknownGameId,
+			NotAllPlayersYetAreReady, UnknownUserId {
 		// TODO after that server will invoke setEngine on PlayerHandler which
 		// should set engine field in networkmanager class
 		remoteGameManager.start(userNick, gameId);
 	}
 
-	public void ready(String userNick, String gameId) throws RemoteException {
+	public void ready(String userNick, String gameId) throws RemoteException, UnknownGameId,
+			UnknownUserId {
 		// TODO when host click start, server will invoke setEngine on
 		// PlayerHandler which should set engine field in networkmanager class
 		remoteGameManager.ready(userNick, gameId);

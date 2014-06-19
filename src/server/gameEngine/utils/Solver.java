@@ -2,8 +2,6 @@ package server.gameEngine.utils;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import server.gameEngine.model.Field;
 
 import common.model.DiscoveredFields;
@@ -42,5 +40,5 @@ public class Solver {
 		}
 	}
 
-	private static Logger log = Logger.getLogger(Solver.class);
+	// private static Logger log = Logger.getLogger(Solver.class);
 }

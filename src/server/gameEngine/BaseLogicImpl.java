@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
 
@@ -19,6 +20,8 @@ import server.gameEngine.utils.Generator;
 
 import common.enums.GameMode;
 import common.exceptions.create.MaxOpponentSizeIsTooLarge;
+import common.exceptions.gameManager.NotAllPlayersYetAreReady;
+import common.exceptions.gameManager.UnknownUserId;
 import common.exceptions.join.MaximumPlayerExceededException;
 import common.exceptions.join.PlayerWithIdenticalNickAlreadyInGame;
 import common.exceptions.shot.PositionOutOfRange;
@@ -177,7 +180,13 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 	@Override
 	public abstract void leaveBeforeEnd(String userNick) throws RemoteException;
 
-	public void setEngine() throws RemoteException {
+	public void setEngine() throws RemoteException, NotAllPlayersYetAreReady {
+		for (Entry<String, PlayerData> entry : players.entrySet()) {
+			if (entry.getValue().selectedReady == false) {
+				throw new NotAllPlayersYetAreReady();
+			}
+		}
+
 		for (PlayerData playerData : players.values()) {
 			playerData.playerHandler.setEngine(this);
 		}
@@ -188,6 +197,14 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 
 	public boolean isGameRunning() {
 		return gammeRunning;
+	}
+
+	public void markAsReady(String userNick) throws UnknownUserId {
+		if (players.get(userNick) == null) {
+			debug(log, "Player[%s] is not in game", userNick);
+			throw new UnknownUserId();
+		}
+		players.get(userNick).selectedReady = true;
 	}
 
 	// #############################################################

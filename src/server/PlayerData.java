@@ -6,6 +6,7 @@ import common.network.callbacks.PlayerHandler;
 public class PlayerData {
 	public Board board;
 	public PlayerHandler playerHandler;
+	public boolean selectedReady = false;
 
 	public PlayerData(Board board, PlayerHandler playerHandler) {
 		super();

@@ -1,10 +1,10 @@
-package common.exceptions.start;
+package common.exceptions.gameManager;
 
 import java.io.Serializable;
 
 import common.exceptions.CustomBaseException;
 
-public class UnknownGameHost extends CustomBaseException implements Serializable {
+public class UnknownGameId extends CustomBaseException implements Serializable {
 
 	/**
 	 * 

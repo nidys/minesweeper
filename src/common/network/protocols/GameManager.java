@@ -7,13 +7,15 @@ import java.util.List;
 import common.exceptions.create.InvalidGameNameException;
 import common.exceptions.create.MaxOpponentSizeIsTooLarge;
 import common.exceptions.create.MaximumRoomExceededException;
+import common.exceptions.gameManager.NotAllPlayersYetAreReady;
+import common.exceptions.gameManager.UnknownGameId;
+import common.exceptions.gameManager.UnknownUserId;
 import common.exceptions.join.MaximumPlayerExceededException;
 import common.exceptions.join.PlayerWithIdenticalNickAlreadyInGame;
-import common.exceptions.start.UnknownGameHost;
+import common.model.AvailableGameInfo;
 import common.model.Config;
 import common.model.GameSettings;
 import common.network.callbacks.PlayerHandler;
-import common.model.AvailableGameInfo;
 
 public interface GameManager extends Remote {
 	public String tmpMsg(String msg) throws RemoteException;
@@ -27,7 +29,8 @@ public interface GameManager extends Remote {
 			throws RemoteException, MaximumPlayerExceededException, InvalidGameNameException,
 			PlayerWithIdenticalNickAlreadyInGame;
 
-	public void ready(String userNick, String gameId) throws RemoteException;
+	public void ready(String userNick, String gameId) throws RemoteException, UnknownGameId,
+			UnknownUserId;
 
 	/**
 	 * Host uses this method when all players click 'ready' button
@@ -35,5 +38,6 @@ public interface GameManager extends Remote {
 	 * @param userNick
 	 * @throws RemoteException
 	 */
-	public void start(String userNick, String gameId) throws RemoteException, UnknownGameHost;
+	public void start(String userNick, String gameId) throws RemoteException, UnknownGameId,
+			NotAllPlayersYetAreReady;
 }
