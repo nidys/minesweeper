@@ -11,6 +11,7 @@ import java.util.Enumeration;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -18,9 +19,11 @@ import javax.swing.JToggleButton;
 import javax.swing.border.TitledBorder;
 
 import client.internationalization.DialogText;
-
 import common.enums.GameDifficulty;
 import common.enums.GameMode;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  * View for the NewGame component (view with the game board). A dialog.
@@ -32,6 +35,7 @@ public class NewGameDialog extends DialogBase {
 	private JPanel contentPanel;
 	private JPanel difficultyPanel;
 	private JPanel buttonPanel;
+	private ClassicGameOptionsPanel gameOptionsPanel;
 
 	private JToggleButton classicGameButton;
 	private JToggleButton sharedGameButton;
@@ -54,6 +58,7 @@ public class NewGameDialog extends DialogBase {
 		setTitle(DialogText.NEW_GAME_TITLE);
 		setLocationRelativeTo(owner);
 		buildGUI();
+		this.pack();
 
 	}
 
@@ -61,9 +66,9 @@ public class NewGameDialog extends DialogBase {
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0 };
-		gridBagLayout.rowHeights = new int[] { 20, 0, 10, 0 };
+		gridBagLayout.rowHeights = new int[] { 20, 0, 0, 10, 0 };
 		gridBagLayout.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
 		getContentPane().setLayout(gridBagLayout);
 
 		contentPanel = new JPanel();
@@ -81,6 +86,23 @@ public class NewGameDialog extends DialogBase {
 		contentPanel.setLayout(gbl_contentPanel);
 
 		classicGameButton = new JToggleButton("Classic");
+		classicGameButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				hostGameButton.setEnabled(true);
+				joinGameButton.setEnabled(true);
+				
+				gameOptionsPanel = new ClassicGameOptionsPanel();
+				GridBagConstraints gbc_panel = new GridBagConstraints();
+				gbc_panel.insets = new Insets(0, 0, 5, 0);
+				gbc_panel.fill = GridBagConstraints.BOTH;
+				gbc_panel.gridx = 0;
+				gbc_panel.gridy = 2;
+				getContentPane().add(gameOptionsPanel, gbc_panel);
+				adaptToContent();
+				
+			}
+		});
 		gameTypeButtonGroup.add(classicGameButton);
 		GridBagConstraints gbc_classicGameButton = new GridBagConstraints();
 		gbc_classicGameButton.fill = GridBagConstraints.BOTH;
@@ -91,6 +113,13 @@ public class NewGameDialog extends DialogBase {
 		contentPanel.add(classicGameButton, gbc_classicGameButton);
 
 		sharedGameButton = new JToggleButton("Shared");
+		sharedGameButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				hostGameButton.setEnabled(true);
+				joinGameButton.setEnabled(true);
+			}
+		});
 		gameTypeButtonGroup.add(sharedGameButton);
 		GridBagConstraints gbc_sharedGameButton = new GridBagConstraints();
 		gbc_sharedGameButton.fill = GridBagConstraints.BOTH;
@@ -101,6 +130,13 @@ public class NewGameDialog extends DialogBase {
 		contentPanel.add(sharedGameButton, gbc_sharedGameButton);
 
 		perksGameButton = new JToggleButton("Perks");
+		perksGameButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				hostGameButton.setEnabled(true);
+				joinGameButton.setEnabled(true);
+			}
+		});
 		gameTypeButtonGroup.add(perksGameButton);
 		GridBagConstraints gbc_perksGameButton = new GridBagConstraints();
 		gbc_perksGameButton.fill = GridBagConstraints.BOTH;
@@ -157,7 +193,7 @@ public class NewGameDialog extends DialogBase {
 		GridBagConstraints gbc_buttonPanel = new GridBagConstraints();
 		gbc_buttonPanel.fill = GridBagConstraints.BOTH;
 		gbc_buttonPanel.gridx = 0;
-		gbc_buttonPanel.gridy = 2;
+		gbc_buttonPanel.gridy = 3;
 		getContentPane().add(buttonPanel, gbc_buttonPanel);
 		GridBagLayout gbl_buttonPanel = new GridBagLayout();
 		gbl_buttonPanel.columnWidths = new int[] { 0, 0, 0, 0 };
@@ -167,6 +203,7 @@ public class NewGameDialog extends DialogBase {
 		buttonPanel.setLayout(gbl_buttonPanel);
 
 		hostGameButton = new JButton("Host");
+		hostGameButton.setEnabled(false);
 		GridBagConstraints gbc_hostGameButton = new GridBagConstraints();
 		gbc_hostGameButton.fill = GridBagConstraints.BOTH;
 		gbc_hostGameButton.gridheight = 2;
@@ -176,6 +213,7 @@ public class NewGameDialog extends DialogBase {
 		buttonPanel.add(hostGameButton, gbc_hostGameButton);
 
 		joinGameButton = new JButton("Join");
+		joinGameButton.setEnabled(false);
 		GridBagConstraints gbc_joinGameButton = new GridBagConstraints();
 		gbc_joinGameButton.fill = GridBagConstraints.BOTH;
 		gbc_joinGameButton.gridheight = 2;
@@ -186,6 +224,10 @@ public class NewGameDialog extends DialogBase {
 
 		Dimension d = this.getLayout().preferredLayoutSize(this);
 		this.setSize(new Dimension(280, 158));
+	}
+	
+	private void adaptToContent() {
+		this.pack();
 	}
 
 	// Currently not used, as we use Easy/Normal/Hard tpye of the game. May be
@@ -258,5 +300,33 @@ public class NewGameDialog extends DialogBase {
 			}
 		}
 		return null;
+	}
+	
+	public boolean isWinWhenSolvedSelected() {
+		return gameOptionsPanel.isWinWhenSolvedSelected();
+	}
+	
+	public boolean isLivesCountSelected() {
+		return gameOptionsPanel.isLivesCountSelected();
+	}
+	
+	public boolean isTimedSelected() {
+		return gameOptionsPanel.isTimedSelected();
+	}
+	
+	public boolean isBoardLimitSelected() {
+		return gameOptionsPanel.isBoardLimitSelected();
+	}
+	
+	public int getLivesCount() {
+		return gameOptionsPanel.getLivesCount();
+	}
+	
+	public int getTimeAmount() {
+		return gameOptionsPanel.getTimeAmount();
+	}
+	
+	public int getBoardLimit() {
+		return gameOptionsPanel.getBoardLimit();
 	}
 }
