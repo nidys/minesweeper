@@ -78,7 +78,7 @@ public class GamesListDialog extends DialogBase {
 		gamesList = new JList<Game>(model);
 		gamesList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				joinButton.setEnabled(true);
+				//joinButton.setEnabled(true);
 			}
 		});
 		GridBagConstraints gbc_list = new GridBagConstraints();
@@ -93,7 +93,7 @@ public class GamesListDialog extends DialogBase {
 		GridBagConstraints gbc_joinBtn = new GridBagConstraints();
 		gbc_joinBtn.gridx = 0;
 		gbc_joinBtn.gridy = 1;
-		getContentPane().add(joinBtn, gbc_joinBtn)
+		getContentPane().add(joinBtn, gbc_joinBtn);
 
 		//joinButton = new JButton(ButtonNames.JOIN);
 		//joinButton.setEnabled(false);
@@ -144,7 +144,7 @@ public class GamesListDialog extends DialogBase {
 	public void setGames(List<AvailableGameInfo> games) {
 		for(AvailableGameInfo game : games) {
 			// TODO Skwara To be replaced Game -> AvailableGameInfo 
-			model.addElement(new Game(game.getGameId(), game.getHostUser()));
+			model.addElement(new Game(game.getGameId(), "gameAddress", game.getHostUser(), 1 ));
 		}
 	}
 

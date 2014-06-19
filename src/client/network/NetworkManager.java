@@ -54,19 +54,19 @@ public class NetworkManager {
 
 		// --TODO DELETE THIS, only temporarly added here, ready gdoc and method
 		// comments-
-		try {
-			remoteGameManager.ready(config.getUserNick(), config.getGameId());
-			remoteGameManager.start(config.getUserNick(), config.getGameId());
-		} catch (UnknownGameId e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NotAllPlayersYetAreReady e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnknownUserId e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			remoteGameManager.ready(config.getUserNick(), config.getGameId());
+//			remoteGameManager.start(config.getUserNick(), config.getGameId());
+//		} catch (UnknownGameId e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (NotAllPlayersYetAreReady e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (UnknownUserId e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		// ------ @up ------------------------
 
 		return gameSettings.getFactors();

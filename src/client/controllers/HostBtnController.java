@@ -41,6 +41,7 @@ public class HostBtnController extends BaseControllerForDialog {
 					playerName, gameMode, gameId));
 			gameState.setDifficultyFactors(difficultyFactors);
 			gameState.setMode(gameMode);
+			gameState.setGameId(gameId);
 			newGameView.setVisible(false);
 			
 			GameRoomDialog gameRoomView = componentsFactory.createGameRoomComponent(playerName, gameId);

@@ -4,6 +4,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
+import client.controllers.ReadyBtnController;
 import client.controllers.StartGameBtnController;
 import client.internationalization.DialogText;
 
@@ -156,6 +157,10 @@ public class GameRoomDialog extends DialogBase {
 		startBtn.addActionListener(listener);
 	}
 	
+	
+	public void addReadyBtnListener(ReadyBtnController listener) {
+		readyBtn.addActionListener(listener);
+	}
 	public void setPlayerReady() {
 		//TODO send playerIsReady message
 	}

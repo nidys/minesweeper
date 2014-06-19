@@ -43,11 +43,14 @@ public class JoinRoomBtnController extends BaseControllerForDialog {
 					
 			info(log, "Sending join game for user[%s]", playerName);
 			String gameId = gamesListView.getSelectedGame();
+			gameState.setGameId(gameId);
 			System.out.println("Joinuje do: " + gameId);
 			
 			newGameView.setVisible(false);
-			GameDifficultyFactors gameDifficultyFactors = netManager.joinGame(playerName,
+			GameDifficultyFactors difficultyFactors = netManager.joinGame(playerName,
 					gameState.getPlayerHandler(), gameId);
+			gameState.setDifficultyFactors(difficultyFactors);
+			gameState.setMode(gameMode);
 			
 			GameRoomDialog gameRoomView = componentsFactory.createGameRoomComponent(playerName, gameId);
 			gameRoomView.setVisible(true);

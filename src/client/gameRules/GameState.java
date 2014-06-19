@@ -6,18 +6,19 @@ import common.model.GameDifficultyFactors;
 import common.network.callbacks.PlayerHandler;
 
 public class GameState {
-	private GameMode currentMode;
+	private GameMode mode;
 	private String userNick;
+	private String gameId;
 	private PlayerHandler playerHandler;
 	private GameDifficulty difficulty;
 	private GameDifficultyFactors difficultyFactors;
 
 	public GameMode getMode() {
-		return currentMode;
+		return mode;
 	}
 
-	public void setMode(GameMode currentMode) {
-		this.currentMode = currentMode;
+	public void setMode(GameMode mode) {
+		this.mode = mode;
 	}
 
 	public void setUserNick(String userNick) {
@@ -50,5 +51,13 @@ public class GameState {
 
 	public void setDifficultyFactors(GameDifficultyFactors difficultyFactors) {
 		this.difficultyFactors = difficultyFactors;
+	}
+
+	public String getGameId() {
+		return gameId;
+	}
+
+	public void setGameId(String gameId) {
+		this.gameId = gameId;
 	}
 }

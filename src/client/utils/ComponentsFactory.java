@@ -5,6 +5,7 @@ import client.controllers.JoinGamesBtnController;
 import client.controllers.JoinRoomBtnController;
 import client.controllers.MyBombFielsBtnController;
 import client.controllers.NewGameBtnController;
+import client.controllers.ReadyBtnController;
 import client.controllers.ResetBtnController;
 import client.controllers.StartGameBtnController;
 import client.gameRules.GameState;
@@ -93,6 +94,7 @@ public class ComponentsFactory {
 	
 	private void initializeStartGameListeners() {
 		gameRoomView.addStartGameBtnListener(new StartGameBtnController(listenerGenerator, mainView, gameRoomView));
+		gameRoomView.addReadyBtnListener(new ReadyBtnController(listenerGenerator));
 	}
 	
 	private void initializeJoinGameListeners() {
