@@ -127,11 +127,10 @@ public class PlayerGameBoardPanel extends JPanel {
 	}
 
 	private FieldButton createBombFieldBtn(String name, int i, int j) {
-		FieldButton btn = new FieldButton(i * boardSizeX + j + 1);
+		FieldButton btn = new FieldButton(i * boardSizeX + j);
 		btn.setPreferredSize(new Dimension(50, 50));
 		gameBoardPanel.add(btn);
-		btn.setText(name);
-
+		// btn.setText(name);
 		return btn;
 	}
 
@@ -142,19 +141,19 @@ public class PlayerGameBoardPanel extends JPanel {
 	}
 
 	public void setFieldAsBomb(int pos) {
-		board[pos - 1].setBackground(Color.RED);
-		board[pos - 1].setIcon(GraphicsFactory.getBombIcon());
-		board[pos - 1].setPreferredSize(new Dimension(32, 32));
-		board[pos - 1].setText("");
+		board[pos].setBackground(Color.RED);
+		board[pos].setIcon(GraphicsFactory.getBombIcon());
+		board[pos].setPreferredSize(new Dimension(32, 32));
+		board[pos].setText("");
 		lblFace.setIcon(GraphicsFactory.getDeadFaceIcon());
 	}
 
 	public void setFieldAsValued(int pos, int value) {
-		board[pos - 1].setText(Integer.toString(value));
+		board[pos].setText(Integer.toString(value));
 	}
 
 	public void setFieldAsEmpty(int pos) {
-		board[pos - 1].setBackground(Color.GRAY);
+		board[pos].setBackground(Color.GRAY);
 	}
 
 	public void resetFields() {
@@ -164,29 +163,29 @@ public class PlayerGameBoardPanel extends JPanel {
 	}
 
 	public void setFieldAsFlagged(int pos) {
-		if (!board[pos - 1].isFlagged) { // so its not already discovered field
+		if (!board[pos].isFlagged) { // so its not already discovered field
 			// board[pos - 1].setText("F");
-			board[pos - 1].setBackground(UIManager.getColor("Button.shadow"));
-			board[pos - 1].setText("");
-			board[pos - 1].setIcon(GraphicsFactory.getFlagIcon());
-			board[pos - 1].setPreferredSize(new Dimension(32, 32));
+			board[pos].setBackground(UIManager.getColor("Button.shadow"));
+			board[pos].setText("");
+			board[pos].setIcon(GraphicsFactory.getFlagIcon());
+			board[pos].setPreferredSize(new Dimension(32, 32));
 
 			lblBombs.setText((Integer.parseInt(lblBombs.getText()) - 1) + "");
-			board[pos - 1].isFlagged = true;
+			board[pos].isFlagged = true;
 
-		} else if (board[pos - 1].isFlagged) { // so we want to unset flag
-			board[pos - 1].setText("" + pos);
-			board[pos - 1].setBackground(UIManager.getColor("Button.background"));
-			board[pos - 1].setIcon(null);
+		} else if (board[pos].isFlagged) { // so we want to unset flag
+			board[pos].setText("" + pos);
+			board[pos].setBackground(UIManager.getColor("Button.background"));
+			board[pos].setIcon(null);
 			lblBombs.setText((Integer.parseInt(lblBombs.getText()) + 1) + "");
-			board[pos - 1].isFlagged = false;
+			board[pos].isFlagged = false;
 		} else {
 
 		}
 	}
 
 	public void setFieldAsEmptyWithValue(int pos, int value) {
-		board[pos - 1].setText("" + value);
+		board[pos].setText("" + value);
 	}
 
 }

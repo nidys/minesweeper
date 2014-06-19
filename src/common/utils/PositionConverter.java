@@ -37,5 +37,5 @@ public class PositionConverter {
 	}
 
 	private static Logger log = Logger.getLogger(PositionConverter.class);
-	private static boolean DEBUG = true;
+	private static boolean DEBUG = false;
 }

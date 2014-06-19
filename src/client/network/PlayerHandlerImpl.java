@@ -50,7 +50,7 @@ public class PlayerHandlerImpl extends UnicastRemoteObject implements PlayerHand
 	}
 
 	@Override
-	public void setProgress(int progress) throws RemoteException {
+	public void setProgress(int progress, String playerNick) throws RemoteException {
 		info(log, "Setting progress to[%d]", progress);
 		// TODO Only For CLASSIC. See method description
 

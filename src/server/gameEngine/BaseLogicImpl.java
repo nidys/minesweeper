@@ -1,5 +1,6 @@
 package server.gameEngine;
 
+import static common.utils.LoggingHelper.debug;
 import static common.utils.LoggingHelper.info;
 
 import java.rmi.RemoteException;
@@ -73,7 +74,7 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 		info(log, "Player[%s] setting boardSizeX[%d], boardSizeY[%d], bombsNumber[%d]", userNick,
 				boardSizeX, boardSizeY, bombsNumber);
 
-		players.put(userNick, new PlayerData(new Board(getCopyOfFirstBoard(), boardSizeX
+		players.put(userNick, new PlayerData(new Board(getCopyOfGeneratedBoard(0), boardSizeX
 				* boardSizeY), playerHandler));
 
 		setOpponentInOtherPlayers(userNick);
@@ -119,12 +120,17 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 		info(log, "setting boardSizeX[%d], boardSizeY[%d], bombsNumber[%d]", boardSizeX,
 				boardSizeY, bombsNumber);
 		generatedBoards = Generator.generate(5, null, bombsNumber, boardSizeX, boardSizeY);
-		players.put(hostUserId, new PlayerData(new Board(getCopyOfFirstBoard(), boardSizeX
+		players.put(hostUserId, new PlayerData(new Board(getCopyOfGeneratedBoard(0), boardSizeX
 				* boardSizeY), gameConfig.getPlayerHandler()));
 	}
 
-	private Field[][] getCopyOfFirstBoard() {
-		Field[][] templBoard = generatedBoards.get(0);
+	private Field[][] getCopyOfGeneratedBoard(int num) {
+		if (num >= generatedBoards.size()) {
+			debug(log, "Generate additional boards");
+			generatedBoards = Generator.generate(5, generatedBoards, bombsNumber, boardSizeX,
+					boardSizeY);
+		}
+		Field[][] templBoard = generatedBoards.get(num);
 		Field[][] userBoard = new Field[boardSizeX][boardSizeY];
 		for (int i = 0; i < templBoard.length; i++) {
 			System.arraycopy(templBoard[i], 0, userBoard[i], 0, templBoard[0].length);

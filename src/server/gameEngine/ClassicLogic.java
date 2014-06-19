@@ -4,13 +4,13 @@ import static common.utils.LoggingHelper.error;
 import static common.utils.LoggingHelper.info;
 
 import java.rmi.RemoteException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import server.PlayerData;
 import server.gameEngine.model.Board;
+import server.gameEngine.utils.Generator;
 
 import common.enums.GameMode;
 import common.exceptions.shot.PositionOutOfRange;
@@ -37,14 +37,14 @@ public class ClassicLogic extends BaseLogicImpl {
 		}
 
 		// TODO for now no algo to collect neighbour empty fields
-		List<ShotResult> arr = new ArrayList<ShotResult>();
-		arr.add(new ShotResult(position, board.getShotResult(position)));
+		// List<ShotResult> arr = new ArrayList<ShotResult>();
+		// arr.add(new ShotResult(position, board.getShotResult(position)));
+		List<ShotResult> arr = Generator.shot(board.mineField, position);
 
 		for (String otherPlayer : players.keySet()) {
 			if (otherPlayer.equals(userNick) == false) {
-				players.get(otherPlayer).playerHandler.setProgress(board.getProgress()); // TODO
-																							// whos
-																							// progress?
+				// TODO whos progress?
+				players.get(otherPlayer).playerHandler.setProgress(board.getProgress(), userNick);
 			}
 		}
 		error(log, "implement correct shot result response");

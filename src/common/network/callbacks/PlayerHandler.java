@@ -20,8 +20,10 @@ public interface PlayerHandler extends Remote, Serializable {
 	 * 100% = boardSize - bombAmount
 	 * 
 	 * @param progress
+	 * @param playerNick
+	 *            TODO
 	 */
-	public void setProgress(int progress) throws RemoteException;
+	public void setProgress(int progress, String playerNick) throws RemoteException;
 
 	/**
 	 * Used during game

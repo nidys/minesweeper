@@ -3,7 +3,7 @@ package server.gameEngine.model;
 import common.utils.PositionConverter;
 
 public class Board {
-	private Field[][] mineField;
+	public Field[][] mineField;
 	int boardNum;
 	int exposed;
 
