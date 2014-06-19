@@ -59,19 +59,6 @@ public class ClassicLogic extends BaseLogicImpl {
 	}
 
 	@Override
-	public void ready(String userNick) throws RemoteException {
-		// TODO Auto-generated method stub
-		error(log, "implement!!!");
-	}
-
-	@Override
-	public void start(String userNick) throws RemoteException {
-		// TODO Auto-generated method stub
-		error(log, "implement!!!");
-
-	}
-
-	@Override
 	public void leaveBeforeEnd(String userNick) throws RemoteException {
 		// TODO Auto-generated method stub
 		error(log, "implement!!!");

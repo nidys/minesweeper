@@ -38,21 +38,8 @@ public class PerksLogic extends BaseLogicImpl {
 	}
 
 	@Override
-	public void ready(String userNick) throws RemoteException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void start(String userNick) throws RemoteException {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void leaveBeforeEnd(String userNick) throws RemoteException {
 		// TODO Auto-generated method stub
 
 	}
-
 }

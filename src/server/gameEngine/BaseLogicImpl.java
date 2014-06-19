@@ -175,13 +175,13 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 	public abstract void resetBoard(String userNick) throws RemoteException;
 
 	@Override
-	public abstract void ready(String userNick) throws RemoteException;
-
-	@Override
-	public abstract void start(String userNick) throws RemoteException;
-
-	@Override
 	public abstract void leaveBeforeEnd(String userNick) throws RemoteException;
+
+	public void setEngine() throws RemoteException {
+		for (PlayerData playerData : players.values()) {
+			playerData.playerHandler.setEngine(this);
+		}
+	}
 
 	// #############################################################
 	private static final long serialVersionUID = 1320613550415878733L;

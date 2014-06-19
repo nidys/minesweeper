@@ -22,16 +22,5 @@ public interface GameLogic extends Remote {
 
 	public void resetBoard(String userNick) throws RemoteException;
 
-	public void ready(String userNick) throws RemoteException;
-
-	/**
-	 * Host uses this method when all players click 'ready' button
-	 * 
-	 * @param userNick
-	 * @throws RemoteException
-	 */
-	public void start(String userNick) throws RemoteException;
-
 	public void leaveBeforeEnd(String userNick) throws RemoteException;
-
 }

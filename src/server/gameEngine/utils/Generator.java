@@ -119,8 +119,6 @@ public class Generator {
 			}
 		}
 		mineField[i][j] = Field.getFromValue(bombsInNeighbourhood);
-		// System.out.println(String.format("(%d,%d) = %d", i, j,
-		// bombsInNeighbourhood));
 	}
 
 	public static boolean isInRange(int x, int y, int maxX, int maxY) {

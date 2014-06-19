@@ -11,14 +11,17 @@ import common.enums.GameInterruptMessage;
 import common.model.GameSummary;
 import common.model.Result;
 import common.network.callbacks.PlayerHandler;
+import common.network.protocols.GameLogic;
 
 public class PlayerHandlerImpl extends UnicastRemoteObject implements PlayerHandler {
 	private static Logger log = Logger.getLogger(PlayerHandlerImpl.class);
 	private MainWindow view;
+	private NetworkManager netManager;
 
-	public PlayerHandlerImpl(MainWindow view) throws RemoteException {
+	public PlayerHandlerImpl(MainWindow view, NetworkManager netManager) throws RemoteException {
 		super();
 		this.view = view;
+		this.netManager = netManager;
 	}
 
 	/**
@@ -62,6 +65,12 @@ public class PlayerHandlerImpl extends UnicastRemoteObject implements PlayerHand
 		// TODO send during game, before end, in case e.g. some players lost
 		// connection
 
+	}
+
+	@Override
+	public void setEngine(GameLogic engine) throws RemoteException {
+		netManager.setEngine(engine);
+		// TODO invoke some window or set enable on board view?
 	}
 
 	// @Override

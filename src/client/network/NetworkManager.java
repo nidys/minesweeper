@@ -1,7 +1,6 @@
 package client.network;
 
 import static common.utils.LoggingHelper.error;
-import static common.utils.LoggingHelper.info;
 
 import java.rmi.Naming;
 import java.rmi.RemoteException;
@@ -15,6 +14,7 @@ import common.exceptions.create.MaximumRoomExceededException;
 import common.exceptions.join.MaximumPlayerExceededException;
 import common.exceptions.join.PlayerWithIdenticalNickAlreadyInGame;
 import common.exceptions.shot.PositionOutOfRange;
+import common.exceptions.start.UnknownGameHost;
 import common.model.AvailableGameInfo;
 import common.model.Config;
 import common.model.GameDifficultyFactors;
@@ -49,7 +49,16 @@ public class NetworkManager {
 		// engine = remoteGameManager.createNewGame(userNick, gm,
 		// playerHandler);
 		gameSettings = remoteGameManager.createNewGame(config);
-		engine = gameSettings.getEngine();
+
+		// --TODO DELETE THIS, only temporarly added here, ready gdoc and method
+		// comments-
+		try {
+			remoteGameManager.start(config.getGameId(), config.getGameId());
+		} catch (UnknownGameHost e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// ------ @up ------------------------
 
 		return gameSettings.getFactors();
 	}
@@ -68,7 +77,6 @@ public class NetworkManager {
 		// TODO must pass gameId too.
 		error(log, "Finish implementation!!!");
 		gameSettings = remoteGameManager.joinGame(userNick, gameId, playerHandler);
-		engine = gameSettings.getEngine();
 
 		return gameSettings.getFactors();
 	}
@@ -80,5 +88,21 @@ public class NetworkManager {
 
 	public void resetBoard(String userNick) throws RemoteException {
 		engine.resetBoard(userNick);
+	}
+
+	public void start(String userNick, String gameId) throws RemoteException, UnknownGameHost {
+		// TODO after that server will invoke setEngine on PlayerHandler which
+		// should set engine field in networkmanager class
+		remoteGameManager.start(userNick, gameId);
+	}
+
+	public void ready(String userNick, String gameId) throws RemoteException {
+		// TODO when host click start, server will invoke setEngine on
+		// PlayerHandler which should set engine field in networkmanager class
+		remoteGameManager.ready(userNick, gameId);
+	}
+
+	public void setEngine(GameLogic engine) {
+		this.engine = engine;
 	}
 }

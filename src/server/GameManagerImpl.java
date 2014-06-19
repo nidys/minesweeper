@@ -20,6 +20,7 @@ import common.exceptions.create.MaxOpponentSizeIsTooLarge;
 import common.exceptions.create.MaximumRoomExceededException;
 import common.exceptions.join.MaximumPlayerExceededException;
 import common.exceptions.join.PlayerWithIdenticalNickAlreadyInGame;
+import common.exceptions.start.UnknownGameHost;
 import common.model.AvailableGameInfo;
 import common.model.Config;
 import common.model.GameSettings;
@@ -125,5 +126,20 @@ public class GameManagerImpl implements GameManager {
 
 		}
 		debug(log, sb.toString());
+	}
+
+	@Override
+	public void ready(String userNick, String gameId) throws RemoteException {
+		// TODO Auto-generated method stub
+		error(log, "implement!!!");
+	}
+
+	@Override
+	public void start(String userNick, String gameId) throws RemoteException, UnknownGameHost {
+		if (games.get(gameId) == null) {
+			throw new UnknownGameHost();
+		}
+		games.get(gameId).setEngine();
+
 	}
 }

@@ -1,7 +1,5 @@
 package server.gameEngine.utils;
 
-import static common.utils.LoggingHelper.error;
-
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -23,18 +21,12 @@ public class Solver {
 	public void shot(List<ShotResult> arr, int x, int y) {
 		arr.add(new ShotResult(PositionConverter.getPositionFromXY(x, y, mineField.length),
 				mineField[x][y].getValue()));
-
-		if (mineField[x][y].isNumber()) {
+		if (mineField[x][y] == Field.EMPTY) {
 			mineField[x][y] = mineField[x][y].getMarked();
-			return;
-		} else if (mineField[x][y] == Field.EMPTY) {
-			mineField[x][y] = mineField[x][y].getMarked();
-			// TODO iterate neighbours, recursive call here
 			f(arr, x, y);
-			return;
+		} else {
+			mineField[x][y] = mineField[x][y].getMarked();
 		}
-		error(log, "Serious error!!! - iterating on bomb field");
-		// Bomb field impossible case
 	}
 
 	public void f(List<ShotResult> arr, int currX, int currY) {

@@ -9,6 +9,7 @@ import common.exceptions.create.MaxOpponentSizeIsTooLarge;
 import common.exceptions.create.MaximumRoomExceededException;
 import common.exceptions.join.MaximumPlayerExceededException;
 import common.exceptions.join.PlayerWithIdenticalNickAlreadyInGame;
+import common.exceptions.start.UnknownGameHost;
 import common.model.Config;
 import common.model.GameSettings;
 import common.network.callbacks.PlayerHandler;
@@ -25,4 +26,14 @@ public interface GameManager extends Remote {
 	public GameSettings joinGame(String userNick, String gameId, PlayerHandler playerHandler)
 			throws RemoteException, MaximumPlayerExceededException, InvalidGameNameException,
 			PlayerWithIdenticalNickAlreadyInGame;
+
+	public void ready(String userNick, String gameId) throws RemoteException;
+
+	/**
+	 * Host uses this method when all players click 'ready' button
+	 * 
+	 * @param userNick
+	 * @throws RemoteException
+	 */
+	public void start(String userNick, String gameId) throws RemoteException, UnknownGameHost;
 }
