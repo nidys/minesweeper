@@ -17,7 +17,7 @@ import server.gameEngine.utils.Solver;
 import common.enums.GameMode;
 import common.enums.LostReasonMessage;
 import common.exceptions.shot.PositionOutOfRange;
-import common.model.DiscoveredFields;
+import common.model.DiscoveredField;
 import common.model.ShotResult;
 
 public class ClassicLogic extends BaseLogicImpl {
@@ -44,12 +44,16 @@ public class ClassicLogic extends BaseLogicImpl {
 		}
 
 		// TODO implement full shot logic
+<<<<<<< HEAD
 		List<DiscoveredFields> unrevealed = Solver.shot(board.mineField, position);
 		if (unrevealed == null) {
 			debug(log, "This shoudlnt happened error in client");
 			return null; // TODO add malicious try to shot already shot
 							// position?
 		}
+=======
+		List<DiscoveredField> unrevealed = Generator.shot(board.mineField, position);
+>>>>>>> a74bc6108e4ef992814dd34d8fd91de0faa2a6e2
 
 		if (isNormal && unrevealed.get(0).getValue() == Field.BOMB.getValue()) {
 			debug(log, "Normal mode, game lost");

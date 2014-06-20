@@ -36,14 +36,15 @@ public class PlayerHandlerImpl extends UnicastRemoteObject implements PlayerHand
 		// TODO For CLASSIC mode: set Labels for progress status
 	}
 
-	public void opponentShot(int position, Result result) throws RemoteException {
-		log.debug(String.format("Got opponentShot. Posp[%d] result[%s]", position, result));
-		if (result == Result.BOMB) {
-			view.setFieldAsBomb(position);
-		} else {
-			view.setFieldAsEmpty(position);
-		}
-	}
+	// TODO MALY Check if it's obsolete
+//	public void opponentShot(int position, Result result) throws RemoteException {
+//		log.debug(String.format("Got opponentShot. Posp[%d] result[%s]", position, result));
+//		if (result == Result.BOMB) {
+//			view.setFieldAsBomb(position);
+//		} else {
+//			view.setFieldAsEmpty(position);
+//		}
+//	}
 
 	@Override
 	public void endGame(GameSummary gameSummary) throws RemoteException {

@@ -3,11 +3,13 @@ package client.controllers;
 import java.awt.event.ActionEvent;
 import java.rmi.RemoteException;
 
+import javax.swing.JButton;
+import javax.swing.UIManager;
+
 import org.apache.log4j.Logger;
 
 import client.controllers.base.BaseControllerForDialog;
 import client.utils.ControllerGenerator;
-
 import common.exceptions.gameManager.UnknownGameId;
 import common.exceptions.gameManager.UnknownUserId;
 
@@ -22,6 +24,7 @@ public class ReadyBtnController extends BaseControllerForDialog {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		try {
+	
 			netManager.ready(gameState.getUserNick(), gameState.getGameId());
 
 		} catch (RemoteException | UnknownGameId | UnknownUserId ex) {

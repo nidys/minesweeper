@@ -15,7 +15,7 @@ import client.utils.ControllerGenerator;
 import client.views.component.FieldButton;
 
 import common.exceptions.shot.PositionOutOfRange;
-import common.model.DiscoveredFields;
+import common.model.DiscoveredField;
 import common.model.ShotResult;
 
 public class MyBombFielsBtnController extends BaseControllerForField {
@@ -62,17 +62,22 @@ public class MyBombFielsBtnController extends BaseControllerForField {
 		if (pressed) {
 			if (SwingUtilities.isRightMouseButton(arg0)) {
 				// TODO Check if the button is to able to be flagged
-				mainView.setFieldAsFlagged(position);
+				mainView.setFieldFlagged(position);
 			} else {
 				try {
 					ShotResult shotResult = netManager.shot(gameState.getUserNick(), position);
 					// TODO handle other fields, should game be continued,
 					// update inside clock etc.
-					List<DiscoveredFields> results = shotResult.getUnrevealed();
-					for (DiscoveredFields result : results)
-						setField(result);
+					List<DiscoveredField> results = shotResult.getUnrevealed();
+					
+					//TODO Maly ? Sometimes after reset results is null.
+					if (results == null)
+						return;
+					
+					for (DiscoveredField result : results)
+						mainView.setField(result);
 
-					DiscoveredFields result = results.get(0);
+					DiscoveredField result = results.get(0);
 					info(log, "Clicked field, user[%s], pos[%d], val[%d]", gameState.getUserNick(),
 							result.getPosition(), result.getValue());
 				} catch (RemoteException | PositionOutOfRange e) {
@@ -82,27 +87,5 @@ public class MyBombFielsBtnController extends BaseControllerForField {
 			}
 		}
 		pressed = false;
-	}
-
-	private void setField(DiscoveredFields result) {
-		int fieldValue = result.getValue();
-		switch (fieldValue) {
-		case -1:
-			mainView.setFieldAsBomb(result.getPosition());
-			break;
-		case 0:
-			mainView.setFieldAsEmpty(result.getPosition());
-			break;
-		case 1:
-		case 2:
-		case 3:
-		case 4:
-		case 5:
-		case 6:
-		case 7:
-		case 8:
-			mainView.setFieldAsEmptyWithValue(result.getPosition(), fieldValue);
-			break;
-		}
 	}
 }

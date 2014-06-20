@@ -10,10 +10,41 @@ import org.apache.log4j.Logger;
 
 import server.gameEngine.model.Field;
 
+<<<<<<< HEAD
+=======
+import common.model.DiscoveredField;
+>>>>>>> a74bc6108e4ef992814dd34d8fd91de0faa2a6e2
 import common.utils.PositionConverter;
 
 public class Generator {
 
+<<<<<<< HEAD
+=======
+	public static void main(String... args) {
+		List<Field[][]> tab = generate(1, null, 3, 6, 6);
+		@SuppressWarnings("unused")
+		List<DiscoveredField> resu = shot(tab.get(0), 17);
+		debugFieldSett(String.format("after shot\n"), tab.get(0));
+	}
+
+	public static List<DiscoveredField> shot(Field[][] mineField, int pos) {
+		List<DiscoveredField> arr = new ArrayList<DiscoveredField>();
+		int x = PositionConverter.getXFromPosition(pos, mineField.length);
+		int y = PositionConverter.getYFromPosition(pos, mineField.length);
+		if (mineField[x][y] == Field.BOMB) {
+			arr.add(new DiscoveredField(pos, Field.BOMB.getValue()));
+			return arr;
+		}
+		// TODO check if shot is on already shot place
+		if (mineField[x][y].shouldVisit() == false) {
+			error(log, "This field was already clicked");
+			return null;
+		}
+		new Solver(mineField).shot(arr, x, y);
+		return arr;
+	}
+
+>>>>>>> a74bc6108e4ef992814dd34d8fd91de0faa2a6e2
 	public static List<Field[][]> generate(int amount, List<Field[][]> old, int bombsNumber,
 			int boardSizeX, int boardSizeY) {
 		List<Field[][]> result = new ArrayList<Field[][]>();
