@@ -17,14 +17,17 @@ import common.enums.GameMode;
 import common.exceptions.create.InvalidGameNameException;
 import common.exceptions.join.MaximumPlayerExceededException;
 import common.exceptions.join.PlayerWithIdenticalNickAlreadyInGame;
+import common.exceptions.join.UnableToJoinGame;
+
 import common.model.GameDifficultyFactors;
 
 public class JoinRoomBtnController extends BaseControllerForDialog {
 	private static Logger log = Logger.getLogger(JoinRoomBtnController.class);
 	private MainWindow mainView;
 	private GamesListDialog gamesListView;
-	
-	public JoinRoomBtnController(ControllerGenerator listenerGenerator, MainWindow mainView, GamesListDialog gamesListView) {
+
+	public JoinRoomBtnController(ControllerGenerator listenerGenerator, MainWindow mainView,
+			GamesListDialog gamesListView) {
 		super();
 		this.mainView = mainView;
 		this.gamesListView = gamesListView;
@@ -35,12 +38,16 @@ public class JoinRoomBtnController extends BaseControllerForDialog {
 	public void actionPerformed(ActionEvent e) {
 		try {
 			String playerName = gameState.getUserNick();
-			GameMode gameMode = newGameView.getGameMode(); // TODO Shoudn't be taken from newGameView
-					
+			GameMode gameMode = newGameView.getGameMode(); // TODO Shoudn't be
+															// taken from
+															// newGameView
+
 			info(log, "Sending join game for user[%s]", playerName);
 			String gameId = gamesListView.getSelectedGame();
 			gameState.setGameId(gameId);
-			
+System.out.println("Joinuje do: " + gameId);
+
+
 			newGameView.setVisible(false);
 			
 			
@@ -56,12 +63,13 @@ public class JoinRoomBtnController extends BaseControllerForDialog {
 					gameState.getPlayerHandler(), gameId);
 			gameState.setDifficultyFactors(difficultyFactors);
 			gameState.setMode(gameMode);
-			
+
 			gameRoomDialog.setVisible(true);
 			
 			//initializeGameBoard(gameDifficultyFactors, playerName, gameMode);
+
 		} catch (RemoteException | MaximumPlayerExceededException | InvalidGameNameException
-				| PlayerWithIdenticalNickAlreadyInGame ex) {
+				| PlayerWithIdenticalNickAlreadyInGame | UnableToJoinGame ex) {
 			// TODO Handle exceptions
 			ex.printStackTrace();
 		}

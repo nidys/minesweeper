@@ -1,6 +1,11 @@
 package server.gameEngine.utils;
 
+import static common.utils.LoggingHelper.error;
+
+import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.log4j.Logger;
 
 import server.gameEngine.model.Field;
 
@@ -16,29 +21,46 @@ public class Solver {
 	}
 
 	// assuming shot is not on bomb
-	public void shot(List<DiscoveredField> arr, int x, int y) {
+	public void resolveShot(List<DiscoveredField> arr, int x, int y) {
 		arr.add(new DiscoveredField(PositionConverter.getPositionFromXY(x, y, mineField.length),
 				mineField[x][y].getValue()));
 		if (mineField[x][y] == Field.EMPTY) {
 			mineField[x][y] = mineField[x][y].getMarked();
-			f(arr, x, y);
+			iterateNeighbours(arr, x, y);
 		} else {
 			mineField[x][y] = mineField[x][y].getMarked();
 		}
 	}
 
-	public void f(List<DiscoveredField> arr, int currX, int currY) {
+	public void iterateNeighbours(List<DiscoveredField> arr, int currX, int currY) {
 		for (int y = 0; y < steps.length; y++) {
 			int yy = currY + steps[y];
 			for (int x = 0; x < steps.length; x++) {
 				int xx = currX + steps[x];
 				if (Generator.isInRange(xx, yy, mineField.length, mineField[currX].length)
 						&& (mineField[xx][yy].shouldVisit())) {
-					shot(arr, xx, yy);
+					resolveShot(arr, xx, yy);
 				}
 			}
 		}
 	}
 
-	// private static Logger log = Logger.getLogger(Solver.class);
+	public static List<DiscoveredField> shot(Field[][] mineField, int pos) {
+		List<DiscoveredField> arr = new ArrayList<DiscoveredField>();
+		int x = PositionConverter.getXFromPosition(pos, mineField.length);
+		int y = PositionConverter.getYFromPosition(pos, mineField.length);
+		if (mineField[x][y] == Field.BOMB) {
+			arr.add(new DiscoveredField(pos, Field.BOMB.getValue()));
+			return arr;
+		}
+		// TODO check if shot is on already shot place
+		if (mineField[x][y].shouldVisit() == false) {
+			error(log, "This field was already clicked");
+			return null;
+		}
+		new Solver(mineField).resolveShot(arr, x, y);
+		return arr;
+	}
+
+	private static Logger log = Logger.getLogger(Solver.class);
 }

@@ -16,6 +16,7 @@ import common.exceptions.gameManager.UnknownGameId;
 import common.exceptions.gameManager.UnknownUserId;
 import common.exceptions.join.MaximumPlayerExceededException;
 import common.exceptions.join.PlayerWithIdenticalNickAlreadyInGame;
+import common.exceptions.join.UnableToJoinGame;
 import common.exceptions.shot.PositionOutOfRange;
 import common.model.AvailableGameInfo;
 import common.model.Config;
@@ -54,19 +55,19 @@ public class NetworkManager {
 
 		// --TODO DELETE THIS, only temporarly added here, ready gdoc and method
 		// comments-
-//		try {
-//			remoteGameManager.ready(config.getUserNick(), config.getGameId());
-//			remoteGameManager.start(config.getUserNick(), config.getGameId());
-//		} catch (UnknownGameId e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (NotAllPlayersYetAreReady e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (UnknownUserId e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		// try {
+		// remoteGameManager.ready(config.getUserNick(), config.getGameId());
+		// remoteGameManager.start(config.getUserNick(), config.getGameId());
+		// } catch (UnknownGameId e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// } catch (NotAllPlayersYetAreReady e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// } catch (UnknownUserId e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
 		// ------ @up ------------------------
 
 		return gameSettings.getFactors();
@@ -78,7 +79,7 @@ public class NetworkManager {
 
 	public GameDifficultyFactors joinGame(String userNick, PlayerHandler playerHandler,
 			String gameId) throws RemoteException, MaximumPlayerExceededException,
-			InvalidGameNameException, PlayerWithIdenticalNickAlreadyInGame {
+			InvalidGameNameException, PlayerWithIdenticalNickAlreadyInGame, UnableToJoinGame {
 		// TODO used in JoinBtnController
 		// TODO must pass gameId too.
 		error(log, "Finish implementation!!!");

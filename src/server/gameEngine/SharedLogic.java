@@ -10,16 +10,18 @@ import org.apache.log4j.Logger;
 
 import server.PlayerData;
 import server.gameEngine.model.Board;
-import server.gameEngine.utils.Generator;
+import server.gameEngine.utils.Solver;
+
 import common.enums.GameMode;
 import common.exceptions.shot.PositionOutOfRange;
 import common.model.DiscoveredField;
 import common.model.ShotResult;
 
+@SuppressWarnings("serial")
 public class SharedLogic extends BaseLogicImpl {
 
 	private static Logger log = Logger.getLogger(ClassicLogic.class);
-	
+
 	public SharedLogic() throws RemoteException {
 		super();
 		// TODO Auto-generated constructor stub
@@ -27,13 +29,13 @@ public class SharedLogic extends BaseLogicImpl {
 
 	@Override
 	public GameMode getGameMode() {
-		
+
 		return GameMode.SHARED;
 	}
 
 	@Override
-	public ShotResult shot(String userNick, int position)
-			throws RemoteException, PositionOutOfRange {
+	public ShotResult shot(String userNick, int position) throws RemoteException,
+			PositionOutOfRange {
 		info(log, "Got shot for user[%s], pos[%d]", userNick, position);
 		PlayerData pData = players.get(userNick);
 		Board board = pData.board;
@@ -45,8 +47,7 @@ public class SharedLogic extends BaseLogicImpl {
 		}
 
 		// TODO implement full shot logic
-		List<DiscoveredField> unrevealed = Generator.shot(board.mineField, position);
-
+		List<DiscoveredField> unrevealed = Solver.shot(board.mineField, position);
 
 		// TODO return Shotresutl
 		return new ShotResult(unrevealed, 10, 10, true);
@@ -57,6 +58,8 @@ public class SharedLogic extends BaseLogicImpl {
 		// TODO Auto-generated method stub
 
 		info(log, "Reset from player[%s]", userNick);
+		error(log, "!!!implement");
+		// players.get(userNick).resetBoard();
 
 	}
 

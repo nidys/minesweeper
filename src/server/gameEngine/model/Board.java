@@ -11,17 +11,33 @@ public class Board {
 
 	public Board(Field[][] mineField, int maxPosition) {
 		this.maxPosition = maxPosition;
-		setBoard(mineField, 0);
+		this.boardNum = 0;
+		setBoard(mineField);
 	}
 
-	public void setBoard(Field[][] mineField, int boardNum) {
+	public void setBoard(Field[][] mineField) {
 		this.mineField = mineField;
-		this.boardNum = boardNum;
 		exposed = 0;
 	}
 
 	public int getProgress() {
 		return exposed;
+	}
+
+	public int getBoardNum() {
+		return boardNum;
+	}
+
+	public void incBoardNum() {
+		this.boardNum++;
+	}
+
+	public int getExposed() {
+		return exposed;
+	}
+
+	public void setExposed(int exposed) {
+		this.exposed = exposed;
 	}
 
 	public int getShotResult(int pos) {

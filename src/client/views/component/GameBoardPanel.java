@@ -140,23 +140,21 @@ public class GameBoardPanel extends JPanel {
 		}
 	}
 
-	
-	
-
 	public void resetFields() {
-		for (int i = 0; i < board.length; i++){
+		for (int i = 0; i < board.length; i++) {
 			board[i].setBackground(null);
 			board[i].setText("");
 			board[i].setIcon(null);
 		}
 		enableComponents(gameBoardPanel, true);
+
 	}
-	
+
 	private void generateBoard() {
 		board = new FieldButton[boardSizeX * boardSizeY];
 		for (int i = 0; i < boardSizeX; ++i) {
 			for (int j = 0; j < boardSizeY; ++j) {
-				board[i * boardSizeX + j] = createAndAddBombFieldBtn( i, j);
+				board[i * boardSizeX + j] = createAndAddBombFieldBtn(i, j);
 			}
 		}
 	}
@@ -168,8 +166,7 @@ public class GameBoardPanel extends JPanel {
 		gameBoardPanel.add(btn);
 		return btn;
 	}
-	
-	
+
 	public void setField(DiscoveredField field) {
 		int fieldValue = field.getValue();
 		int position = field.getPosition();
@@ -217,31 +214,31 @@ public class GameBoardPanel extends JPanel {
 			break;
 		}
 	}
-	
+
 	public void setFieldFlagged(int pos) {
 		if (!board[pos].isFlagged) { // so its not already discovered field
 			board[pos].setBackground(UIManager.getColor("Button.shadow"));
 			board[pos].setIcon(GraphicsFactory.getFlagIcon());
 			board[pos].setPreferredSize(new Dimension(32, 32));
-			bombsLbl.setText((Integer.parseInt(bombsLbl.getText()) - 1 )+ "");
+			bombsLbl.setText((Integer.parseInt(bombsLbl.getText()) - 1) + "");
 			board[pos].isFlagged = true;
 
 		} else if (board[pos].isFlagged) { // so we want to unset flag
 			board[pos].setBackground(UIManager.getColor("Button.background"));
 			board[pos].setIcon(null);
-			bombsLbl.setText((Integer.parseInt(bombsLbl.getText()) + 1 )+ "");
+			bombsLbl.setText((Integer.parseInt(bombsLbl.getText()) + 1) + "");
 			board[pos].isFlagged = false;
-		} 
+		}
 	}
-	
+
 	public void enableComponents(Container container, boolean enable) {
-        Component[] components = container.getComponents();
-        for (Component component : components) {
-            component.setEnabled(enable);
-            if (component instanceof Container) {
-                enableComponents((Container)component, enable);
-            }
-        }
-    }
-	
+		Component[] components = container.getComponents();
+		for (Component component : components) {
+			component.setEnabled(enable);
+			if (component instanceof Container) {
+				enableComponents((Container) component, enable);
+			}
+		}
+	}
+
 }
