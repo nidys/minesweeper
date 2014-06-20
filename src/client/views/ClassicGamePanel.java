@@ -11,7 +11,7 @@ import javax.swing.JProgressBar;
 
 import client.controllers.MyBombFielsBtnController;
 import client.views.GameResultDialog.GameResult;
-import client.views.component.PlayerGameBoardPanel;
+import client.views.component.GameBoardPanel;
 
 @SuppressWarnings("serial")
 public class ClassicGamePanel extends GamePanelBase {
@@ -19,7 +19,7 @@ public class ClassicGamePanel extends GamePanelBase {
 	private int progressMaxValue;
 	private Map<String, Opponent> opponentsMap = new HashMap<String, Opponent>();
 	
-	public PlayerGameBoardPanel gameBoard;
+	public GameBoardPanel gameBoard;
 
 	private class Opponent {
 		public JLabel nameLabel;
@@ -126,12 +126,12 @@ public class ClassicGamePanel extends GamePanelBase {
 	}
 
 	public void setFieldAsFlagged(int position) {
-		gameBoard.setFieldAsFlagged(position);
+		gameBoard.setFieldFlagged(position);
 
 	}
 
 	@Override
-	public void addPlayer(PlayerGameBoardPanel playerGameBoardPanel) {
+	public void addPlayer(GameBoardPanel playerGameBoardPanel) {
 		this.gameBoard = playerGameBoardPanel;
 
 		GridBagConstraints gbc_panel = new GridBagConstraints();

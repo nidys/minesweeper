@@ -39,21 +39,21 @@ public class NewGameDialog extends DialogBase {
 	private JPanel buttonPanel;
 	private ClassicGameOptionsPanel gameOptionsPanel;
 
-	private JToggleButton classicGameButton;
-	private JToggleButton sharedGameButton;
-	private JToggleButton perksGameButton;
+	private JToggleButton classicGameBtn;
+	private JToggleButton sharedGameBtn;
+	private JToggleButton perksGameBtn;
 
 	private JPanel panelSettings;
 
 	private JRadioButton easyRbtn;
 	private JRadioButton mediumRbtn;
 	private JRadioButton hardRbtn;
-	private JButton hostGameButton;
-	private JButton joinGameButton;
+	private JButton hostGameBtn;
+	private JButton joinGameBtn;
 	private final ButtonGroup gameTypeButtonGroup = new ButtonGroup();
 	private JPanel namePanel;
 	private JLabel gameNameLbl;
-	private JTextField gameNameTextField;
+	private JTextField gameNameTxtFld;
 
 	public NewGameDialog(JFrame owner, boolean isModal) {
 		super(owner, isModal);
@@ -94,12 +94,13 @@ public class NewGameDialog extends DialogBase {
 		gbl_contentPanel.rowWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
 		contentPanel.setLayout(gbl_contentPanel);
 
-		classicGameButton = new JToggleButton("Classic");
-		classicGameButton.addMouseListener(new MouseAdapter() {
+		// TODO GUI Internationalization
+		classicGameBtn = new JToggleButton("Classic");
+		classicGameBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				hostGameButton.setEnabled(true);
-				joinGameButton.setEnabled(true);
+				hostGameBtn.setEnabled(true);
+				joinGameBtn.setEnabled(true);
 				
 				gameOptionsPanel = new ClassicGameOptionsPanel();
 				GridBagConstraints gbc_panel = new GridBagConstraints();
@@ -109,51 +110,52 @@ public class NewGameDialog extends DialogBase {
 				gbc_panel.gridy = 2;
 				getContentPane().add(gameOptionsPanel, gbc_panel);
 				adaptToContent();
-				
 			}
 		});
-		gameTypeButtonGroup.add(classicGameButton);
+		gameTypeButtonGroup.add(classicGameBtn);
 		GridBagConstraints gbc_classicGameButton = new GridBagConstraints();
 		gbc_classicGameButton.fill = GridBagConstraints.BOTH;
 		gbc_classicGameButton.gridheight = 2;
 		gbc_classicGameButton.insets = new Insets(0, 0, 5, 5);
 		gbc_classicGameButton.gridx = 0;
 		gbc_classicGameButton.gridy = 0;
-		contentPanel.add(classicGameButton, gbc_classicGameButton);
+		contentPanel.add(classicGameBtn, gbc_classicGameButton);
 
-		sharedGameButton = new JToggleButton("Shared");
-		sharedGameButton.addMouseListener(new MouseAdapter() {
+		// TODO GUI Internationalization
+		sharedGameBtn = new JToggleButton("Shared");
+		sharedGameBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				hostGameButton.setEnabled(true);
-				joinGameButton.setEnabled(true);
+				hostGameBtn.setEnabled(true);
+				joinGameBtn.setEnabled(true);
 			}
 		});
-		gameTypeButtonGroup.add(sharedGameButton);
+		gameTypeButtonGroup.add(sharedGameBtn);
 		GridBagConstraints gbc_sharedGameButton = new GridBagConstraints();
 		gbc_sharedGameButton.fill = GridBagConstraints.BOTH;
 		gbc_sharedGameButton.gridheight = 2;
 		gbc_sharedGameButton.insets = new Insets(0, 0, 5, 5);
 		gbc_sharedGameButton.gridx = 1;
 		gbc_sharedGameButton.gridy = 0;
-		contentPanel.add(sharedGameButton, gbc_sharedGameButton);
+		contentPanel.add(sharedGameBtn, gbc_sharedGameButton);
 
-		perksGameButton = new JToggleButton("Perks");
-		perksGameButton.addMouseListener(new MouseAdapter() {
+		// TODO GUI Internationalization
+		perksGameBtn = new JToggleButton("Perks");
+		perksGameBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				hostGameButton.setEnabled(true);
-				joinGameButton.setEnabled(true);
+				hostGameBtn.setEnabled(true);
+				joinGameBtn.setEnabled(true);
 			}
 		});
-		gameTypeButtonGroup.add(perksGameButton);
+		gameTypeButtonGroup.add(perksGameBtn);
 		GridBagConstraints gbc_perksGameButton = new GridBagConstraints();
 		gbc_perksGameButton.fill = GridBagConstraints.BOTH;
 		gbc_perksGameButton.gridheight = 2;
 		gbc_perksGameButton.insets = new Insets(0, 0, 5, 0);
 		gbc_perksGameButton.gridx = 2;
 		gbc_perksGameButton.gridy = 0;
-		contentPanel.add(perksGameButton, gbc_perksGameButton);
+		contentPanel.add(perksGameBtn, gbc_perksGameButton);
 
 		difficultyPanel = new JPanel();
 		difficultyPanel.setBorder(new TitledBorder(null, "Difficulty", TitledBorder.LEADING,
@@ -171,6 +173,7 @@ public class NewGameDialog extends DialogBase {
 		gbl_difficultyPanel.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
 		difficultyPanel.setLayout(gbl_difficultyPanel);
 
+		// TODO GUI Internationalization
 		easyRbtn = new JRadioButton("Easy");
 		easyRbtn.setSelected(true);
 		buttonGroup.add(easyRbtn);
@@ -181,6 +184,7 @@ public class NewGameDialog extends DialogBase {
 		gbc_easyRbtn.gridy = 0;
 		difficultyPanel.add(easyRbtn, gbc_easyRbtn);
 
+		// TODO GUI Internationalization
 		mediumRbtn = new JRadioButton("Medium");
 		buttonGroup.add(mediumRbtn);
 		GridBagConstraints gbc_mediumRbtn = new GridBagConstraints();
@@ -190,6 +194,7 @@ public class NewGameDialog extends DialogBase {
 		gbc_mediumRbtn.gridy = 0;
 		difficultyPanel.add(mediumRbtn, gbc_mediumRbtn);
 
+		// TODO GUI Internationalization
 		hardRbtn = new JRadioButton("Hard");
 		buttonGroup.add(hardRbtn);
 		GridBagConstraints gbc_hardRbtn = new GridBagConstraints();
@@ -212,25 +217,27 @@ public class NewGameDialog extends DialogBase {
 		gbl_buttonPanel.rowWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
 		buttonPanel.setLayout(gbl_buttonPanel);
 
-		hostGameButton = new JButton("Host");
-		hostGameButton.setEnabled(false);
+		// TODO GUI Internationalization
+		hostGameBtn = new JButton("Host");
+		hostGameBtn.setEnabled(false);
 		GridBagConstraints gbc_hostGameButton = new GridBagConstraints();
 		gbc_hostGameButton.fill = GridBagConstraints.BOTH;
 		gbc_hostGameButton.gridheight = 2;
 		gbc_hostGameButton.insets = new Insets(0, 0, 5, 5);
 		gbc_hostGameButton.gridx = 0;
 		gbc_hostGameButton.gridy = 0;
-		buttonPanel.add(hostGameButton, gbc_hostGameButton);
+		buttonPanel.add(hostGameBtn, gbc_hostGameButton);
 
-		joinGameButton = new JButton("Join");
-		joinGameButton.setEnabled(false);
+		// TODO GUI Internationalization
+		joinGameBtn = new JButton("Join");
+		joinGameBtn.setEnabled(false);
 		GridBagConstraints gbc_joinGameButton = new GridBagConstraints();
 		gbc_joinGameButton.fill = GridBagConstraints.BOTH;
 		gbc_joinGameButton.gridheight = 2;
 		gbc_joinGameButton.insets = new Insets(0, 0, 5, 0);
 		gbc_joinGameButton.gridx = 2;
 		gbc_joinGameButton.gridy = 0;
-		buttonPanel.add(joinGameButton, gbc_joinGameButton);
+		buttonPanel.add(joinGameBtn, gbc_joinGameButton);
 		
 		namePanel = new JPanel();
 		GridBagConstraints gbc_namePanel = new GridBagConstraints();
@@ -239,14 +246,15 @@ public class NewGameDialog extends DialogBase {
 		gbc_namePanel.gridy = 3;
 		getContentPane().add(namePanel, gbc_namePanel);
 		
+		// TODO GUI Internationalization
 		gameNameLbl = new JLabel("Nazwa gry:");
 		namePanel.add(gameNameLbl);
 		
-		gameNameTextField = new JTextField();
-		namePanel.add(gameNameTextField);
+		gameNameTxtFld = new JTextField();
+		namePanel.add(gameNameTxtFld);
 		// generate random game name so that user don't need to write it all the
 		// time
-		gameNameTextField.setText("Game Name " + String.valueOf(new Random().nextInt(100)));
+		gameNameTxtFld.setText("Game Name " + String.valueOf(new Random().nextInt(100)));
 		
 		Dimension d = this.getLayout().preferredLayoutSize(this);
 		this.setSize(new Dimension(280, 210));
@@ -287,15 +295,15 @@ public class NewGameDialog extends DialogBase {
 	// }
 
 	public void addHostBtnListener(ActionListener listener) {
-		hostGameButton.addActionListener(listener);
+		hostGameBtn.addActionListener(listener);
 	}
 
 	public void addJoinBtnListener(ActionListener listener) {
-		joinGameButton.addActionListener(listener);
+		joinGameBtn.addActionListener(listener);
 	}
 
 	public String getGameId() {
-		return gameNameTextField.getText();
+		return gameNameTxtFld.getText();
 	}
 
 	public GameDifficulty getGameDifficulty() {

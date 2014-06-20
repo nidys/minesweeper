@@ -1,29 +1,24 @@
 package client.views;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Toolkit;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import client.controllers.JoinRoomBtnController;
-import client.internationalization.ButtonNames;
 import client.internationalization.DialogText;
 
-import java.awt.GridBagLayout;
-
-import javax.swing.JButton;
-
-import java.awt.GridBagConstraints;
-
-import javax.swing.JList;
-
 import common.model.AvailableGameInfo;
-import common.enums.GameMode;import java.awt.Insets;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.util.List;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
+
+// TODO MALY To be refactored.
 
 @SuppressWarnings("serial")
 public class GamesListDialog extends DialogBase {

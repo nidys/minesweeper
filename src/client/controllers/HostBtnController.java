@@ -11,7 +11,7 @@ import client.controllers.base.BaseControllerForDialog;
 import client.utils.ControllerGenerator;
 import client.views.GameRoomDialog;
 import client.views.MainWindow;
-import client.views.component.PlayerGameBoardPanel;
+import client.views.component.GameBoardPanel;
 import common.enums.GameMode;
 import common.exceptions.create.InvalidGameNameException;
 import common.exceptions.create.MaxOpponentSizeIsTooLarge;
@@ -32,7 +32,7 @@ public class HostBtnController extends BaseControllerForDialog {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		try {
-			String playerName = mainView.getUserNick();
+			String playerName = mainView.getPlayerName();
 			String gameId = newGameView.getGameId();
 			GameMode gameMode = newGameView.getGameMode();
 			

@@ -23,7 +23,7 @@ public class NewGameBtnController extends BaseControllerForWindow {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String serverAddr = mainView.getServerAddress();
-		String userNick = mainView.getUserNick();
+		String userNick = mainView.getPlayerName();
 		netManager.connectToServer(serverAddr, userNick);
 		gameState.setUserNick(userNick);
 		try {

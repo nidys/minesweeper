@@ -3,66 +3,64 @@ package client.views;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
+import common.model.DiscoveredField;
 import client.controllers.MyBombFielsBtnController;
-import client.views.component.PlayerGameBoardPanel;
+import client.views.component.GameBoardPanel;
 
 @SuppressWarnings("serial")
 public class PerksGamePanel extends GamePanelBase {
 	private GridLayout layout;
-	ArrayList<PlayerGameBoardPanel> playerGameBoardPanels = new ArrayList<PlayerGameBoardPanel>();
+	ArrayList<GameBoardPanel> gameBoardPanels = new ArrayList<GameBoardPanel>();
 
 	public PerksGamePanel() {
 		super();
 
-		drawComponents();
+		initUi();
 	}
 
-	private void drawComponents() {
+	private void initUi() {
 		setBounds(0, 0, 450, 301);
 		layout = new GridLayout(0, 1);
 		setLayout(layout);
 	}
 
-	public void addPlayer(PlayerGameBoardPanel playerGameBoardPanel) {
-		add(playerGameBoardPanel);
-		playerGameBoardPanels.add(playerGameBoardPanel);
+	public void addNewPlayerGameBoardPanel(GameBoardPanel gameBoardPanel) {
+		add(gameBoardPanel);
+		gameBoardPanels.add(gameBoardPanel);
 
 	}
 
 	public void addBombFieldBtnListener(MyBombFielsBtnController listener) {
-		playerGameBoardPanels.get(playerGameBoardPanels.size() - 1).addBombFieldBtnListener(listener);
-		
+		gameBoardPanels.get(gameBoardPanels.size() - 1)
+				.addBombFieldBtnListener(listener);
 	}
 
-	public void setFieldAsBomb(int position) {
-		playerGameBoardPanels.get(0).setFieldAsBomb(position);
+	public void gameBoardPanels() {
+		gameBoardPanels.get(0).resetFields();
 
 	}
-
-	public void setFieldAsEmpty(int position) {
-		playerGameBoardPanels.get(0).setFieldAsEmpty(position);
-
-	}
-
-	public void resetFields() {
-		playerGameBoardPanels.get(0).resetFields();
+	@Override
+	public void setField(DiscoveredField field) {
+		gameBoardPanels.get(0).setField(field);
 
 	}
-
-	public void setFieldAsFlagged(int position) {
-		playerGameBoardPanels.get(0).setFieldAsFlagged(position);
-
-	}
-
-	public void setFieldAsEmptyWithValue(int position, int value) {
-		playerGameBoardPanels.get(0).setFieldAsEmptyWithValue(position, value);
+	
+	@Override
+	public void setFieldFlagged(int position) {
+		gameBoardPanels.get(0).setFieldFlagged(position);
 
 	}
 
 	@Override
-	public void setProgress(String opponentName, int progressValue) { 
+	public void setProgress(String opponentName, int progressValue) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void resetFields() {
+		gameBoardPanels.get(0).resetFields();
+		
 	}
 
 }
