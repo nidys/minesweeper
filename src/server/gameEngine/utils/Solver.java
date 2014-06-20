@@ -21,13 +21,8 @@ public class Solver {
 	}
 
 	// assuming shot is not on bomb
-<<<<<<< HEAD
-	public void resolveShot(List<DiscoveredFields> arr, int x, int y) {
-		arr.add(new DiscoveredFields(PositionConverter.getPositionFromXY(x, y, mineField.length),
-=======
-	public void shot(List<DiscoveredField> arr, int x, int y) {
+	public void resolveShot(List<DiscoveredField> arr, int x, int y) {
 		arr.add(new DiscoveredField(PositionConverter.getPositionFromXY(x, y, mineField.length),
->>>>>>> a74bc6108e4ef992814dd34d8fd91de0faa2a6e2
 				mineField[x][y].getValue()));
 		if (mineField[x][y] == Field.EMPTY) {
 			mineField[x][y] = mineField[x][y].getMarked();
@@ -37,11 +32,7 @@ public class Solver {
 		}
 	}
 
-<<<<<<< HEAD
-	public void iterateNeighbours(List<DiscoveredFields> arr, int currX, int currY) {
-=======
-	public void f(List<DiscoveredField> arr, int currX, int currY) {
->>>>>>> a74bc6108e4ef992814dd34d8fd91de0faa2a6e2
+	public void iterateNeighbours(List<DiscoveredField> arr, int currX, int currY) {
 		for (int y = 0; y < steps.length; y++) {
 			int yy = currY + steps[y];
 			for (int x = 0; x < steps.length; x++) {
@@ -54,12 +45,12 @@ public class Solver {
 		}
 	}
 
-	public static List<DiscoveredFields> shot(Field[][] mineField, int pos) {
-		List<DiscoveredFields> arr = new ArrayList<DiscoveredFields>();
+	public static List<DiscoveredField> shot(Field[][] mineField, int pos) {
+		List<DiscoveredField> arr = new ArrayList<DiscoveredField>();
 		int x = PositionConverter.getXFromPosition(pos, mineField.length);
 		int y = PositionConverter.getYFromPosition(pos, mineField.length);
 		if (mineField[x][y] == Field.BOMB) {
-			arr.add(new DiscoveredFields(pos, Field.BOMB.getValue()));
+			arr.add(new DiscoveredField(pos, Field.BOMB.getValue()));
 			return arr;
 		}
 		// TODO check if shot is on already shot place
