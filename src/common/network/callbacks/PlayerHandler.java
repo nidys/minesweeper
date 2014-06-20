@@ -5,6 +5,8 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import common.enums.GameInterruptMessage;
+import common.enums.GameMode;
+import common.model.GameDifficultyFactors;
 import common.model.GameSummary;
 import common.model.LostReason;
 import common.network.protocols.GameLogic;
@@ -41,5 +43,7 @@ public interface PlayerHandler extends Remote, Serializable {
 	public void addOpponent(String opponentName) throws RemoteException;
 
 	void changeStateToReady(String opponentName) throws RemoteException;
+	
+	void startGame() throws RemoteException;
 	
 }

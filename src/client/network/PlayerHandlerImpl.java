@@ -6,9 +6,13 @@ import java.rmi.server.UnicastRemoteObject;
 import org.apache.log4j.Logger;
 
 import static common.utils.LoggingHelper.info;
+import client.controllers.MyBombFielsBtnController;
+import client.controllers.ResetBtnController;
 import client.views.MainWindow;
 import client.views.component.GameBoardPanel;
 import common.enums.GameInterruptMessage;
+import common.enums.GameMode;
+import common.model.GameDifficultyFactors;
 import common.model.GameSummary;
 import common.model.LostReason;
 import common.model.Result;
@@ -98,6 +102,12 @@ public class PlayerHandlerImpl extends UnicastRemoteObject implements PlayerHand
 		if (opponentName == null)
 			return;
 		view.getGameRoomDialog().setOpponentReady(opponentName);
+		
+	}
+
+	@Override
+	public void startGame() throws RemoteException {
+		view.getGameRoomDialog().simulateStartButtonClick(); // simulate start btn for other users
 		
 	}
 

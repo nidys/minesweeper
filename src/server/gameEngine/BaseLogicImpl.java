@@ -202,9 +202,10 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 				throw new NotAllPlayersYetAreReady();
 			}
 		}
-
+		
 		for (PlayerData playerData : players.values()) {
-			playerData.playerHandler.setEngine(this);
+				playerData.playerHandler.setEngine(this);
+				playerData.playerHandler.startGame();
 		}
 		
 		gammeRunning = true;

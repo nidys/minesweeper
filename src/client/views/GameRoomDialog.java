@@ -32,7 +32,7 @@ import client.internationalization.ButtonNames;
 import client.internationalization.DialogText;
 
 public class GameRoomDialog extends DialogBase {
-	private static Logger log = Logger.getLogger(GameManagerImpl.class);
+	private static Logger log = Logger.getLogger(GameRoomDialog.class);
 	/**
 	 * 
 	 */
@@ -50,7 +50,7 @@ public class GameRoomDialog extends DialogBase {
 	private JButton readyBtn;
 	private JLabel hostNameLbl;
 	
-	boolean isHost = false;
+	private boolean isHost = false;
 
 	public GameRoomDialog(String gameName, String playerName, boolean isHost, JFrame owner,
 			boolean isModal) {
@@ -246,5 +246,21 @@ public class GameRoomDialog extends DialogBase {
 	public void setOpponentWaiting(String opponentName) {
 		opponentsMap.get(opponentName).stateLabel
 				.setText(DialogText.PLAYERSTATE_WAITING);
+	}
+	
+	public void simulateStartButtonClick(){
+		
+		if (!isHost){
+			info(log, "click!");
+			startBtn.doClick();
+		}
+	}
+
+	public boolean isHost() {
+		return isHost;
+	}
+
+	public void setHost(boolean isHost) {
+		this.isHost = isHost;
 	}
 }
