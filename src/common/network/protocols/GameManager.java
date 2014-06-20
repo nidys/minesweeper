@@ -12,6 +12,7 @@ import common.exceptions.gameManager.UnknownGameId;
 import common.exceptions.gameManager.UnknownUserId;
 import common.exceptions.join.MaximumPlayerExceededException;
 import common.exceptions.join.PlayerWithIdenticalNickAlreadyInGame;
+import common.exceptions.join.UnableToJoinGame;
 import common.model.AvailableGameInfo;
 import common.model.Config;
 import common.model.GameSettings;
@@ -27,7 +28,7 @@ public interface GameManager extends Remote {
 
 	public GameSettings joinGame(String userNick, String gameId, PlayerHandler playerHandler)
 			throws RemoteException, MaximumPlayerExceededException, InvalidGameNameException,
-			PlayerWithIdenticalNickAlreadyInGame;
+			PlayerWithIdenticalNickAlreadyInGame, UnableToJoinGame;
 
 	public void ready(String userNick, String gameId) throws RemoteException, UnknownGameId,
 			UnknownUserId;

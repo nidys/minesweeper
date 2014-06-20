@@ -24,6 +24,7 @@ import common.exceptions.gameManager.UnknownGameId;
 import common.exceptions.gameManager.UnknownUserId;
 import common.exceptions.join.MaximumPlayerExceededException;
 import common.exceptions.join.PlayerWithIdenticalNickAlreadyInGame;
+import common.exceptions.join.UnableToJoinGame;
 import common.model.AvailableGameInfo;
 import common.model.Config;
 import common.model.GameSettings;
@@ -71,10 +72,14 @@ public class GameManagerImpl implements GameManager {
 	@Override
 	public synchronized GameSettings joinGame(String userNick, String gameId,
 			PlayerHandler playerHandler) throws RemoteException, MaximumPlayerExceededException,
-			InvalidGameNameException, PlayerWithIdenticalNickAlreadyInGame {
+			InvalidGameNameException, UnableToJoinGame, PlayerWithIdenticalNickAlreadyInGame {
 		if (games.containsKey(gameId) == false) {
 			info(log, "Player[%s] tried to join game[%s] but doesn't exist", userNick, gameId);
 			throw new InvalidGameNameException();
+		}
+		if (games.get(gameId).isGameRunning() == true) {
+			debug(log, "gameId[%s] already started", gameId);
+			throw new UnableToJoinGame();
 		}
 		BaseLogicImpl engine = games.get(gameId);
 		engine.addPlayer(userNick, playerHandler);
@@ -88,7 +93,7 @@ public class GameManagerImpl implements GameManager {
 		switch (gameConfig.getGameMode()) {
 		case CLASSIC:
 			engine = new ClassicLogic();
-			engine.setGameConfiguration(gameConfig);
+			engine.setGameConfiguration(gameConfig, this);
 			games.put(gameConfig.getGameId(), engine);
 			break;
 		case SHARED:
@@ -116,6 +121,11 @@ public class GameManagerImpl implements GameManager {
 		}
 	}
 
+	public void unregisterGame(String gameId) {
+		info(log, "Deregistering game[%d]", gameId);
+		games.remove(gameId);
+	}
+
 	/**
 	 * For debug purposes
 	 * 
@@ -134,8 +144,8 @@ public class GameManagerImpl implements GameManager {
 	}
 
 	@Override
-	public void ready(String userNick, String gameId) throws RemoteException, UnknownGameId,
-			UnknownUserId {
+	public synchronized void ready(String userNick, String gameId) throws RemoteException,
+			UnknownGameId, UnknownUserId {
 		if (games.get(gameId) == null) {
 			throw new UnknownGameId();
 		}
@@ -144,12 +154,21 @@ public class GameManagerImpl implements GameManager {
 	}
 
 	@Override
-	public void start(String userNick, String gameId) throws RemoteException, UnknownGameId,
-			NotAllPlayersYetAreReady {
+	public synchronized void start(String userNick, String gameId) throws RemoteException,
+			UnknownGameId, NotAllPlayersYetAreReady {
 		if (games.get(gameId) == null) {
 			throw new UnknownGameId();
 		}
-		games.get(gameId).setEngine();
+		if (games.get(gameId).getHostUserId().equals(userNick) == false) {
+			error(log, "Only host[%s], can start game, [%s] tried", games.get(gameId)
+					.getHostUserId(), userNick);
+			// TODO hadle malicious user?
+		}
+		if (games.get(gameId).areAllReady()) {
+			games.get(gameId).setEngine();
+		} else {
+			throw new NotAllPlayersYetAreReady();
+		}
 
 	}
 }

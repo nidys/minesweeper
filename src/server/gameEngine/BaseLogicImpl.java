@@ -3,6 +3,7 @@ package server.gameEngine;
 import static common.utils.LoggingHelper.debug;
 import static common.utils.LoggingHelper.info;
 
+import java.rmi.NoSuchObjectException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -13,12 +14,15 @@ import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
 
+import server.GameManagerImpl;
 import server.PlayerData;
 import server.gameEngine.model.Board;
 import server.gameEngine.model.Field;
 import server.gameEngine.utils.Generator;
 
 import common.enums.GameMode;
+import common.enums.GameResult;
+import common.enums.LostReasonMessage;
 import common.exceptions.create.MaxOpponentSizeIsTooLarge;
 import common.exceptions.gameManager.NotAllPlayersYetAreReady;
 import common.exceptions.gameManager.UnknownUserId;
@@ -28,12 +32,15 @@ import common.exceptions.shot.PositionOutOfRange;
 import common.model.Config;
 import common.model.GameDifficultyFactors;
 import common.model.GameSettings;
+import common.model.GameSummary;
+import common.model.LostReason;
 import common.model.ShotResult;
 import common.network.callbacks.PlayerHandler;
 import common.network.protocols.GameLogic;
 
 public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameLogic {
-
+	String gameId;
+	GameManagerImpl gameManager;
 	protected static final int MAX_PLAYERS = 4;
 	// <userId, (board,callback)>
 	Map<String, PlayerData> players = new HashMap<String, PlayerData>();
@@ -50,17 +57,22 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 
 	private int boardSizeX, boardSizeY, bombsNumber;
 
-	public void setGameConfiguration(Config gameConfig) throws MaxOpponentSizeIsTooLarge {
+	public void setGameConfiguration(Config gameConfig, GameManagerImpl gameManager)
+			throws MaxOpponentSizeIsTooLarge {
+		this.gameId = gameConfig.getGameId();
+		this.gameManager = gameManager;
 		hostUserId = gameConfig.getUserNick();
 		setBoardSize(gameConfig);
 		isNormal = gameConfig.isNormal();
 		if (isNormal == false) {
 			isLifecount = gameConfig.isLifecount();
 			isTimed = gameConfig.isTimed();
+			boardAmount = gameConfig.getBoardAmount();
+		} else {
+			boardAmount = 1;
 		}
 		gameDuration = gameConfig.getGameDuration();
 		lifeAmount = gameConfig.getLifeAmount();
-		boardAmount = gameConfig.getBoardAmount();
 		maxOpponentAmount = gameConfig.getMaxOpponentAmount();
 		if (maxOpponentAmount > MAX_PLAYERS) {
 			info(log,
@@ -129,7 +141,7 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 				* boardSizeY), gameConfig.getPlayerHandler()));
 	}
 
-	private Field[][] getCopyOfGeneratedBoard(int num) {
+	protected Field[][] getCopyOfGeneratedBoard(int num) {
 		if (num >= generatedBoards.size()) {
 			debug(log, "Generate additional boards");
 			generatedBoards = Generator.generate(5, generatedBoards, bombsNumber, boardSizeX,
@@ -182,6 +194,8 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 	@Override
 	public abstract void leaveBeforeEnd(String userNick) throws RemoteException;
 
+	// ----------------------
+
 	public void setEngine() throws RemoteException, NotAllPlayersYetAreReady {
 		for (Entry<String, PlayerData> entry : players.entrySet()) {
 			if (entry.getValue().selectedReady == false) {
@@ -207,6 +221,44 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 			throw new UnknownUserId();
 		}
 		players.get(userNick).selectedReady = true;
+	}
+
+	public boolean areAllReady() {
+		for (String player : players.keySet()) {
+			if (players.get(player).selectedReady == false) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	protected void unregisterMyself() {
+		try {
+			gameManager.unregisterGame(gameId);
+			UnicastRemoteObject.unexportObject(this, true);
+		} catch (NoSuchObjectException e) {
+			e.printStackTrace();
+		}
+	}
+
+	protected void removePlayerAndFisnishIfLast(String userNick) throws RemoteException {
+		players.remove(userNick);
+		if (players.size() == 1) {
+			info(log, "Last player left,  report finish game");
+			for (Entry<String, PlayerData> entry : players.entrySet()) {
+				entry.getValue().playerHandler.endGame(new GameSummary(GameResult.WIN));
+			}
+			unregisterMyself();
+		}
+	}
+
+	protected void informOthersAboutPlayerLost(String userNick, LostReasonMessage msg)
+			throws RemoteException {
+		for (Entry<String, PlayerData> entry : players.entrySet()) {
+			if (entry.getKey().equals(userNick) == false) {
+				entry.getValue().playerHandler.playerLost(new LostReason(userNick, msg));
+			}
+		}
 	}
 
 	// #############################################################

@@ -2,7 +2,6 @@ package common.network.protocols;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.List;
 
 import common.exceptions.shot.PositionOutOfRange;
 import common.model.ShotResult;
