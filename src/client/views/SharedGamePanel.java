@@ -3,14 +3,14 @@ package client.views;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
-import javax.swing.JPanel;
-
 import client.controllers.MyBombFielsBtnController;
-import client.views.component.PlayerGameBoardPanel;
+import client.views.component.GameBoardPanel;
+
+import common.model.DiscoveredField;
 
 public class SharedGamePanel extends GamePanelBase {
 
-	private PlayerGameBoardPanel gameBoard;
+	private GameBoardPanel gameBoard;
 	
 	public SharedGamePanel() {
 		initUI();
@@ -26,8 +26,8 @@ public class SharedGamePanel extends GamePanelBase {
 	}
 	
 	@Override
-	public void addPlayer(PlayerGameBoardPanel playerGameBoardPanel) {
-		this.gameBoard = playerGameBoardPanel;
+	public void addNewPlayerGameBoardPanel(GameBoardPanel gameBoardPanel) {
+		this.gameBoard = gameBoardPanel;
 
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.fill = GridBagConstraints.BOTH;
@@ -43,34 +43,21 @@ public class SharedGamePanel extends GamePanelBase {
 
 	}
 
-	@Override
-	public void setFieldAsBomb(int position) {
-		gameBoard.setFieldAsBomb(position);
-
-	}
-
-	@Override
-	public void setFieldAsEmpty(int position) {
-		gameBoard.setFieldAsEmpty(position);
-
-
-	}
-
-	@Override
+		@Override
 	public void resetFields() {
 		gameBoard.resetFields();
 
 	}
 
 	@Override
-	public void setFieldAsFlagged(int position) {
-		gameBoard.setFieldAsFlagged(position);
+	public void setFieldFlagged(int position) {
+		gameBoard.setFieldFlagged(position);
 
 	}
 
 	@Override
-	public void setFieldAsEmptyWithValue(int position, int value) {
-		gameBoard.setFieldAsValued(position, value);
+	public void setField(DiscoveredField field) {
+		gameBoard.setField(field);
 
 	}
 
@@ -79,5 +66,6 @@ public class SharedGamePanel extends GamePanelBase {
 		// TODO Auto-generated method stub
 
 	}
+
 
 }

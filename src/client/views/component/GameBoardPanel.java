@@ -1,6 +1,8 @@
 package client.views.component;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -14,14 +16,15 @@ import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 
 import client.controllers.MyBombFielsBtnController;
+import client.internationalization.DescriptionText;
 import client.utils.GraphicsFactory;
-
+import common.model.DiscoveredField;
 import common.model.GameDifficultyFactors;
 
 @SuppressWarnings("serial")
 public class GameBoardPanel extends JPanel {
 
-	private String playerName; // TODO Is it used?
+	private String playerName;
 	private int boardSizeX;
 	private int boardSizeY;
 	private int bombsAmount;
@@ -70,8 +73,7 @@ public class GameBoardPanel extends JPanel {
 		gbl_statusPanel.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
 		statusPanel.setLayout(gbl_statusPanel);
 
-		// TODO GUI Internationalization
-		playerNameLbl = new JLabel("UserNick");
+		playerNameLbl = new JLabel(this.playerName);
 		playerNameLbl.setFont(new Font("Segoe WP", Font.BOLD, 11));
 		GridBagConstraints gbc_lblUserNick = new GridBagConstraints();
 		gbc_lblUserNick.fill = GridBagConstraints.BOTH;
@@ -99,8 +101,7 @@ public class GameBoardPanel extends JPanel {
 		gbc_lblBombs.gridy = 0;
 		statusPanel.add(bombsLbl, gbc_lblBombs);
 
-		// TODO GUI Internationalization
-		durationLbl = new JLabel("Duration: " + this.duration);
+		durationLbl = new JLabel(DescriptionText.DURATION + this.duration);
 		durationLbl.setFont(new Font("Segoe WP", Font.BOLD, 11));
 		GridBagConstraints gbc_lblDuration = new GridBagConstraints();
 		gbc_lblDuration.fill = GridBagConstraints.BOTH;
@@ -124,32 +125,88 @@ public class GameBoardPanel extends JPanel {
 		}
 	}
 
-	// TODO All of those setFieldAs.. methods should me merged as one
-	// method setField(..) with proper parameters. Check MainView.SetField() 
-	// for reference.
-	public void setFieldAsBomb(int pos) {
-		board[pos].setBackground(Color.RED);
-		board[pos].setIcon(GraphicsFactory.getBombIcon());
-		board[pos].setPreferredSize(new Dimension(32, 32));
-		board[pos].setText("");
-		faceLbl.setIcon(GraphicsFactory.getDeadFaceIcon());
+	
+	
+
+	public void resetFields() {
+		for (int i = 0; i < board.length; i++){
+			board[i].setBackground(null);
+			board[i].setText("");
+			board[i].setIcon(null);
+		}
+		faceLbl.setIcon(GraphicsFactory.getHappyFaceIcon());
+		enableComponents(gameBoardPanel, true);
+	}
+	
+	private void generateBoard() {
+		board = new FieldButton[boardSizeX * boardSizeY];
+		for (int i = 0; i < boardSizeX; ++i) {
+			for (int j = 0; j < boardSizeY; ++j) {
+				board[i * boardSizeX + j] = createAndAddBombFieldBtn( i, j);
+			}
+		}
 	}
 
-	public void setFieldAsValued(int pos, int value) {
-		board[pos].setText(Integer.toString(value));
+	private FieldButton createAndAddBombFieldBtn(int i, int j) {
+		FieldButton btn = new FieldButton(i * boardSizeX + j);
+		btn.setPreferredSize(new Dimension(35, 35));
+		btn.setFont(new Font("Tahoma", Font.BOLD, 20));
+		gameBoardPanel.add(btn);
+		return btn;
 	}
-
-	public void setFieldAsEmpty(int pos) {
-		board[pos].setBackground(Color.GRAY);
-	}
-
-	public void setFieldAsEmptyWithValue(int pos, int value) {
-		board[pos].setText("" + value);
+	
+	
+	public void setField(DiscoveredField field) {
+		int fieldValue = field.getValue();
+		int position = field.getPosition();
+		switch (fieldValue) {
+		case -1:
+			board[position].setBackground(Color.RED);
+			board[position].setIcon(GraphicsFactory.getBombIcon());
+			board[position].setPreferredSize(new Dimension(32, 32));
+			faceLbl.setIcon(GraphicsFactory.getDeadFaceIcon());
+			enableComponents(gameBoardPanel, false);
+			break;
+		case 0:
+			board[position].setBackground(Color.GRAY);
+			break;
+		case 1:
+			board[position].setForeground(Color.BLUE);
+			board[position].setText(Integer.toString(fieldValue));
+			break;
+		case 2:
+			board[position].setForeground(Color.GREEN);
+			board[position].setText(Integer.toString(fieldValue));
+			break;
+		case 3:
+			board[position].setForeground(Color.RED);
+			board[position].setText(Integer.toString(fieldValue));
+			break;
+		case 4:
+			board[position].setForeground(Color.YELLOW);
+			board[position].setText(Integer.toString(fieldValue));
+			break;
+		case 5:
+			board[position].setForeground(Color.PINK);
+			board[position].setText(Integer.toString(fieldValue));
+			break;
+		case 6:
+			board[position].setForeground(Color.CYAN);
+			board[position].setText(Integer.toString(fieldValue));
+			break;
+		case 7:
+			board[position].setForeground(Color.MAGENTA);
+			board[position].setText(Integer.toString(fieldValue));
+			break;
+		case 8:
+			board[position].setForeground(Color.ORANGE);
+			board[position].setText(Integer.toString(fieldValue));
+			break;
+		}
 	}
 	
 	public void setFieldFlagged(int pos) {
 		if (!board[pos].isFlagged) { // so its not already discovered field
-			// board[pos - 1].setText("F");
 			board[pos].setBackground(UIManager.getColor("Button.shadow"));
 			board[pos].setText("");
 			board[pos].setIcon(GraphicsFactory.getFlagIcon());
@@ -164,30 +221,17 @@ public class GameBoardPanel extends JPanel {
 			board[pos].setIcon(null);
 			bombsLbl.setText((Integer.parseInt(bombsLbl.getText()) + 1) + "");
 			board[pos].isFlagged = false;
-		} else {
-			// ?????
-		}
+		} 
 	}
 	
-	// TODO What about clearing the images?
-	public void resetFields() {
-		for (int i = 0; i < board.length; i++)
-			board[i].setBackground(null);
-	}
+	public void enableComponents(Container container, boolean enable) {
+        Component[] components = container.getComponents();
+        for (Component component : components) {
+            component.setEnabled(enable);
+            if (component instanceof Container) {
+                enableComponents((Container)component, enable);
+            }
+        }
+    }
 	
-	private void generateBoard() {
-		board = new FieldButton[boardSizeX * boardSizeY];
-		for (int i = 0; i < boardSizeX; ++i) {
-			for (int j = 0; j < boardSizeY; ++j) {
-				board[i * boardSizeX + j] = createBombFieldBtn(i * boardSizeX + j + 1 + "", i, j);
-			}
-		}
-	}
-
-	private FieldButton createBombFieldBtn(String name, int i, int j) {
-		FieldButton btn = new FieldButton(i * boardSizeX + j);
-		btn.setPreferredSize(new Dimension(50, 50));
-		gameBoardPanel.add(btn);
-		return btn;
-	}
 }

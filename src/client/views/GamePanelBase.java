@@ -2,6 +2,8 @@ package client.views;
 
 import javax.swing.JPanel;
 
+import common.model.DiscoveredField;
+
 import client.controllers.MyBombFielsBtnController;
 import client.views.component.GameBoardPanel;
 
@@ -9,20 +11,16 @@ import client.views.component.GameBoardPanel;
 @SuppressWarnings("serial")
 public abstract class GamePanelBase extends JPanel {
 
-	public abstract void addPlayer(GameBoardPanel playerGameBoardPanel);
+	public abstract void addNewPlayerGameBoardPanel(GameBoardPanel playerGameBoardPanel);
 
 	public abstract void addBombFieldBtnListener(MyBombFielsBtnController listener);
 
-	public abstract void setFieldAsBomb(int position);
-
-	public abstract void setFieldAsEmpty(int position);
-
 	public abstract void resetFields();
 
-	public abstract void setFieldAsFlagged(int position);
-
-	public abstract void setFieldAsEmptyWithValue(int position, int value);
-
 	public abstract void setProgress(String opponentName, int progressValue);
+
+	public abstract void setField(DiscoveredField field);
+
+	public abstract void setFieldFlagged(int position);
 
 }

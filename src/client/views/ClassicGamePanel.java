@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
+import common.model.DiscoveredField;
 import client.controllers.MyBombFielsBtnController;
 import client.views.GameResultDialog.GameResult;
 import client.views.component.GameBoardPanel;
@@ -105,18 +106,11 @@ public class ClassicGamePanel extends GamePanelBase {
 		gameBoard.addBombFieldBtnListener(listener);
 	}
 
-	public void setFieldAsBomb(int position) {
-		gameBoard.setFieldAsBomb(position);
+	
 
-	}
-
-	public void setFieldAsEmptyWithValue(int position, int value) {
-		gameBoard.setFieldAsValued(position, value);
-
-	}
-
-	public void setFieldAsEmpty(int position) {
-		gameBoard.setFieldAsEmpty(position);
+	@Override
+	public void setField(DiscoveredField field) {
+		gameBoard.setField(field);
 
 	}
 
@@ -125,14 +119,15 @@ public class ClassicGamePanel extends GamePanelBase {
 
 	}
 
-	public void setFieldAsFlagged(int position) {
+	@Override
+	public void setFieldFlagged(int position) {
 		gameBoard.setFieldFlagged(position);
 
 	}
 
 	@Override
-	public void addPlayer(GameBoardPanel playerGameBoardPanel) {
-		this.gameBoard = playerGameBoardPanel;
+	public void addNewPlayerGameBoardPanel(GameBoardPanel gameBoardPanel) {
+		this.gameBoard = gameBoardPanel;
 
 		GridBagConstraints gbc_panel = new GridBagConstraints();
 		gbc_panel.fill = GridBagConstraints.BOTH;

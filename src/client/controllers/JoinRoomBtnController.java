@@ -64,9 +64,9 @@ public class JoinRoomBtnController extends BaseControllerForDialog {
 	}
 
 	private void initializeGameBoard(GameDifficultyFactors gameDifficultyFactors,
-		mainView.addPlayer(new PlayerGameBoardPanel(gameDifficultyFactors, playerName));
 			String playerName, GameMode mode) {
 		mainView.initializeGameBoard(mode);
+		mainView.addNewPlayerGameBoardPanel(new GameBoardPanel(gameDifficultyFactors, playerName));
 		componentsFactory.initializeBoardListeners();
 	}
 }

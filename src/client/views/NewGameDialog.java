@@ -22,8 +22,9 @@ import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.border.TitledBorder;
 
+import client.internationalization.ButtonNames;
+import client.internationalization.DescriptionText;
 import client.internationalization.DialogText;
-
 import common.enums.GameDifficulty;
 import common.enums.GameMode;
 
@@ -43,8 +44,6 @@ public class NewGameDialog extends DialogBase {
 	private JToggleButton sharedGameBtn;
 	private JToggleButton perksGameBtn;
 
-	private JPanel panelSettings;
-
 	private JRadioButton easyRbtn;
 	private JRadioButton mediumRbtn;
 	private JRadioButton hardRbtn;
@@ -58,8 +57,7 @@ public class NewGameDialog extends DialogBase {
 	public NewGameDialog(JFrame owner, boolean isModal) {
 		super(owner, isModal);
 		setAlwaysOnTop(true);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(
-				NewGameDialog.class.getResource("/resources/images/flag.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(NewGameDialog.class.getResource("/resources/images/flag.png")));
 		setTitle(DialogText.NEW_GAME_TITLE);
 		setLocationRelativeTo(owner);
 		buildGUI();
@@ -94,8 +92,7 @@ public class NewGameDialog extends DialogBase {
 		gbl_contentPanel.rowWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
 		contentPanel.setLayout(gbl_contentPanel);
 
-		// TODO GUI Internationalization
-		classicGameBtn = new JToggleButton("Classic");
+		classicGameBtn = new JToggleButton(ButtonNames.CLASSIC);
 		classicGameBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -121,8 +118,8 @@ public class NewGameDialog extends DialogBase {
 		gbc_classicGameButton.gridy = 0;
 		contentPanel.add(classicGameBtn, gbc_classicGameButton);
 
-		// TODO GUI Internationalization
-		sharedGameBtn = new JToggleButton("Shared");
+		
+		sharedGameBtn = new JToggleButton(ButtonNames.SHARED);
 		sharedGameBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -139,8 +136,7 @@ public class NewGameDialog extends DialogBase {
 		gbc_sharedGameButton.gridy = 0;
 		contentPanel.add(sharedGameBtn, gbc_sharedGameButton);
 
-		// TODO GUI Internationalization
-		perksGameBtn = new JToggleButton("Perks");
+		perksGameBtn = new JToggleButton(ButtonNames.SHARED);
 		perksGameBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -158,7 +154,7 @@ public class NewGameDialog extends DialogBase {
 		contentPanel.add(perksGameBtn, gbc_perksGameButton);
 
 		difficultyPanel = new JPanel();
-		difficultyPanel.setBorder(new TitledBorder(null, "Difficulty", TitledBorder.LEADING,
+		difficultyPanel.setBorder(new TitledBorder(null, DescriptionText.DIFFICULTY, TitledBorder.LEADING,
 				TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_difficultyPanel = new GridBagConstraints();
 		gbc_difficultyPanel.insets = new Insets(0, 0, 5, 0);
@@ -173,8 +169,7 @@ public class NewGameDialog extends DialogBase {
 		gbl_difficultyPanel.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
 		difficultyPanel.setLayout(gbl_difficultyPanel);
 
-		// TODO GUI Internationalization
-		easyRbtn = new JRadioButton("Easy");
+		easyRbtn = new JRadioButton(ButtonNames.EASY);
 		easyRbtn.setSelected(true);
 		buttonGroup.add(easyRbtn);
 		GridBagConstraints gbc_easyRbtn = new GridBagConstraints();
@@ -184,8 +179,7 @@ public class NewGameDialog extends DialogBase {
 		gbc_easyRbtn.gridy = 0;
 		difficultyPanel.add(easyRbtn, gbc_easyRbtn);
 
-		// TODO GUI Internationalization
-		mediumRbtn = new JRadioButton("Medium");
+		mediumRbtn = new JRadioButton(ButtonNames.MEDIUM);
 		buttonGroup.add(mediumRbtn);
 		GridBagConstraints gbc_mediumRbtn = new GridBagConstraints();
 		gbc_mediumRbtn.fill = GridBagConstraints.BOTH;
@@ -194,8 +188,7 @@ public class NewGameDialog extends DialogBase {
 		gbc_mediumRbtn.gridy = 0;
 		difficultyPanel.add(mediumRbtn, gbc_mediumRbtn);
 
-		// TODO GUI Internationalization
-		hardRbtn = new JRadioButton("Hard");
+		hardRbtn = new JRadioButton(ButtonNames.HARD);
 		buttonGroup.add(hardRbtn);
 		GridBagConstraints gbc_hardRbtn = new GridBagConstraints();
 		gbc_hardRbtn.fill = GridBagConstraints.BOTH;
@@ -217,8 +210,7 @@ public class NewGameDialog extends DialogBase {
 		gbl_buttonPanel.rowWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
 		buttonPanel.setLayout(gbl_buttonPanel);
 
-		// TODO GUI Internationalization
-		hostGameBtn = new JButton("Host");
+		hostGameBtn = new JButton(ButtonNames.HOST);
 		hostGameBtn.setEnabled(false);
 		GridBagConstraints gbc_hostGameButton = new GridBagConstraints();
 		gbc_hostGameButton.fill = GridBagConstraints.BOTH;
@@ -228,8 +220,7 @@ public class NewGameDialog extends DialogBase {
 		gbc_hostGameButton.gridy = 0;
 		buttonPanel.add(hostGameBtn, gbc_hostGameButton);
 
-		// TODO GUI Internationalization
-		joinGameBtn = new JButton("Join");
+		joinGameBtn = new JButton(ButtonNames.JOIN);
 		joinGameBtn.setEnabled(false);
 		GridBagConstraints gbc_joinGameButton = new GridBagConstraints();
 		gbc_joinGameButton.fill = GridBagConstraints.BOTH;
@@ -246,8 +237,7 @@ public class NewGameDialog extends DialogBase {
 		gbc_namePanel.gridy = 3;
 		getContentPane().add(namePanel, gbc_namePanel);
 		
-		// TODO GUI Internationalization
-		gameNameLbl = new JLabel("Nazwa gry:");
+		gameNameLbl = new JLabel(DescriptionText.GAME_NAME);
 		namePanel.add(gameNameLbl);
 		
 		gameNameTxtFld = new JTextField();
