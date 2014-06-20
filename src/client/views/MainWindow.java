@@ -30,6 +30,7 @@ import client.views.component.GameBoardPanel;
 import common.enums.GameMode;
 import common.model.DiscoveredField;
 import common.network.ServerAddress;
+import common.network.callbacks.PlayerHandler;
 
 /**
  * View for the Main component (view with the game board). Standard window.
@@ -41,6 +42,7 @@ public class MainWindow extends WindowBase {
 	private JTextField serverAddressTxtFld;
 	private JTextField playerNameTxtFld;
 	private GamePanelBase gamePanel;
+	private GameRoomDialog gameRoomDialog;
 
 	public MainWindow() {
 		setTitle(DialogText.MAINWINDOW_TITLE);
@@ -256,12 +258,22 @@ public class MainWindow extends WindowBase {
 			break;
 		case PERKS:
 			gamePanel = new PerksGamePanel();
-			setTitle(DialogText.MAINWINDOW_SHARED_TITLE);
+			setTitle(DialogText.MAINWINDOW_PERKS_TITLE);
 			break;
 		case SHARED:
-			throw new UnsupportedOperationException("NYI");
+			gamePanel = new SharedGamePanel();
+			setTitle(DialogText.MAINWINDOW_SHARED_TITLE);
 		}
 		getContentPane().add(gamePanel);
 	}
+
+	public GameRoomDialog getGameRoomDialog() {
+		return gameRoomDialog;
+	}
+	
+	public void setGameRoomDialog(GameRoomDialog gameRoomDialog) {
+		this.gameRoomDialog = gameRoomDialog;
+	}
+	
 
 }

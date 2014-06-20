@@ -5,9 +5,9 @@ import java.awt.GridBagLayout;
 
 import client.controllers.MyBombFielsBtnController;
 import client.views.component.GameBoardPanel;
-
 import common.model.DiscoveredField;
 
+@SuppressWarnings("serial")
 public class SharedGamePanel extends GamePanelBase {
 
 	private GameBoardPanel gameBoard;
@@ -65,6 +65,12 @@ public class SharedGamePanel extends GamePanelBase {
 	public void setProgress(String opponentName, int progressValue) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void addOpponent(String opponentName) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

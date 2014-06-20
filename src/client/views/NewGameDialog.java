@@ -246,7 +246,6 @@ public class NewGameDialog extends DialogBase {
 		// time
 		gameNameTxtFld.setText("Game Name " + String.valueOf(new Random().nextInt(100)));
 		
-		Dimension d = this.getLayout().preferredLayoutSize(this);
 		this.setSize(new Dimension(280, 210));
 	}
 	
@@ -339,15 +338,15 @@ public class NewGameDialog extends DialogBase {
 		return gameOptionsPanel.isBoardLimitSelected();
 	}
 	
-	public int getLivesCount() {
-		return gameOptionsPanel.getLivesCount();
+	public int getLifesAmount() {
+		return gameOptionsPanel.getLifesAmount();
 	}
 	
-	public int getTimeAmount() {
+	public long getTimeAmount() {
 		return gameOptionsPanel.getTimeAmount();
 	}
 	
-	public int getBoardLimit() {
-		return gameOptionsPanel.getBoardLimit();
+	public int getBoardAmount() {
+		return gameOptionsPanel.getBoardAmount();
 	}
 }

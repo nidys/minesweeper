@@ -18,6 +18,10 @@ import java.awt.event.MouseEvent;
 
 public class ClassicGameOptionsPanel extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JCheckBox chckbxWinWhenSolved;
 	private JCheckBox chckbxLivesCount;
 	private JCheckBox chckbxTimed;
@@ -25,7 +29,7 @@ public class ClassicGameOptionsPanel extends JPanel {
 
 	private JSpinner livesSpinner;
 	private JSpinner timeSpinner;
-	private JSpinner boarAmountSpinner;
+	private JSpinner boardAmountSpinner;
 
 	public ClassicGameOptionsPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -96,7 +100,7 @@ public class ClassicGameOptionsPanel extends JPanel {
 		chckbxBoardLimit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				boarAmountSpinner.setEnabled(true);
+				boardAmountSpinner.setEnabled(true);
 			}
 		});
 		GridBagConstraints gbc_chckbxBoardLimit = new GridBagConstraints();
@@ -106,12 +110,12 @@ public class ClassicGameOptionsPanel extends JPanel {
 		gbc_chckbxBoardLimit.gridy = 3;
 		add(chckbxBoardLimit, gbc_chckbxBoardLimit);
 
-		boarAmountSpinner = new JSpinner();
-		boarAmountSpinner.setEnabled(false);
+		boardAmountSpinner = new JSpinner();
+		boardAmountSpinner.setEnabled(false);
 		GridBagConstraints gbc_spinner_boardLimit = new GridBagConstraints();
 		gbc_spinner_boardLimit.gridx = 1;
 		gbc_spinner_boardLimit.gridy = 3;
-		add(boarAmountSpinner, gbc_spinner_boardLimit);
+		add(boardAmountSpinner, gbc_spinner_boardLimit);
 	}
 
 	public boolean isWinWhenSolvedSelected() {
@@ -130,15 +134,15 @@ public class ClassicGameOptionsPanel extends JPanel {
 		return chckbxBoardLimit.isSelected();
 	}
 
-	public int getLivesCount() {
+	public int getLifesAmount() {
 		return (int) livesSpinner.getValue();
 	}
 
-	public int getTimeAmount() {
-		return (int) timeSpinner.getValue();
+	public long getTimeAmount() {
+		return Integer.valueOf((int)timeSpinner.getValue()).longValue();
 	}
 
-	public int getBoardLimit() {
-		return (int) boarAmountSpinner.getValue();
+	public int getBoardAmount() {
+		return (int) boardAmountSpinner.getValue();
 	}
 }

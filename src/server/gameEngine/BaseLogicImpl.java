@@ -90,7 +90,7 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 	private void setOpponentInOtherPlayers(String userNick) throws RemoteException {
 		for (String player : getOtherPlayers(userNick)) {
 			info(log, "Sending setOpponent to [%s]", player);
-			players.get(player).playerHandler.setOpponents(userNick);
+			players.get(player).playerHandler.addOpponent(userNick);
 		}
 	}
 
@@ -155,7 +155,7 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 		return new GameSettings((GameLogic) this, factors, opponents, hostUserId);
 	}
 
-	private List<String> getOtherPlayers(String userNick) {
+	public List<String> getOtherPlayers(String userNick) {
 		List<String> opponents = new ArrayList<String>(players.keySet());
 		opponents.remove(userNick);
 		return opponents;
@@ -192,6 +192,7 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 		for (PlayerData playerData : players.values()) {
 			playerData.playerHandler.setEngine(this);
 		}
+		
 		gammeRunning = true;
 	}
 
@@ -201,12 +202,16 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 		return gammeRunning;
 	}
 
-	public void markAsReady(String userNick) throws UnknownUserId {
+	public void markAsReady(String userNick) throws UnknownUserId, RemoteException {
 		if (players.get(userNick) == null) {
 			debug(log, "Player[%s] is not in game", userNick);
 			throw new UnknownUserId();
 		}
 		players.get(userNick).selectedReady = true;
+
+		List<String> opponents = getOtherPlayers(userNick);
+		for (String opName : opponents)
+			players.get(opName).playerHandler.changeStateToReady(userNick);
 	}
 
 	// #############################################################

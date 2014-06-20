@@ -63,4 +63,10 @@ public class PerksGamePanel extends GamePanelBase {
 		
 	}
 
+	@Override
+	public void addOpponent(String opponentName) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

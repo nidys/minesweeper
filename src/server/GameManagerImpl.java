@@ -76,8 +76,18 @@ public class GameManagerImpl implements GameManager {
 			info(log, "Player[%s] tried to join game[%s] but doesn't exist", userNick, gameId);
 			throw new InvalidGameNameException();
 		}
+		
+		//So there will be visible opponent in gameRoomDialog
+		
+		
 		BaseLogicImpl engine = games.get(gameId);
 		engine.addPlayer(userNick, playerHandler);
+		
+		List<String> otherPlayers = engine.getOtherPlayers(userNick);
+		for (String player: otherPlayers)
+			playerHandler.addOpponent(player);
+		
+		info(log, "Player[%s] joined game[%s] ", userNick, gameId);
 		return engine.getGameSettings(userNick);
 	}
 
@@ -146,6 +156,7 @@ public class GameManagerImpl implements GameManager {
 	@Override
 	public void start(String userNick, String gameId) throws RemoteException, UnknownGameId,
 			NotAllPlayersYetAreReady {
+		
 		if (games.get(gameId) == null) {
 			throw new UnknownGameId();
 		}

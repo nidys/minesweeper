@@ -22,5 +22,7 @@ public abstract class GamePanelBase extends JPanel {
 	public abstract void setField(DiscoveredField field);
 
 	public abstract void setFieldFlagged(int position);
+	
+	public abstract void addOpponent(String opponentName);
 
 }

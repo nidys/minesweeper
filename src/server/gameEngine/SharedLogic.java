@@ -57,8 +57,7 @@ public class SharedLogic extends BaseLogicImpl {
 		// TODO Auto-generated method stub
 
 		info(log, "Reset from player[%s]", userNick);
-		
-		players.get(userNick).resetBoard();
+
 	}
 
 	@Override

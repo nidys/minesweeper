@@ -67,8 +67,8 @@ public class ComponentsFactory {
 		return gamesListView;
 	}
 	
-	public GameRoomDialog createGameRoomComponent(String hostName, String gameId) {
-		gameRoomView = new GameRoomDialog(gameId, hostName, mainView, true);
+	public GameRoomDialog createGameRoomComponent(String playerName, String gameId, boolean isHost) {
+		gameRoomView = new GameRoomDialog(gameId, playerName, isHost, mainView, true);
 		initializeStartGameListeners();
 		
 		return gameRoomView;

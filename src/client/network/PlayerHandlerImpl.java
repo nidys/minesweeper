@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import static common.utils.LoggingHelper.info;
 import client.views.MainWindow;
+import client.views.component.GameBoardPanel;
 import common.enums.GameInterruptMessage;
 import common.model.GameSummary;
 import common.model.LostReason;
@@ -58,6 +59,7 @@ public class PlayerHandlerImpl extends UnicastRemoteObject implements PlayerHand
 	public void setProgress(int progress, String playerNick) throws RemoteException {
 		info(log, "Setting progress to[%d]", progress);
 		// TODO Only For CLASSIC. See method description
+		view.setProgress(playerNick, progress);
 
 	}
 
@@ -72,6 +74,8 @@ public class PlayerHandlerImpl extends UnicastRemoteObject implements PlayerHand
 	@Override
 	public void setEngine(GameLogic engine) throws RemoteException {
 		netManager.setEngine(engine);
+		view.getGameRoomDialog().setVisible(false);
+		
 		// TODO invoke some window or set enable on board view?
 	}
 
@@ -80,6 +84,21 @@ public class PlayerHandlerImpl extends UnicastRemoteObject implements PlayerHand
 		// TODO Look at 'ending scenarios' defined in gdoc for information what
 		// should be done here
 
+	}
+	
+	@Override
+	public void addOpponent(String opponentName) throws RemoteException
+	{
+		view.getGameRoomDialog().addOpponent(opponentName);
+		view.getGameRoomDialog().pack();
+	}
+
+	@Override
+	public void changeStateToReady(String opponentName) throws RemoteException {
+		if (opponentName == null)
+			return;
+		view.getGameRoomDialog().setOpponentReady(opponentName);
+		
 	}
 
 	// @Override

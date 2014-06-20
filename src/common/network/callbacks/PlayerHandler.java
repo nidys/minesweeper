@@ -37,4 +37,9 @@ public interface PlayerHandler extends Remote, Serializable {
 	public void reportError(GameInterruptMessage errorMsg) throws RemoteException;
 
 	public void setEngine(GameLogic engine) throws RemoteException;
+	
+	public void addOpponent(String opponentName) throws RemoteException;
+
+	void changeStateToReady(String opponentName) throws RemoteException;
+	
 }

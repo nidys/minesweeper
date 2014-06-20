@@ -3,16 +3,15 @@ package client.controllers;
 import java.awt.event.ActionEvent;
 import java.rmi.RemoteException;
 
-import common.enums.GameMode;
-import common.exceptions.gameManager.NotAllPlayersYetAreReady;
-import common.exceptions.gameManager.UnknownGameId;
-import common.exceptions.gameManager.UnknownUserId;
-import common.model.GameDifficultyFactors;
 import client.controllers.base.BaseControllerForDialog;
 import client.utils.ControllerGenerator;
 import client.views.GameRoomDialog;
 import client.views.MainWindow;
 import client.views.component.GameBoardPanel;
+
+import common.exceptions.gameManager.NotAllPlayersYetAreReady;
+import common.exceptions.gameManager.UnknownGameId;
+import common.exceptions.gameManager.UnknownUserId;
 
 public class StartGameBtnController extends BaseControllerForDialog {
 	private MainWindow mainView;
@@ -29,9 +28,13 @@ public class StartGameBtnController extends BaseControllerForDialog {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		try {
+			
+			
 			netManager.start(gameState.getUserNick(), gameState.getGameId());
+			
 			mainView.initializeGameBoard(gameState.getMode());
-			mainView.addNewPlayerGameBoardPanel(new GameBoardPanel(gameState.getDifficultyFactors(), gameState.getUserNick()));
+			mainView.addNewPlayerGameBoardPanel(new GameBoardPanel(gameState.getDifficultyFactors(), gameState.getUserNick(), 3, 120)); //TODO Changed it.
+			
 			componentsFactory.initializeBoardListeners();
 
 			gameRoomView.setVisible(false);

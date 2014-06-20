@@ -30,22 +30,24 @@ public class GameBoardPanel extends JPanel {
 	private int boardSizeX;
 	private int boardSizeY;
 	private int bombsAmount;
-	private long duration;
+	private int lifeAmount;
+	private long gameDuration;
+	
 	private FieldButton[] board;
 	private JPanel statusPanel;
 	private JPanel gameBoardPanel;
 	private JLabel playerNameLbl;
 	private JLabel bombsLbl;
 	private JLabel durationLbl;
-	private JLabel faceLbl;
+	private JLabel lblLifeCount;
 
-	public GameBoardPanel(GameDifficultyFactors gameDifficultyFactors, String playerName) {
+	public GameBoardPanel(GameDifficultyFactors gameDifficultyFactors, String playerName, int lifeAmount, long gameDuration) {
 		this.playerName = playerName;
 		this.boardSizeX = gameDifficultyFactors.getBoardSizeX();
 		this.boardSizeY = gameDifficultyFactors.getBoardSizeY();
 		this.bombsAmount = gameDifficultyFactors.getBombsAmount();
-		// TODO MALY Add duration
-		this.duration = 100;
+		this.lifeAmount = lifeAmount;
+		this.gameDuration = gameDuration;
 
 		createBasicComponents();
 		generateBoard();
@@ -68,9 +70,9 @@ public class GameBoardPanel extends JPanel {
 		gbc_statusPanel.gridy = 0;
 		add(statusPanel, gbc_statusPanel);
 		GridBagLayout gbl_statusPanel = new GridBagLayout();
-		gbl_statusPanel.columnWidths = new int[] { 68, 111, 61, 179, 61, 0, 0 };
+		gbl_statusPanel.columnWidths = new int[] { 68, 179, 0, 61, 0, 0 };
 		gbl_statusPanel.rowHeights = new int[] { 26, 0 };
-		gbl_statusPanel.columnWeights = new double[] { 0.0, 1.0, 0.0, 1.0, 0.0, 0.0,
+		gbl_statusPanel.columnWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 0.0,
 				Double.MIN_VALUE };
 		gbl_statusPanel.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
 		statusPanel.setLayout(gbl_statusPanel);
@@ -83,32 +85,44 @@ public class GameBoardPanel extends JPanel {
 		gbc_lblUserNick.gridx = 0;
 		gbc_lblUserNick.gridy = 0;
 		statusPanel.add(playerNameLbl, gbc_lblUserNick);
-
-		faceLbl = new JLabel("");
-		faceLbl.setIcon(GraphicsFactory.getHappyFaceIcon());
-		GridBagConstraints gbc_lblFace = new GridBagConstraints();
-		gbc_lblFace.insets = new Insets(0, 0, 0, 5);
-		gbc_lblFace.gridx = 2;
-		gbc_lblFace.gridy = 0;
-		statusPanel.add(faceLbl, gbc_lblFace);
+		
+		lblLifeCount = new JLabel(DescriptionText.LIFES_COUNT + lifeAmount);
+		lblLifeCount.setFont(new Font("Segoe WP", Font.BOLD, 11));
+		GridBagConstraints gbc_lblLifeCount = new GridBagConstraints();
+		gbc_lblLifeCount.fill = GridBagConstraints.VERTICAL;
+		gbc_lblLifeCount.insets = new Insets(0, 0, 0, 5);
+		gbc_lblLifeCount.gridx = 2;
+		gbc_lblLifeCount.gridy = 0;
+		statusPanel.add(lblLifeCount, gbc_lblLifeCount);
+		
+		if (lifeAmount <= 0)
+			lblLifeCount.setVisible(false);
+		else
+			lblLifeCount.setVisible(true);
 
 		bombsLbl = new JLabel("" + this.bombsAmount);
 		bombsLbl.setFont(new Font("Segoe WP", Font.BOLD, 11));
 		bombsLbl.setIcon(GraphicsFactory.getFlagIcon());
 		GridBagConstraints gbc_lblBombs = new GridBagConstraints();
-		gbc_lblBombs.fill = GridBagConstraints.BOTH;
+		gbc_lblBombs.fill = GridBagConstraints.VERTICAL;
 		gbc_lblBombs.insets = new Insets(0, 0, 0, 5);
-		gbc_lblBombs.gridx = 4;
+		gbc_lblBombs.gridx = 3;
 		gbc_lblBombs.gridy = 0;
 		statusPanel.add(bombsLbl, gbc_lblBombs);
 
-		durationLbl = new JLabel(DescriptionText.DURATION + this.duration);
+		
+		durationLbl = new JLabel(DescriptionText.DURATION + gameDuration);
 		durationLbl.setFont(new Font("Segoe WP", Font.BOLD, 11));
 		GridBagConstraints gbc_lblDuration = new GridBagConstraints();
-		gbc_lblDuration.fill = GridBagConstraints.BOTH;
-		gbc_lblDuration.gridx = 5;
+		gbc_lblDuration.fill = GridBagConstraints.VERTICAL;
+		gbc_lblDuration.gridx = 4;
 		gbc_lblDuration.gridy = 0;
 		statusPanel.add(durationLbl, gbc_lblDuration);
+		
+		if (gameDuration <= 0)
+			durationLbl.setVisible(false);
+		else
+			durationLbl.setVisible(true);
 
 		gameBoardPanel = new JPanel();
 		GridBagConstraints gbc_gameBoardPanel = new GridBagConstraints();
@@ -116,6 +130,7 @@ public class GameBoardPanel extends JPanel {
 		gbc_gameBoardPanel.gridy = 1;
 		add(gameBoardPanel, gbc_gameBoardPanel);
 		gameBoardPanel.setLayout(new GridLayout(boardSizeX, boardSizeY));
+		//gameBoardPanel.setLayout(new GridLayout(5, 5));
 
 	}
 
@@ -134,9 +149,7 @@ public class GameBoardPanel extends JPanel {
 			board[i].setText("");
 			board[i].setIcon(null);
 		}
-		faceLbl.setIcon(GraphicsFactory.getHappyFaceIcon());
 		enableComponents(gameBoardPanel, true);
-		ignoreEvents = false;
 	}
 	
 	private void generateBoard() {
@@ -150,8 +163,8 @@ public class GameBoardPanel extends JPanel {
 
 	private FieldButton createAndAddBombFieldBtn(int i, int j) {
 		FieldButton btn = new FieldButton(i * boardSizeX + j);
-		btn.setPreferredSize(new Dimension(40, 40));
-		btn.setFont(new Font("Tahoma", Font.BOLD, 18));
+		btn.setPreferredSize(new Dimension(50, 50));
+		btn.setFont(new Font("Tahoma", Font.BOLD, 15));
 		gameBoardPanel.add(btn);
 		return btn;
 	}
@@ -165,7 +178,6 @@ public class GameBoardPanel extends JPanel {
 			board[position].setBackground(Color.RED);
 			board[position].setIcon(GraphicsFactory.getBombIcon());
 			board[position].setPreferredSize(new Dimension(32, 32));
-			faceLbl.setIcon(GraphicsFactory.getDeadFaceIcon());
 			enableComponents(gameBoardPanel, false);
 			break;
 		case 0:
