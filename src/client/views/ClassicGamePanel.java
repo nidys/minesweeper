@@ -52,9 +52,6 @@ public class ClassicGamePanel extends GamePanelBase {
 		add(progressPanel, gbc_progressPanel);
 	}
 
-	// public void setGameBoard(PlayerGameBoardPanel gameBoard) {
-	//
-	// }
 
 	public void addOpponent(String opponentName) {
 		Opponent opponent = new Opponent();

@@ -69,6 +69,11 @@ public class MyBombFielsBtnController extends BaseControllerForField {
 					// TODO handle other fields, should game be continued,
 					// update inside clock etc.
 					List<DiscoveredField> results = shotResult.getUnrevealed();
+					
+					//TODO Maly ? Sometimes after reset results is null.
+					if (results == null)
+						return;
+					
 					for (DiscoveredField result : results)
 						mainView.setField(result);
 

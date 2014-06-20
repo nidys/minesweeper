@@ -15,6 +15,8 @@ public final class ButtonNames {
 	public static final String EASY = "Easy";
 	public static final String MEDIUM = "Medium";
 	public static final String HARD = "Hard";
+	public static final String GO_TO_MENU = "Go to menu";
+	public static final String START = "Start";
 	
 	
 

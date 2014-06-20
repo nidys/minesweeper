@@ -1,15 +1,23 @@
 package client.views;
 
 import javax.swing.JPanel;
+
 import java.awt.GridBagLayout;
+
 import javax.swing.JCheckBox;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+
 import javax.swing.JSpinner;
+
+import client.internationalization.DescriptionText;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class ClassicGameOptionsPanel extends JPanel {
+
 	private JCheckBox chckbxWinWhenSolved;
 	private JCheckBox chckbxLivesCount;
 	private JCheckBox chckbxTimed;
@@ -28,8 +36,8 @@ public class ClassicGameOptionsPanel extends JPanel {
 				Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
-		// TODO GUI Internationalization
-		chckbxWinWhenSolved = new JCheckBox("Win when solved");
+		
+		chckbxWinWhenSolved = new JCheckBox(DescriptionText.WIN_WHEN_SOLVED);
 		GridBagConstraints gbc_chckbxWinWhenSolved = new GridBagConstraints();
 		gbc_chckbxWinWhenSolved.anchor = GridBagConstraints.WEST;
 		gbc_chckbxWinWhenSolved.insets = new Insets(0, 0, 5, 5);
@@ -37,8 +45,8 @@ public class ClassicGameOptionsPanel extends JPanel {
 		gbc_chckbxWinWhenSolved.gridy = 0;
 		add(chckbxWinWhenSolved, gbc_chckbxWinWhenSolved);
 
-		// TODO GUI Internationalization
-		chckbxLivesCount = new JCheckBox("Lives count");
+		
+		chckbxLivesCount = new JCheckBox(DescriptionText.LIVES_COUNT);
 		chckbxLivesCount.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -60,8 +68,8 @@ public class ClassicGameOptionsPanel extends JPanel {
 		gbc_spinner_lives.gridy = 1;
 		add(livesSpinner, gbc_spinner_lives);
 
-		// TODO GUI Internationalization
-		chckbxTimed = new JCheckBox("Timed");
+		
+		chckbxTimed = new JCheckBox(DescriptionText.TIMED);
 		chckbxTimed.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -83,8 +91,8 @@ public class ClassicGameOptionsPanel extends JPanel {
 		gbc_spinner_time.gridy = 2;
 		add(timeSpinner, gbc_spinner_time);
 
-		// TODO GUI Internationalization
-		chckbxBoardLimit = new JCheckBox("Board amount");
+
+		chckbxBoardLimit = new JCheckBox(DescriptionText.BOARD_AMOUNT);
 		chckbxBoardLimit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

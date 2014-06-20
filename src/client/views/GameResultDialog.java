@@ -8,10 +8,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import client.internationalization.ButtonNames;
 import client.utils.GraphicsFactory;
 
 @SuppressWarnings("serial")
 public class GameResultDialog extends JPanel {
+
 
 	private JLabel pictureLabel;
 	private JButton goToMenuButton;
@@ -28,14 +30,14 @@ public class GameResultDialog extends JPanel {
 		gridBagLayout.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
 		setLayout(gridBagLayout);
 
-		pictureLabel = new JLabel("Pic label");
+		pictureLabel = new JLabel();
 		GridBagConstraints gbc_pictureLabel = new GridBagConstraints();
 		gbc_pictureLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_pictureLabel.gridx = 0;
 		gbc_pictureLabel.gridy = 0;
 		add(pictureLabel, gbc_pictureLabel);
 
-		goToMenuButton = new JButton("Go to menu");
+		goToMenuButton = new JButton(ButtonNames.GO_TO_MENU);
 		GridBagConstraints gbc_goToMenuButton = new GridBagConstraints();
 		gbc_goToMenuButton.insets = new Insets(0, 0, 5, 5);
 		gbc_goToMenuButton.gridx = 0;
@@ -51,5 +53,6 @@ public class GameResultDialog extends JPanel {
 		} else {
 
 		}
+		setVisible(true);
 	}
 }
