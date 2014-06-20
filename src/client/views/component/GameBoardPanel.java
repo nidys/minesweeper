@@ -39,7 +39,7 @@ public class GameBoardPanel extends JPanel {
 	private JLabel playerNameLbl;
 	private JLabel bombsLbl;
 	private JLabel durationLbl;
-	private JLabel lblLifeCount;
+	private JLabel lifeCountLbl;
 
 	public GameBoardPanel(GameDifficultyFactors gameDifficultyFactors, String playerName, int lifeAmount, long gameDuration) {
 		this.playerName = playerName;
@@ -65,14 +65,14 @@ public class GameBoardPanel extends JPanel {
 		statusPanel.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		GridBagConstraints gbc_statusPanel = new GridBagConstraints();
 		gbc_statusPanel.insets = new Insets(0, 0, 5, 0);
-		gbc_statusPanel.fill = GridBagConstraints.VERTICAL;
+		gbc_statusPanel.fill = GridBagConstraints.BOTH;
 		gbc_statusPanel.gridx = 0;
 		gbc_statusPanel.gridy = 0;
 		add(statusPanel, gbc_statusPanel);
 		GridBagLayout gbl_statusPanel = new GridBagLayout();
 		gbl_statusPanel.columnWidths = new int[] { 68, 179, 0, 61, 0, 0 };
 		gbl_statusPanel.rowHeights = new int[] { 26, 0 };
-		gbl_statusPanel.columnWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 0.0,
+		gbl_statusPanel.columnWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 1.0,
 				Double.MIN_VALUE };
 		gbl_statusPanel.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
 		statusPanel.setLayout(gbl_statusPanel);
@@ -80,25 +80,25 @@ public class GameBoardPanel extends JPanel {
 		playerNameLbl = new JLabel(this.playerName);
 		playerNameLbl.setFont(new Font("Segoe WP", Font.BOLD, 11));
 		GridBagConstraints gbc_lblUserNick = new GridBagConstraints();
-		gbc_lblUserNick.fill = GridBagConstraints.BOTH;
+		gbc_lblUserNick.fill = GridBagConstraints.VERTICAL;
 		gbc_lblUserNick.insets = new Insets(0, 0, 0, 5);
 		gbc_lblUserNick.gridx = 0;
 		gbc_lblUserNick.gridy = 0;
 		statusPanel.add(playerNameLbl, gbc_lblUserNick);
 		
-		lblLifeCount = new JLabel(DescriptionText.LIFES_COUNT + lifeAmount);
-		lblLifeCount.setFont(new Font("Segoe WP", Font.BOLD, 11));
+		lifeCountLbl = new JLabel(DescriptionText.LIFES_COUNT + lifeAmount);
+		lifeCountLbl.setFont(new Font("Segoe WP", Font.BOLD, 11));
 		GridBagConstraints gbc_lblLifeCount = new GridBagConstraints();
 		gbc_lblLifeCount.fill = GridBagConstraints.VERTICAL;
 		gbc_lblLifeCount.insets = new Insets(0, 0, 0, 5);
 		gbc_lblLifeCount.gridx = 2;
 		gbc_lblLifeCount.gridy = 0;
-		statusPanel.add(lblLifeCount, gbc_lblLifeCount);
+		statusPanel.add(lifeCountLbl, gbc_lblLifeCount);
 		
 		if (lifeAmount <= 0)
-			lblLifeCount.setVisible(false);
+			lifeCountLbl.setVisible(false);
 		else
-			lblLifeCount.setVisible(true);
+			lifeCountLbl.setVisible(true);
 
 		bombsLbl = new JLabel("" + this.bombsAmount);
 		bombsLbl.setFont(new Font("Segoe WP", Font.BOLD, 11));
@@ -130,7 +130,7 @@ public class GameBoardPanel extends JPanel {
 		gbc_gameBoardPanel.gridy = 1;
 		add(gameBoardPanel, gbc_gameBoardPanel);
 		gameBoardPanel.setLayout(new GridLayout(boardSizeX, boardSizeY));
-		//gameBoardPanel.setLayout(new GridLayout(5, 5));
+//		gameBoardPanel.setLayout(new GridLayout(5, 5));
 
 	}
 
@@ -239,6 +239,10 @@ public class GameBoardPanel extends JPanel {
 				enableComponents((Container) component, enable);
 			}
 		}
+	}
+
+	public void setLifeLeft(int lifeLeft) {
+		lifeCountLbl.setText(DescriptionText.LIFES_COUNT + lifeLeft + "");
 	}
 
 }

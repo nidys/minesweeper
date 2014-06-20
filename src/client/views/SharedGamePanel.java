@@ -68,7 +68,13 @@ public class SharedGamePanel extends GamePanelBase {
 	}
 
 	@Override
-	public void addOpponent(String opponentName) {
+	public void addOpponentStatus(String opponentName) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setLifeLeft(int lifeLeft) {
 		// TODO Auto-generated method stub
 		
 	}

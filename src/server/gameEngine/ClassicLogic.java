@@ -50,19 +50,28 @@ public class ClassicLogic extends BaseLogicImpl {
 			return null; // TODO add malicious try to shot already shot
 							// position?
 		}
+		
+		
+		
+		// Progress should be changed even though the normal is not set
+		if (unrevealed.get(0).getValue() == Field.BOMB.getValue())
+		{
+			setProgress(userNick, board, 0);
+		}
+		else
+		{
+			setProgress(userNick, board, unrevealed.size());
+		}
+		
 		if (isNormal && unrevealed.get(0).getValue() == Field.BOMB.getValue()) {
 			debug(log, "Normal mode, game lost");
 			informOthersAboutPlayerLost(userNick, LostReasonMessage.NORMAL_MODE_LOST);
 			removePlayerAndFisnishIfLast(userNick);
+				
 			return new ShotResult(unrevealed, IGNORE_VAL, IGNORE_VAL, !GAME_CAN_BE_CONTINUED);
 		} else if (isNormal) {
 			debug(log, "Normal mode, successful shot");
-			for (String otherPlayer : players.keySet()) {
-				if (otherPlayer.equals(userNick) == false) {
-					players.get(otherPlayer).playerHandler.setProgress(board.getProgress(),
-							userNick);
-				}
-			}
+
 			return new ShotResult(unrevealed, IGNORE_VAL, IGNORE_VAL, GAME_CAN_BE_CONTINUED);
 		} else if (isLifecount) {
 			if (unrevealed.get(0).getValue() == Field.BOMB.getValue()) {
@@ -70,11 +79,29 @@ public class ClassicLogic extends BaseLogicImpl {
 				// TODO implement
 			}
 		}
+	
 
 		error(log, "implement correct shot result response");
 
 		// TODO return Shotresutl
 		return new ShotResult(unrevealed, 10, 10, true);
+	}
+
+	private void setProgress(String userNick, Board board,	int i) throws RemoteException {
+		
+		if (i != 0)
+			board.setExposed(board.getExposed() + i);
+		else
+			board.setExposed(0);
+		
+		for (String otherPlayer : players.keySet()) {
+			info(log, "For other player[%s] than [%s] set progress[%s]", otherPlayer, userNick, board.getProgress());
+			
+			if (otherPlayer.equals(userNick) == false) {
+				players.get(otherPlayer).playerHandler.setProgress(board.getProgress(),
+						userNick);
+			}
+		}
 	}
 
 	@Override

@@ -69,6 +69,9 @@ public class MyBombFielsBtnController extends BaseControllerForField {
 					// TODO handle other fields, should game be continued,
 					// update inside clock etc.
 					List<DiscoveredField> results = shotResult.getUnrevealed();
+					int lifeLeft = shotResult.getLifeLeft();
+					shotResult.getTimeLeft();
+					
 					
 					//TODO Maly ? Sometimes after reset results is null.
 					if (results == null)
@@ -76,6 +79,8 @@ public class MyBombFielsBtnController extends BaseControllerForField {
 					
 					for (DiscoveredField result : results)
 						mainView.setField(result);
+					
+					mainView.setLifeLeft(lifeLeft);
 
 					DiscoveredField result = results.get(0);
 					info(log, "Clicked field, user[%s], pos[%d], val[%d]", gameState.getUserNick(),

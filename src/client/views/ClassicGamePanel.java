@@ -20,6 +20,8 @@ public class ClassicGamePanel extends GamePanelBase {
 	private int progressMaxValue;
 	private Map<String, Opponent> opponentsMap = new HashMap<String, Opponent>();
 	
+	private int playerPoints = 0;
+	
 	public GameBoardPanel gameBoard;
 
 	private class Opponent {
@@ -44,7 +46,8 @@ public class ClassicGamePanel extends GamePanelBase {
 
 		progressPanel = new JPanel();
 		GridBagConstraints gbc_progressPanel = new GridBagConstraints();
-		gbc_progressPanel.fill = GridBagConstraints.BOTH;
+		gbc_progressPanel.anchor = GridBagConstraints.NORTH;
+		gbc_progressPanel.fill = GridBagConstraints.HORIZONTAL;
 		gbc_progressPanel.gridx = 1;
 		gbc_progressPanel.gridy = 0;
 		gbc_progressPanel.weightx = 0.5;
@@ -53,7 +56,7 @@ public class ClassicGamePanel extends GamePanelBase {
 	}
 
 
-	public void addOpponent(String opponentName) {
+	public void addOpponentStatus(String opponentName) {
 		Opponent opponent = new Opponent();
 
 		opponent.nameLabel = new JLabel(opponentName);
@@ -89,6 +92,13 @@ public class ClassicGamePanel extends GamePanelBase {
 
 	public void setProgress(String opponentName, int progressValue) {
 		opponentsMap.get(opponentName).progressBar.setValue(progressValue);
+		
+		if (progressValue == 0){
+			playerPoints += Integer.parseInt(opponentsMap.get(opponentName).pointsLabel.getText());
+		}
+		
+		opponentsMap.get(opponentName).pointsLabel.setText(progressValue + playerPoints + "");
+		
 		hasOpponentWon(opponentName, progressValue);
 	}
 
@@ -132,6 +142,12 @@ public class ClassicGamePanel extends GamePanelBase {
 		gbc_panel.gridy = 0;
 		add(this.gameBoard, gbc_panel);
 
+	}
+
+	@Override
+	public void setLifeLeft(int lifeLeft) {
+		gameBoard.setLifeLeft(lifeLeft);
+		
 	}
 
 }

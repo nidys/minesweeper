@@ -2,18 +2,19 @@ package client.controllers;
 
 import java.awt.event.ActionEvent;
 import java.rmi.RemoteException;
+import java.util.Map;
 
 import client.controllers.base.BaseControllerForDialog;
 import client.utils.ControllerGenerator;
 import client.views.GameRoomDialog;
+import client.views.GameRoomDialog.Opponent;
 import client.views.MainWindow;
 import client.views.component.GameBoardPanel;
-
 import common.exceptions.gameManager.NotAllPlayersYetAreReady;
 import common.exceptions.gameManager.UnknownGameId;
 import common.exceptions.gameManager.UnknownUserId;
-
 import static common.utils.LoggingHelper.info;
+
 import org.apache.log4j.Logger;
 public class StartGameBtnController extends BaseControllerForDialog {
 	private static Logger log = Logger.getLogger(BaseControllerForDialog.class);
@@ -40,8 +41,15 @@ public class StartGameBtnController extends BaseControllerForDialog {
 			mainView.addNewPlayerGameBoardPanel(new GameBoardPanel(gameState.getDifficultyFactors(), gameState.getUserNick(), 3, 120)); //TODO Changed it.
 			
 			componentsFactory.initializeBoardListeners();
-
+			
+			Map<String, Opponent> opponents = gameRoomView.getOpponentsMap();
+			
+			for (String playerName : opponents.keySet())
+				mainView.addOpponentStatus(playerName);
+			
+			
 			gameRoomView.setVisible(false);
+			
 			
 		} catch (RemoteException | UnknownGameId | NotAllPlayersYetAreReady
 				| UnknownUserId ex) {

@@ -274,6 +274,17 @@ public class MainWindow extends WindowBase {
 	public void setGameRoomDialog(GameRoomDialog gameRoomDialog) {
 		this.gameRoomDialog = gameRoomDialog;
 	}
+
+
+	public void addOpponentStatus(String playerName) {
+		gamePanel.addOpponentStatus(playerName);
+		pack();
+	}
+
+	public void setLifeLeft(int lifeLeft) {
+		gamePanel.setLifeLeft(lifeLeft);
+		
+	}
 	
 
 }

@@ -263,4 +263,12 @@ public class GameRoomDialog extends DialogBase {
 	public void setHost(boolean isHost) {
 		this.isHost = isHost;
 	}
+
+	public Map<String, Opponent> getOpponentsMap() {
+		return opponentsMap;
+	}
+
+	public void setOpponentsMap(Map<String, Opponent> opponentsMap) {
+		this.opponentsMap = opponentsMap;
+	}
 }
