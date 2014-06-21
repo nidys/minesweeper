@@ -5,8 +5,10 @@ import java.rmi.RemoteException;
 import java.util.Map;
 
 import client.controllers.base.BaseControllerForDialog;
+import client.internationalization.DialogText;
 import client.utils.ControllerGenerator;
 import client.views.GameRoomDialog;
+import client.views.MessageDialog;
 import client.views.GameRoomDialog.Opponent;
 import client.views.MainWindow;
 import client.views.component.GameBoardPanel;
@@ -17,6 +19,7 @@ import static common.utils.LoggingHelper.info;
 
 import org.apache.log4j.Logger;
 public class StartGameBtnController extends BaseControllerForDialog {
+
 	private static Logger log = Logger.getLogger(BaseControllerForDialog.class);
 	private MainWindow mainView;
 	private GameRoomDialog gameRoomView;
@@ -51,9 +54,33 @@ public class StartGameBtnController extends BaseControllerForDialog {
 			gameRoomView.setVisible(false);
 			
 			
-		} catch (RemoteException | UnknownGameId | NotAllPlayersYetAreReady
-				| UnknownUserId ex) {
+		} catch (RemoteException  ex)
+		{
+			
+		}
+		catch (UnknownGameId ex)
+		{
 			// TODO Auto-generated catch block
+			MessageDialog msg = new MessageDialog(null, true, DialogText.UNKNOWN_GAME_ID_EX_MSG, DialogText.PROBLEM_TITLE);
+			msg.setAlwaysOnTop(true);
+			msg.setVisible(true);
+			
+			ex.printStackTrace();
+		}
+		catch (NotAllPlayersYetAreReady ex)
+		{
+			// TODO Auto-generated catch block
+			MessageDialog msg = new MessageDialog(null, true, DialogText.NOT_ALL_PLAYERS_READY_EX_MSG,  DialogText.PROBLEM_TITLE);
+			msg.setAlwaysOnTop(true);
+			msg.setVisible(true);
+			ex.printStackTrace();
+		}
+		catch (UnknownUserId ex)
+		{
+			// TODO Auto-generated catch block
+			MessageDialog msg = new MessageDialog(null, true,  DialogText.UNKNOWN_USER_ID_EX_MSG,  DialogText.PROBLEM_TITLE);
+			msg.setAlwaysOnTop(true);
+			msg.setVisible(true);
 			ex.printStackTrace();
 		}
 	}

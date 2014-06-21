@@ -13,41 +13,26 @@ import javax.swing.JList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import client.controllers.CancelBtnController;
 import client.controllers.JoinRoomBtnController;
+import client.controllers.RefreshGamesListBtnController;
+import client.internationalization.ButtonNames;
 import client.internationalization.DialogText;
-
+import common.enums.GameMode;
 import common.model.AvailableGameInfo;
 
-// TODO MALY To be refactored.
+import javax.swing.JPanel;
+
+import java.awt.Font;
 
 @SuppressWarnings("serial")
 public class GamesListDialog extends DialogBase {
 
-	private JButton joinButton;
-	
-	public class Game {
-		String name;
-		String address;
-		String hostName;
-		int players;
 
-		public Game(String gameName, String gameAddress, String hostName, int players) {
-			name = gameName;
-			address = gameAddress;
-			this.hostName = hostName;
-			this.players = players;
-		}
-
-		@Override
-		public String toString() {
-			return name + " (" + address + ") Host: " + hostName + " Players: " + players;
-		}
-	}
-
-	// TODO Skwara To be replaced Game -> AvailableGameInfo 
-	private JList<Game> gamesList;
-	private DefaultListModel<Game> model;
+	private JList<AvailableGameInfo> gamesList;
+	private DefaultListModel<AvailableGameInfo> model;
 	private JButton joinBtn;
+	private JButton refreshBtn;
 
 	public GamesListDialog(JFrame owner, boolean isModal) {
 		super(owner, isModal);
@@ -55,7 +40,7 @@ public class GamesListDialog extends DialogBase {
 	}
 
 	private void buildGUI(JFrame owner) {
-		setBounds(100, 100, 400, 300);
+		setBounds(100, 100, 322, 300);
 		setAlwaysOnTop(true);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				NewGameDialog.class.getResource("/resources/images/flag.png")));
@@ -63,17 +48,53 @@ public class GamesListDialog extends DialogBase {
 		setLocationRelativeTo(owner);
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 181, 0 };
-		gridBagLayout.rowHeights = new int[] { 0, 0, 0 };
-		gridBagLayout.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
-		gridBagLayout.rowWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
+		gridBagLayout.columnWidths = new int[]{181};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{1.0};
+		gridBagLayout.rowWeights = new double[]{1.0, 0.0, Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
+		
+		JPanel btnPanel = new JPanel();
+		GridBagConstraints gbc_btnPanel = new GridBagConstraints();
+		gbc_btnPanel.fill = GridBagConstraints.BOTH;
+		gbc_btnPanel.gridx = 0;
+		gbc_btnPanel.gridy = 1;
+		getContentPane().add(btnPanel, gbc_btnPanel);
+		GridBagLayout gbl_btnPanel = new GridBagLayout();
+		gbl_btnPanel.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_btnPanel.rowHeights = new int[]{0, 0};
+		gbl_btnPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_btnPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		btnPanel.setLayout(gbl_btnPanel);
 
-		model = new DefaultListModel<Game>();
-		gamesList = new JList<Game>(model);
+		joinBtn = new JButton(ButtonNames.JOIN);
+		joinBtn.setFont(new Font("Tahoma", Font.BOLD, 11));
+		GridBagConstraints gbc_joinBtn = new GridBagConstraints();
+		gbc_joinBtn.insets = new Insets(0, 0, 0, 5);
+		gbc_joinBtn.gridx = 1;
+		gbc_joinBtn.gridy = 0;
+		btnPanel.add(joinBtn, gbc_joinBtn);
+		joinBtn.setEnabled(false);
+		
+		refreshBtn = new JButton(ButtonNames.REFRESH);
+		GridBagConstraints gbc_refreshBtn = new GridBagConstraints();
+		gbc_refreshBtn.insets = new Insets(0, 0, 0, 5);
+		gbc_refreshBtn.gridx = 3;
+		gbc_refreshBtn.gridy = 0;
+		btnPanel.add(refreshBtn, gbc_refreshBtn);
+		
+		JButton cancelBtn = new JButton(ButtonNames.CANCEL);
+		GridBagConstraints gbc_cancelBtn = new GridBagConstraints();
+		gbc_cancelBtn.insets = new Insets(0, 0, 0, 5);
+		gbc_cancelBtn.gridx = 5;
+		gbc_cancelBtn.gridy = 0;
+		btnPanel.add(cancelBtn, gbc_cancelBtn);
+		
+		model = new DefaultListModel<AvailableGameInfo>();
+		gamesList = new JList<AvailableGameInfo>(model);
 		gamesList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				//joinButton.setEnabled(true);
+				 joinBtn.setEnabled(true);
 			}
 		});
 		GridBagConstraints gbc_list = new GridBagConstraints();
@@ -81,53 +102,13 @@ public class GamesListDialog extends DialogBase {
 		gbc_list.fill = GridBagConstraints.BOTH;
 		gbc_list.gridx = 0;
 		gbc_list.gridy = 0;
-		gbc_list.gridwidth = 3;
 		getContentPane().add(gamesList, gbc_list);
 
-		joinBtn = new JButton("Join");
-		GridBagConstraints gbc_joinBtn = new GridBagConstraints();
-		gbc_joinBtn.gridx = 0;
-		gbc_joinBtn.gridy = 1;
-		getContentPane().add(joinBtn, gbc_joinBtn);
-
-		//joinButton = new JButton(ButtonNames.JOIN);
-		//joinButton.setEnabled(false);
-		//joinButton.addActionListener(new ActionListener() {
-		//	public void actionPerformed(ActionEvent e) {
-		//		joinGame();
-		//	}
-		//});
-		//GridBagConstraints gbc_joinButton = new GridBagConstraints();
-		//gbc_joinButton.anchor = GridBagConstraints.EAST;
-		//gbc_joinButton.gridx = 0;
-		//gbc_joinButton.gridy = 1;
-		//getContentPane().add(joinButton, gbc_joinButton);
-		//
-		//JButton refreshButton = new JButton(ButtonNames.REFRESH);
-		//refreshButton.addActionListener(new ActionListener() {
-		//	public void actionPerformed(ActionEvent e) {
-		//		refresh();
-		//	}
-		//});
-		//GridBagConstraints gbc_refreshButton = new GridBagConstraints();
-		//gbc_refreshButton.gridx = 1;
-		//gbc_refreshButton.gridy = 1;
-		//getContentPane().add(refreshButton, gbc_refreshButton);
-		//
-		//JButton cancelButton = new JButton(ButtonNames.CANCEL);
-		//cancelButton.addActionListener(new ActionListener() {
-		//	public void actionPerformed(ActionEvent e) {
-		//		cancel();
-		//	}
-		//});
-		//GridBagConstraints gbc_cancelButton = new GridBagConstraints();
-		//gbc_cancelButton.gridx = 2;
-		//gbc_cancelButton.gridy = 1;
-		//getContentPane().add(cancelButton, gbc_cancelButton);
 	}
 
-	public void addGame(String gameName, String gameAddress, String hostName, int players) {
-		Game game = new Game(gameName, gameAddress, hostName, players);
+	public void addGame(String gameId, GameMode gameMode, String hostPlayerName, int maxPlayers,
+			int currentlyConnectedPlayers) {
+		AvailableGameInfo game = new AvailableGameInfo(gameId, gameMode, hostPlayerName, maxPlayers, currentlyConnectedPlayers);
 		model.addElement(game);
 	}
 
@@ -135,44 +116,44 @@ public class GamesListDialog extends DialogBase {
 		joinBtn.addActionListener(listener);
 
 	}
+
+	
+	public void addCanceltnListener(CancelBtnController listener) {
+		joinBtn.addActionListener(listener);
+
+	}
+
+	public void addRefreshGamesListBtnListener(RefreshGamesListBtnController listener) {
+		joinBtn.addActionListener(listener);
+
+	}
+
+	
 	
 	public void setGames(List<AvailableGameInfo> games) {
-		for(AvailableGameInfo game : games) {
-			// TODO Skwara To be replaced Game -> AvailableGameInfo 
-			model.addElement(new Game(game.getGameId(), "gameAddress", game.getHostUser(), 1 ));
+		for (AvailableGameInfo game : games) {
+			model.addElement(game);
 		}
 	}
 
-	public void removeGame(String gameName) {
+	public void removeGame(String gameId) {
 		for (int i = 0; i < model.getSize(); i++) {
-			if (model.elementAt(i).name.equals(gameName)) {
+			if (model.elementAt(i).getGameId().equals(gameId)) {
 				model.removeElement(model.elementAt(i));
 			}
 		}
 	}
-	
-	public void setPlayersCount(String gameName, int players) {
+
+	public void setPlayersAmount(String gameId, int playersAmount) {
 		for (int i = 0; i < model.getSize(); i++) {
-			if (model.elementAt(i).name.equals(gameName)) {
-				model.elementAt(i).players = players;
+			if (model.elementAt(i).getGameId().equals(gameId)) {
+				model.elementAt(i).setCurrentlyConnectedPlayers(playersAmount);
 			}
 		}
 	}
 
 	public String getSelectedGame() {
-		return gamesList.getSelectedValue().name;
-	}
-	public void joinGame() {
-		Game selectedGame = (Game) gamesList.getSelectedValue();
-		//TODO send selected game to server
-	}
-	
-	public void refresh() {
-		//TODO send refresh request to server
-	}
-	
-	public void cancel() {
-		this.setVisible(false);
+		return gamesList.getSelectedValue().getGameId();
 	}
 
 }

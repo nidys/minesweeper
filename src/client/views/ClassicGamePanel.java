@@ -9,10 +9,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
-import common.model.DiscoveredField;
 import client.controllers.MyBombFielsBtnController;
-import client.views.GameResultDialog.GameResult;
 import client.views.component.GameBoardPanel;
+
+import common.model.DiscoveredField;
 
 @SuppressWarnings("serial")
 public class ClassicGamePanel extends GamePanelBase {
@@ -104,7 +104,7 @@ public class ClassicGamePanel extends GamePanelBase {
 
 	public void hasOpponentWon(String opponentName, int progress) {
 		if (progress == progressMaxValue) {
-			GameResultDialog gameResultDialog = new GameResultDialog(GameResult.FAIL, opponentName);
+			MessageDialog gameResultDialog = new MessageDialog(null, false, common.enums.GameResult.LOSE, opponentName, "You loose and gain XXX points", "You loose.");
 			gameResultDialog.setVisible(true);
 		}
 	}

@@ -147,7 +147,7 @@ public class GameManagerImpl implements GameManager {
 		for (AvailableGameInfo info : gameList) {
 			sb.append(String
 					.format("\n\tgameId[%s] gameMode[%s],hostUser[%s],currentlyConnected[%d], maxPlayers[%d]",
-							info.getGameId(), info.getGameMode(), info.getHostUser(),
+							info.getGameId(), info.getGameMode(), info.getHostPlayerName(),
 							info.getCurrentlyConnectedPlayers(), info.getMaxPlayers()));
 
 		}

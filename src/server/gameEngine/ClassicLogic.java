@@ -13,7 +13,6 @@ import server.PlayerData;
 import server.gameEngine.model.Board;
 import server.gameEngine.model.Field;
 import server.gameEngine.utils.Solver;
-
 import common.enums.GameMode;
 import common.enums.LostReasonMessage;
 import common.exceptions.shot.PositionOutOfRange;
@@ -66,8 +65,8 @@ public class ClassicLogic extends BaseLogicImpl {
 		if (isNormal && unrevealed.get(0).getValue() == Field.BOMB.getValue()) {
 			debug(log, "Normal mode, game lost");
 			informOthersAboutPlayerLost(userNick, LostReasonMessage.NORMAL_MODE_LOST);
-			removePlayerAndFisnishIfLast(userNick);
-				
+			removePlayerAndFinishIfLast(userNick);
+			
 			return new ShotResult(unrevealed, IGNORE_VAL, IGNORE_VAL, !GAME_CAN_BE_CONTINUED);
 		} else if (isNormal) {
 			debug(log, "Normal mode, successful shot");
@@ -78,8 +77,7 @@ public class ClassicLogic extends BaseLogicImpl {
 				pData.lifeAmount--;
 				// TODO implement
 			}
-		}
-	
+		}	
 
 		error(log, "implement correct shot result response");
 
@@ -106,13 +104,22 @@ public class ClassicLogic extends BaseLogicImpl {
 
 	@Override
 	public synchronized void resetBoard(String userNick) throws RemoteException {
-		if (isNormal) {
-			return;
-		}
+
+//TODO isNormal shouldn't affect boardReset
+		
+//		if (isNormal) {
+//			return;
+//		}
+		
+		info(log, "Reset from player[%s]", userNick);
+		
 		Board board = players.get(userNick).board;
+		
+		
 		if (board.getBoardNum() < boardAmount) {
 			info(log, "Reset from player[%s]", userNick);
 			board.incBoardNum();
+			
 			board.setBoard(getCopyOfGeneratedBoard(board.getBoardNum()));
 			for (String otherPlayer : players.keySet()) {
 				if (otherPlayer.equals(userNick) == false) {
@@ -120,21 +127,28 @@ public class ClassicLogic extends BaseLogicImpl {
 							userNick);
 				}
 			}
+			
+			if (board.getBoardNum() == boardAmount)
+				players.get(userNick).playerHandler.informAboutLasBoard();
+			
 		} else if (board.getBoardNum() == boardAmount) {
 			info(log, "Player[%s] used all bards", userNick);
 			informOthersAboutPlayerLost(userNick, LostReasonMessage.NO_BOARDS_LEFT);
-			removePlayerAndFisnishIfLast(userNick);
+			informPlayerAboutLost(userNick, LostReasonMessage.NO_BOARDS_LEFT);
+			removePlayerAndFinishIfLast(userNick);
 		} else {
 			error(log, "client should not be able to click reset after he lost");
 			// TODO handle malicious ?
 		}
 	}
 
+	
+
 	@Override
 	public synchronized void leaveBeforeEnd(String userNick) throws RemoteException {
 		debug(log, "Player[%s] leaving game", userNick);
 		informOthersAboutPlayerLost(userNick, LostReasonMessage.PLAYER_LEFT_BEFORE_END);
-		removePlayerAndFisnishIfLast(userNick);
+		removePlayerAndFinishIfLast(userNick);
 	}
 
 	// #############################################################

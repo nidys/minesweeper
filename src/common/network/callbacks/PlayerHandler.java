@@ -42,8 +42,10 @@ public interface PlayerHandler extends Remote, Serializable {
 	
 	public void addOpponent(String opponentName) throws RemoteException;
 
-	void changeStateToReady(String opponentName) throws RemoteException;
+	void changeState(String opponentName) throws RemoteException;
 	
 	void startGame() throws RemoteException;
+	
+	void informAboutLasBoard() throws RemoteException;
 	
 }

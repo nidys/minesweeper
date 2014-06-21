@@ -12,4 +12,9 @@ public class DescriptionText {
 	public static final String TIMED = "Timed";
 	public static final String LIVES_COUNT = "Lives count";
 	public static final String WIN_WHEN_SOLVED = "Win when solved";
+	
+	public static final String PLAYERSTATE_READY = "Ready";
+	public static final String PLAYERSTATE_WAITING = "Waiting...";
+	
+	public static final String CONNECTED_PLAYERS = "Connected players:";
 }

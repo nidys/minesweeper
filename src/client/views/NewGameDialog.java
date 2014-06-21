@@ -327,7 +327,7 @@ public class NewGameDialog extends DialogBase {
 	}
 	
 	public boolean isLivesCountSelected() {
-		return gameOptionsPanel.isLivesCountSelected();
+		return gameOptionsPanel.isLifesAmountSelected();
 	}
 	
 	public boolean isTimedSelected() {
@@ -343,7 +343,7 @@ public class NewGameDialog extends DialogBase {
 	}
 	
 	public long getTimeAmount() {
-		return gameOptionsPanel.getTimeAmount();
+		return gameOptionsPanel.getGameDuration();
 	}
 	
 	public int getBoardAmount() {

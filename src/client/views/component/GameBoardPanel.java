@@ -18,8 +18,7 @@ import javax.swing.border.BevelBorder;
 import client.controllers.MyBombFielsBtnController;
 import client.internationalization.DescriptionText;
 import client.utils.GraphicsFactory;
-import client.views.GameResultDialog;
-import client.views.GameResultDialog.GameResult;
+
 import common.model.DiscoveredField;
 import common.model.GameDifficultyFactors;
 

@@ -1,11 +1,13 @@
 package client.utils;
 
+import client.controllers.CancelBtnController;
 import client.controllers.HostBtnController;
 import client.controllers.JoinGamesBtnController;
 import client.controllers.JoinRoomBtnController;
 import client.controllers.MyBombFielsBtnController;
 import client.controllers.NewGameBtnController;
 import client.controllers.ReadyBtnController;
+import client.controllers.RefreshGamesListBtnController;
 import client.controllers.ResetBtnController;
 import client.controllers.StartGameBtnController;
 import client.gameRules.GameState;
@@ -99,5 +101,9 @@ public class ComponentsFactory {
 	
 	private void initializeJoinGameListeners() {
 		gamesListView.addJoinGameBtnListener(new JoinRoomBtnController(listenerGenerator, mainView, gamesListView));
+		gamesListView.addCanceltnListener(new CancelBtnController(listenerGenerator, mainView, gamesListView));	
+		gamesListView.addRefreshGamesListBtnListener(new RefreshGamesListBtnController(listenerGenerator, mainView, gamesListView));	
 	}
+		
+	
 }

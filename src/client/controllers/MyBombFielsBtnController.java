@@ -66,8 +66,12 @@ public class MyBombFielsBtnController extends BaseControllerForField {
 			} else {
 				try {
 					ShotResult shotResult = netManager.shot(gameState.getUserNick(), position);
+					
 					// TODO handle other fields, should game be continued,
 					// update inside clock etc.
+					if (shotResult == null)
+						return;
+					
 					List<DiscoveredField> results = shotResult.getUnrevealed();
 					int lifeLeft = shotResult.getLifeLeft();
 					shotResult.getTimeLeft();

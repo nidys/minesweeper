@@ -3,9 +3,6 @@ package client.controllers;
 import java.awt.event.ActionEvent;
 import java.rmi.RemoteException;
 
-import javax.swing.JButton;
-import javax.swing.UIManager;
-
 import org.apache.log4j.Logger;
 
 import client.controllers.base.BaseControllerForDialog;

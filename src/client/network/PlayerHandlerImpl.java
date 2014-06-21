@@ -12,6 +12,7 @@ import client.views.MainWindow;
 import client.views.component.GameBoardPanel;
 import common.enums.GameInterruptMessage;
 import common.enums.GameMode;
+import common.enums.LostReasonMessage;
 import common.model.GameDifficultyFactors;
 import common.model.GameSummary;
 import common.model.LostReason;
@@ -55,7 +56,10 @@ public class PlayerHandlerImpl extends UnicastRemoteObject implements PlayerHand
 	public void endGame(GameSummary gameSummary) throws RemoteException {
 		info(log, "Got end game with result[%s]", gameSummary.getGameResult());
 		// TODO For CLASSIC send after one of the players win. From now,
+		
 		// GameLogic wont be available
+		view.setResetEnable(false);
+		view.displayEndGameSummary(gameSummary);
 
 	}
 
@@ -88,6 +92,11 @@ public class PlayerHandlerImpl extends UnicastRemoteObject implements PlayerHand
 		// TODO Look at 'ending scenarios' defined in gdoc for information what
 		// should be done here
 
+		if (reason.getReasonMsg() == LostReasonMessage.NO_BOARDS_LEFT)
+			view.setResetEnable(false);
+		System.out.println("Display reason of lost!!!!!!!!!!!!!!!!");
+		view.displayLostReason(reason);
+
 	}
 	
 	@Override
@@ -98,16 +107,23 @@ public class PlayerHandlerImpl extends UnicastRemoteObject implements PlayerHand
 	}
 
 	@Override
-	public void changeStateToReady(String opponentName) throws RemoteException {
+	public void changeState(String opponentName) throws RemoteException {
+		
 		if (opponentName == null)
 			return;
-		view.getGameRoomDialog().setOpponentReady(opponentName);
+		view.getGameRoomDialog().changeOpponentState(opponentName);
 		
 	}
 
 	@Override
 	public void startGame() throws RemoteException {
 		view.getGameRoomDialog().simulateStartButtonClick(); // simulate start btn for other users
+		
+	}
+
+	@Override
+	public void informAboutLasBoard() throws RemoteException {
+		view.setResetEnable(false);
 		
 	}
 

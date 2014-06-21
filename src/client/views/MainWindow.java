@@ -1,6 +1,7 @@
 package client.views;
 
 import static client.internationalization.ButtonNames.NEW_GAME;
+import static common.utils.LoggingHelper.info;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -21,6 +22,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
+import org.apache.log4j.Logger;
+
 import client.controllers.MyBombFielsBtnController;
 import client.internationalization.ButtonNames;
 import client.internationalization.DescriptionText;
@@ -28,21 +31,25 @@ import client.internationalization.DialogText;
 import client.utils.GraphicsFactory;
 import client.views.component.GameBoardPanel;
 import common.enums.GameMode;
+import common.enums.GameResult;
 import common.model.DiscoveredField;
+import common.model.GameSummary;
+import common.model.LostReason;
 import common.network.ServerAddress;
-import common.network.callbacks.PlayerHandler;
 
 /**
  * View for the Main component (view with the game board). Standard window.
  */
 @SuppressWarnings("serial")
 public class MainWindow extends WindowBase {
+	private static Logger log = Logger.getLogger(MainWindow.class);
 	private JButton newGameBtn;
 	private JButton resetBtn;
 	private JTextField serverAddressTxtFld;
 	private JTextField playerNameTxtFld;
 	private GamePanelBase gamePanel;
 	private GameRoomDialog gameRoomDialog;
+	private boolean resetEnable = true;
 
 	public MainWindow() {
 		setTitle(DialogText.MAINWINDOW_TITLE);
@@ -79,6 +86,7 @@ public class MainWindow extends WindowBase {
 
 		resetBtn = new JButton(ButtonNames.RESET);
 		menuBar.add(resetBtn);
+		resetBtn.setEnabled(resetEnable);
 		getContentPane().setBounds(0, 0, 450, 301);
 		this.setResizable(true);
 	}
@@ -283,8 +291,52 @@ public class MainWindow extends WindowBase {
 
 	public void setLifeLeft(int lifeLeft) {
 		gamePanel.setLifeLeft(lifeLeft);
-		
+
 	}
-	
+
+	public void setResetEnable(boolean enable) {
+		info(log, "setResetEnabled");
+		resetEnable = enable;
+
+		if (resetBtn != null)
+			resetBtn.setEnabled(resetEnable);
+	}
+
+	public void displayLostReason(LostReason reason) {
+		System.out.println("Display lost reason in GameResultDialog");
+		
+		
+		MessageDialog gameResultDialog = null;
+		switch (reason.getReasonMsg()) {
+			case NO_BOARDS_LEFT :
+				gameResultDialog = new MessageDialog(this, true, common.enums.GameResult.LOSE, reason.getPlayerNick(), "No boards left, you loose and gain XXX points",
+						"No boards left");
+				break;
+			case NO_LIFES :
+				gameResultDialog = new MessageDialog(this, true, common.enums.GameResult.LOSE, reason.getPlayerNick(), "No lifes left, you loose and gain XXX points",
+						"No lifes left");
+				break;
+			case NORMAL_MODE_LOST :
+				gameResultDialog = new MessageDialog(this, true, common.enums.GameResult.LOSE, reason.getPlayerNick(), "You loose and gain XXX points", "You loose.");
+				break;
+			case PLAYER_LEFT_BEFORE_END :
+				// gameResultDialog = new GameResultDialog(this, true,
+				// GameResult.FAIL, reason.getPlayerNick(),
+				// "No boards left, you loose and gain XXX points",
+				// "No boards left");
+				break;
+			default :
+				break;
+		}
+		if (gameResultDialog != null)
+			gameResultDialog.setVisible(true);
+
+	}
+
+	public void displayEndGameSummary(GameSummary gameSummary) {
+		System.out.println("Display end game summary in GameResultDialog");
+		MessageDialog gameResultDialog = new MessageDialog(this, true, gameSummary.getGameResult(), "playerName", "message", "title");
+		gameResultDialog.setVisible(true);
+	}
 
 }

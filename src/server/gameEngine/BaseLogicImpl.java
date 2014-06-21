@@ -19,7 +19,6 @@ import server.PlayerData;
 import server.gameEngine.model.Board;
 import server.gameEngine.model.Field;
 import server.gameEngine.utils.Generator;
-
 import common.enums.GameMode;
 import common.enums.GameResult;
 import common.enums.LostReasonMessage;
@@ -205,7 +204,11 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 		
 		for (PlayerData playerData : players.values()) {
 				playerData.playerHandler.setEngine(this);
+				
 				playerData.playerHandler.startGame();
+				
+				if (playerData.board.getBoardNum() == boardAmount)
+					playerData.playerHandler.informAboutLasBoard();
 		}
 		
 		gammeRunning = true;
@@ -222,11 +225,11 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 			debug(log, "Player[%s] is not in game", userNick);
 			throw new UnknownUserId();
 		}
-		players.get(userNick).selectedReady = true;
+		players.get(userNick).selectedReady = !players.get(userNick).selectedReady; 
 
 		List<String> opponents = getOtherPlayers(userNick);
 		for (String opName : opponents)
-			players.get(opName).playerHandler.changeStateToReady(userNick);
+			players.get(opName).playerHandler.changeState(userNick);
 	}
 
 	public boolean areAllReady() {
@@ -247,7 +250,7 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 		}
 	}
 
-	protected void removePlayerAndFisnishIfLast(String userNick) throws RemoteException {
+	protected void removePlayerAndFinishIfLast(String userNick) throws RemoteException {
 		players.remove(userNick);
 		if (players.size() == 1) {
 			info(log, "Last player left,  report finish game");
@@ -265,6 +268,11 @@ public abstract class BaseLogicImpl extends UnicastRemoteObject implements GameL
 				entry.getValue().playerHandler.playerLost(new LostReason(userNick, msg));
 			}
 		}
+	}
+	
+	protected void informPlayerAboutLost(String userNick, LostReasonMessage msg) throws RemoteException {
+		players.get(userNick).playerHandler.playerLost(new LostReason(userNick, msg));
+		
 	}
 
 	// #############################################################

@@ -11,18 +11,18 @@ public class AvailableGameInfo implements Serializable {
 	private static final long serialVersionUID = -8806991692072237822L;
 	private String gameId;
 	private GameMode gameMode;
-	private String hostUser;
+	private String hostPlayerName;
 	private int maxPlayers;
 	private int currentlyConnectedPlayers;
 
-	public AvailableGameInfo(String gameId, GameMode gameMode, String hostUser, int maxPlayers,
-			int currentlyAttachedPlayers) {
+	public AvailableGameInfo(String gameId, GameMode gameMode, String hostPlayerName,
+			int maxPlayers, int currentlyConnectedPlayers) {
 		super();
 		this.gameId = gameId;
 		this.gameMode = gameMode;
-		this.hostUser = hostUser;
+		this.hostPlayerName = hostPlayerName;
 		this.maxPlayers = maxPlayers;
-		this.currentlyConnectedPlayers = currentlyAttachedPlayers;
+		this.currentlyConnectedPlayers = currentlyConnectedPlayers;
 	}
 
 	public String getGameId() {
@@ -41,12 +41,12 @@ public class AvailableGameInfo implements Serializable {
 		this.gameMode = gameMode;
 	}
 
-	public String getHostUser() {
-		return hostUser;
+	public String getHostPlayerName() {
+		return hostPlayerName;
 	}
 
-	public void setHostUser(String hostUser) {
-		this.hostUser = hostUser;
+	public void setHostPlayerName(String hostPlayerName) {
+		this.hostPlayerName = hostPlayerName;
 	}
 
 	public int getMaxPlayers() {
@@ -65,4 +65,12 @@ public class AvailableGameInfo implements Serializable {
 		this.currentlyConnectedPlayers = currentlyConnectedPlayers;
 	}
 
+	public String toString() {
+		String result = gameId + " (" + gameMode + ") Host: " + hostPlayerName + " Players: "
+				+ currentlyConnectedPlayers;
+		if (maxPlayers == 0)
+			return result;
+		else
+			return result + "/" + maxPlayers;
+	}
 }

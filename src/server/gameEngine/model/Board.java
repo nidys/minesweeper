@@ -11,7 +11,7 @@ public class Board {
 
 	public Board(Field[][] mineField, int maxPosition) {
 		this.maxPosition = maxPosition;
-		this.boardNum = 0;
+		this.boardNum = 1;
 		setBoard(mineField);
 	}
 
