@@ -62,13 +62,13 @@ public class MainWindow extends WindowBase {
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
 	}
 
-	public void initializeGameBoard(GameMode mode) {
+	public void initializeGameBoard(GameMode mode, int progressMaxValue) {
 		clearWindow();
 		drawComponents();
 
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-		drawGameBoard(mode);
+		drawGameBoard(mode, progressMaxValue);
 	}
 
 	private void clearWindow() {
@@ -258,10 +258,10 @@ public class MainWindow extends WindowBase {
 		gamePanel.setField(field);
 	}
 
-	private void drawGameBoard(GameMode mode) {
+	private void drawGameBoard(GameMode mode, int progressMaxValue) {
 		switch (mode) {
-		case CLASSIC:
-			gamePanel = new ClassicGamePanel(100);
+		case CLASSIC:	
+			gamePanel = new ClassicGamePanel(progressMaxValue);
 			setTitle(DialogText.MAINWINDOW_CLASSIC_TITLE);
 			break;
 		case PERKS:

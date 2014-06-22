@@ -77,7 +77,8 @@ System.out.println("Joinuje do: " + gameId);
 
 	private void initializeGameBoard(GameDifficultyFactors gameDifficultyFactors,
 			String playerName, GameMode mode) {
-		mainView.initializeGameBoard(mode);
+		int progressMaxValue = ( gameDifficultyFactors.getBoardSizeX() * gameDifficultyFactors.getBoardSizeY() ) - gameDifficultyFactors.getBombsAmount();
+		mainView.initializeGameBoard(mode, progressMaxValue);
 		mainView.addNewPlayerGameBoardPanel(new GameBoardPanel(gameDifficultyFactors, playerName, 3, 120)); //TODO Changed it.
 		componentsFactory.initializeBoardListeners();
 	}
