@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 
-import client.controllers.MyBombFielsBtnController;
+import client.controllers.BoardFieldBtnController;
 import client.internationalization.DescriptionText;
 import client.utils.GraphicsFactory;
 
@@ -133,7 +133,7 @@ public class GameBoardPanel extends JPanel {
 
 	}
 
-	public void addBombFieldBtnListener(MyBombFielsBtnController listener) {
+	public void addBombFieldBtnListener(BoardFieldBtnController listener) {
 		for (int i = 0; i < board.length; i++) {
 			board[i].addMouseListener(listener);
 		}

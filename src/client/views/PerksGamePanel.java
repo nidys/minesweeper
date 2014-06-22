@@ -4,7 +4,7 @@ import java.awt.GridLayout;
 import java.util.ArrayList;
 
 import common.model.DiscoveredField;
-import client.controllers.MyBombFielsBtnController;
+import client.controllers.BoardFieldBtnController;
 import client.views.component.GameBoardPanel;
 
 @SuppressWarnings("serial")
@@ -29,7 +29,7 @@ public class PerksGamePanel extends GamePanelBase {
 
 	}
 
-	public void addBombFieldBtnListener(MyBombFielsBtnController listener) {
+	public void addBombFieldBtnListener(BoardFieldBtnController listener) {
 		gameBoardPanels.get(gameBoardPanels.size() - 1)
 				.addBombFieldBtnListener(listener);
 	}

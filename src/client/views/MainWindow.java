@@ -24,7 +24,7 @@ import javax.swing.UIManager;
 
 import org.apache.log4j.Logger;
 
-import client.controllers.MyBombFielsBtnController;
+import client.controllers.BoardFieldBtnController;
 import client.internationalization.ButtonNames;
 import client.internationalization.DescriptionText;
 import client.internationalization.DialogText;
@@ -205,7 +205,7 @@ public class MainWindow extends WindowBase {
 		resetBtn.addActionListener(listener);
 	}
 
-	public void addBombFieldBtnListener(MyBombFielsBtnController listener) {
+	public void addBombFieldBtnListener(BoardFieldBtnController listener) {
 		gamePanel.addBombFieldBtnListener(listener);
 	}
 
@@ -309,7 +309,7 @@ public class MainWindow extends WindowBase {
 		MessageDialog gameResultDialog = null;
 		switch (reason.getReasonMsg()) {
 			case NO_BOARDS_LEFT :
-				gameResultDialog = new MessageDialog(this, true, common.enums.GameResult.LOSE, reason.getPlayerNick(), "No boards left, you loose and gain XXX points",
+				gameResultDialog = new MessageDialog(this, true, GameResult.LOSE, reason.getPlayerNick(), "No boards left, you loose and gain XXX points",
 						"No boards left");
 				break;
 			case NO_LIFES :

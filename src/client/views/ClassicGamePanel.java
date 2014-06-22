@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
-import client.controllers.MyBombFielsBtnController;
+import client.controllers.BoardFieldBtnController;
 import client.views.component.GameBoardPanel;
 
 import common.model.DiscoveredField;
@@ -109,7 +109,7 @@ public class ClassicGamePanel extends GamePanelBase {
 		}
 	}
 
-	public void addBombFieldBtnListener(MyBombFielsBtnController listener) {
+	public void addBombFieldBtnListener(BoardFieldBtnController listener) {
 		gameBoard.addBombFieldBtnListener(listener);
 	}
 

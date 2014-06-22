@@ -4,7 +4,7 @@ import client.controllers.CancelBtnController;
 import client.controllers.HostBtnController;
 import client.controllers.JoinGamesBtnController;
 import client.controllers.JoinRoomBtnController;
-import client.controllers.MyBombFielsBtnController;
+import client.controllers.BoardFieldBtnController;
 import client.controllers.NewGameBtnController;
 import client.controllers.ReadyBtnController;
 import client.controllers.RefreshGamesListBtnController;
@@ -79,7 +79,7 @@ public class ComponentsFactory {
 	// TODO MALY Temporarily here. Maybe move it to createMainComponent()?
 	public void initializeBoardListeners() {
 		mainView.addResetBtnListener(new ResetBtnController(listenerGenerator));
-		mainView.addBombFieldBtnListener(new MyBombFielsBtnController(listenerGenerator));
+		mainView.addBombFieldBtnListener(new BoardFieldBtnController(listenerGenerator));
 		// TODO MALY Review if it's obsolete
 		// mainView.addOponentFieldBtnListener(new
 		// OpponentBombFieldBtnController(listenerGenerator));

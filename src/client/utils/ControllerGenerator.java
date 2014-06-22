@@ -1,7 +1,6 @@
 package client.utils;
 
-import client.controllers.MyBombFielsBtnController;
-import client.controllers.OpponentBombFieldBtnController;
+import client.controllers.BoardFieldBtnController;
 import client.controllers.base.BaseController;
 import client.controllers.base.BaseControllerForDialog;
 import client.controllers.base.BaseControllerForWindow;
@@ -49,13 +48,7 @@ public class ControllerGenerator {
 		listener.setGameState(gameState);
 	}
 
-	public void setFieldsForWindow(MyBombFielsBtnController listener) {
-		listener.setMainView(mainView);
-		setBaseComponents(listener);
-
-	}
-
-	public void setFieldsForWindow(OpponentBombFieldBtnController listener) {
+	public void setFieldsForWindow(BoardFieldBtnController listener) {
 		listener.setMainView(mainView);
 		setBaseComponents(listener);
 

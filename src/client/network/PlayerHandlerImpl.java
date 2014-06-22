@@ -6,7 +6,7 @@ import java.rmi.server.UnicastRemoteObject;
 import org.apache.log4j.Logger;
 
 import static common.utils.LoggingHelper.info;
-import client.controllers.MyBombFielsBtnController;
+import client.controllers.BoardFieldBtnController;
 import client.controllers.ResetBtnController;
 import client.views.MainWindow;
 import client.views.component.GameBoardPanel;

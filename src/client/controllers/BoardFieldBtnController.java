@@ -18,11 +18,11 @@ import common.exceptions.shot.PositionOutOfRange;
 import common.model.DiscoveredField;
 import common.model.ShotResult;
 
-public class MyBombFielsBtnController extends BaseControllerForField {
-	private static Logger log = Logger.getLogger(MyBombFielsBtnController.class);
+public class BoardFieldBtnController extends BaseControllerForField {
+	private static Logger log = Logger.getLogger(BoardFieldBtnController.class);
 	private boolean pressed;
 
-	public MyBombFielsBtnController(ControllerGenerator listenerGenerator) {
+	public BoardFieldBtnController(ControllerGenerator listenerGenerator) {
 		listenerGenerator.setFieldsForWindow(this);
 	}
 
