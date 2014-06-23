@@ -2,6 +2,8 @@ package client.views;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 
 import client.controllers.BoardFieldBtnController;
 import client.views.component.GameBoardPanel;
@@ -38,7 +40,7 @@ public class SharedGamePanel extends GamePanelBase {
 	}
 
 	@Override
-	public void addBombFieldBtnListener(BoardFieldBtnController listener) {
+	public void addBombFieldBtnListener(MouseListener listener) {
 		gameBoard.addBombFieldBtnListener(listener);
 
 	}

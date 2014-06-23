@@ -11,6 +11,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.util.Random;
 
 import javax.swing.Box;
@@ -49,19 +50,30 @@ public class MainWindow extends WindowBase {
 	private JTextField playerNameTxtFld;
 	private GamePanelBase gamePanel;
 	private GameRoomDialog gameRoomDialog;
+	private MessageDialog msgDialog;
 	private boolean resetEnable = true;
-
+	private JMenuBar menuBar;
+	
 	public MainWindow() {
+		resetBtn = new JButton(ButtonNames.RESET);
+		newGameBtn = new JButton(NEW_GAME);
+	}
+
+	public void initializeEntryScreen(){
+		clearWindow();
 		setTitle(DialogText.MAINWINDOW_TITLE);
-		//TODO
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MainWindow.class.getResource("/resources/images/bomb.png")));
-		setResizable(false);
 		drawEntryScreen();
 
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
-	}
+		
+		Dimension d = this.getLayout().preferredLayoutSize(this);
+		setSize(d);
+		setResizable(false);
 
+	}
+	
 	public void initializeGameBoard(GameMode mode, int progressMaxValue) {
 		clearWindow();
 		drawComponents();
@@ -72,6 +84,7 @@ public class MainWindow extends WindowBase {
 	}
 
 	private void clearWindow() {
+		setJMenuBar(null);
 		getContentPane().removeAll();
 		getContentPane().repaint();
 	}
@@ -81,10 +94,10 @@ public class MainWindow extends WindowBase {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
 
-		JMenuBar menuBar = new JMenuBar();
+		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
-		resetBtn = new JButton(ButtonNames.RESET);
+		
 		menuBar.add(resetBtn);
 		resetBtn.setEnabled(resetEnable);
 		getContentPane().setBounds(0, 0, 450, 301);
@@ -92,7 +105,7 @@ public class MainWindow extends WindowBase {
 	}
 
 	private void drawEntryScreen() {
-		setBounds(100, 100, 463, 288);
+		//setBounds(100, 100, 463, 288);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -152,7 +165,7 @@ public class MainWindow extends WindowBase {
 		gbc_serverAddress.gridy = 3;
 		getContentPane().add(serverAddressTxtFld, gbc_serverAddress);
 
-		newGameBtn = new JButton(NEW_GAME);
+	
 		newGameBtn.setBackground(UIManager.getColor("Button.background"));
 		GridBagConstraints gbc_newGameBtn = new GridBagConstraints();
 		gbc_newGameBtn.anchor = GridBagConstraints.WEST;
@@ -192,9 +205,7 @@ public class MainWindow extends WindowBase {
 		gbc_horizontalStrut_2.gridy = 5;
 		getContentPane().add(horizontalStrut_2, gbc_horizontalStrut_2);
 
-		Dimension d = this.getLayout().preferredLayoutSize(this);
-		setSize(d);
-		setResizable(false);
+
 	}
 
 	public void addNewGameBtnListener(ActionListener listener) {
@@ -205,7 +216,7 @@ public class MainWindow extends WindowBase {
 		resetBtn.addActionListener(listener);
 	}
 
-	public void addBombFieldBtnListener(BoardFieldBtnController listener) {
+	public void addBombFieldBtnListener(MouseListener listener) {
 		gamePanel.addBombFieldBtnListener(listener);
 	}
 
@@ -304,20 +315,15 @@ public class MainWindow extends WindowBase {
 
 	public void displayLostReason(LostReason reason) {
 		System.out.println("Display lost reason in GameResultDialog");
-		
-		
-		MessageDialog gameResultDialog = null;
 		switch (reason.getReasonMsg()) {
 			case NO_BOARDS_LEFT :
-				gameResultDialog = new MessageDialog(this, true, GameResult.LOSE, reason.getPlayerNick(), "No boards left, you loose and gain XXX points",
-						"No boards left");
+				msgDialog.displayLostReasonMsg(this, true,  GameResult.LOSE, reason.getPlayerNick(), "No boards left, you loose and gain XXX points", "No boards left");
 				break;
 			case NO_LIFES :
-				gameResultDialog = new MessageDialog(this, true, common.enums.GameResult.LOSE, reason.getPlayerNick(), "No lifes left, you loose and gain XXX points",
-						"No lifes left");
+				msgDialog.displayLostReasonMsg(this, true, common.enums.GameResult.LOSE, reason.getPlayerNick(), "No lifes left, you loose and gain XXX points","No lifes left");
 				break;
 			case NORMAL_MODE_LOST :
-				gameResultDialog = new MessageDialog(this, true, common.enums.GameResult.LOSE, reason.getPlayerNick(), "You loose and gain XXX points", "You loose.");
+				msgDialog.displayLostReasonMsg(this, true, common.enums.GameResult.LOSE, reason.getPlayerNick(), "You loose and gain XXX points", "You loose.");
 				break;
 			case PLAYER_LEFT_BEFORE_END :
 				// gameResultDialog = new GameResultDialog(this, true,
@@ -328,15 +334,16 @@ public class MainWindow extends WindowBase {
 			default :
 				break;
 		}
-		if (gameResultDialog != null)
-			gameResultDialog.setVisible(true);
-
 	}
 
 	public void displayEndGameSummary(GameSummary gameSummary) {
 		System.out.println("Display end game summary in GameResultDialog");
-		MessageDialog gameResultDialog = new MessageDialog(this, true, gameSummary.getGameResult(), "playerName", "message", "title");
-		gameResultDialog.setVisible(true);
+		msgDialog.displayLostReasonMsg(this, true, gameSummary.getGameResult(), "playerName", "message", "title");
+	}
+
+	public void setMessageDialog(MessageDialog msgDialog) {
+		this.msgDialog = msgDialog;
+		
 	}
 
 }

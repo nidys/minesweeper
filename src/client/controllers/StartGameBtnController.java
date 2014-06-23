@@ -24,12 +24,14 @@ public class StartGameBtnController extends BaseControllerForDialog {
 	private static Logger log = Logger.getLogger(BaseControllerForDialog.class);
 	private MainWindow mainView;
 	private GameRoomDialog gameRoomView;
+	private MessageDialog msgDialog;
 
 	public StartGameBtnController(ControllerGenerator controllerGenerator,
-			MainWindow mainView, GameRoomDialog gameRoomView) {
+			MainWindow mainView, GameRoomDialog gameRoomView, MessageDialog msgDialog) {
 		super();
 		this.mainView = mainView;
 		this.gameRoomView = gameRoomView;
+		this.msgDialog = msgDialog;
 		controllerGenerator.setFieldsForDialog(this);
 	}
 
@@ -64,26 +66,20 @@ public class StartGameBtnController extends BaseControllerForDialog {
 		catch (UnknownGameId ex)
 		{
 			// TODO Auto-generated catch block
-			MessageDialog msg = new MessageDialog(null, true, DialogText.UNKNOWN_GAME_ID_EX_MSG, DialogText.PROBLEM_TITLE);
-			msg.setAlwaysOnTop(true);
-			msg.setVisible(true);
+			msgDialog.displayInfoMsg(null, true, DialogText.UNKNOWN_GAME_ID_EX_MSG, DialogText.PROBLEM_TITLE);
 			
 			ex.printStackTrace();
 		}
 		catch (NotAllPlayersYetAreReady ex)
 		{
 			// TODO Auto-generated catch block
-			MessageDialog msg = new MessageDialog(null, true, DialogText.NOT_ALL_PLAYERS_READY_EX_MSG,  DialogText.PROBLEM_TITLE);
-			msg.setAlwaysOnTop(true);
-			msg.setVisible(true);
+			msgDialog.displayInfoMsg(null, true, DialogText.NOT_ALL_PLAYERS_READY_EX_MSG,  DialogText.PROBLEM_TITLE);
 			ex.printStackTrace();
 		}
 		catch (UnknownUserId ex)
 		{
 			// TODO Auto-generated catch block
-			MessageDialog msg = new MessageDialog(null, true,  DialogText.UNKNOWN_USER_ID_EX_MSG,  DialogText.PROBLEM_TITLE);
-			msg.setAlwaysOnTop(true);
-			msg.setVisible(true);
+			msgDialog.displayInfoMsg(null, true,  DialogText.UNKNOWN_USER_ID_EX_MSG,  DialogText.PROBLEM_TITLE);
 			ex.printStackTrace();
 		}
 	}

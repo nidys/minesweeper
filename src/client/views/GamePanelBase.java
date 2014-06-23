@@ -1,11 +1,12 @@
 package client.views;
 
+import java.awt.event.MouseListener;
+
 import javax.swing.JPanel;
 
-import common.model.DiscoveredField;
-
-import client.controllers.BoardFieldBtnController;
 import client.views.component.GameBoardPanel;
+
+import common.model.DiscoveredField;
 
 // TODO when all will be working -> change it to interface and change method names so anybody will now whats going on inside them
 @SuppressWarnings("serial")
@@ -13,7 +14,7 @@ public abstract class GamePanelBase extends JPanel {
 
 	public abstract void addNewPlayerGameBoardPanel(GameBoardPanel playerGameBoardPanel);
 
-	public abstract void addBombFieldBtnListener(BoardFieldBtnController listener);
+	public abstract void addBombFieldBtnListener(MouseListener listener);
 
 	public abstract void resetFields();
 

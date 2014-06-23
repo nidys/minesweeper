@@ -1,6 +1,8 @@
 package client.views;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import common.model.DiscoveredField;
@@ -29,7 +31,7 @@ public class PerksGamePanel extends GamePanelBase {
 
 	}
 
-	public void addBombFieldBtnListener(BoardFieldBtnController listener) {
+	public void addBombFieldBtnListener(MouseListener listener) {
 		gameBoardPanels.get(gameBoardPanels.size() - 1)
 				.addBombFieldBtnListener(listener);
 	}

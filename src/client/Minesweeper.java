@@ -39,6 +39,7 @@ public class Minesweeper {
 					Locator locator = new Locator();
 
 					MainWindow mainView = locator.getMain();
+					mainView.initializeEntryScreen();
 					mainView.setVisible(true);
 
 				} catch (Exception e) {

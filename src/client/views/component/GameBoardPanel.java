@@ -9,6 +9,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -18,7 +20,6 @@ import javax.swing.border.BevelBorder;
 import client.controllers.BoardFieldBtnController;
 import client.internationalization.DescriptionText;
 import client.utils.GraphicsFactory;
-
 import common.model.DiscoveredField;
 import common.model.GameDifficultyFactors;
 
@@ -133,7 +134,7 @@ public class GameBoardPanel extends JPanel {
 
 	}
 
-	public void addBombFieldBtnListener(BoardFieldBtnController listener) {
+	public void addBombFieldBtnListener(MouseListener listener) {
 		for (int i = 0; i < board.length; i++) {
 			board[i].addMouseListener(listener);
 		}

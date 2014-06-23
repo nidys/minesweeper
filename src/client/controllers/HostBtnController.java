@@ -22,10 +22,12 @@ import common.model.GameDifficultyFactors;
 public class HostBtnController extends BaseControllerForDialog {
 	private static Logger log = Logger.getLogger(HostBtnController.class);
 	private MainWindow mainView;
+	private MessageDialog msgDialog;
 
-	public HostBtnController(ControllerGenerator listenerGenerator, MainWindow mainView) {
+	public HostBtnController(ControllerGenerator listenerGenerator, MainWindow mainView, MessageDialog msgDialog) {
 		super();
 		this.mainView = mainView;
+		this.msgDialog = msgDialog;
 		listenerGenerator.setFieldsForDialog(this);
 	}
 
@@ -63,30 +65,25 @@ public class HostBtnController extends BaseControllerForDialog {
 			ex.printStackTrace();
 		} catch (InvalidGameNameException ex) {
 
-			MessageDialog msg = new MessageDialog(null, true,
+			msgDialog.displayInfoMsg(null, true,
 					DialogText.INVALID_GAME_NAME_EX_MSG,
 					DialogText.PROBLEM_TITLE);
-			msg.setAlwaysOnTop(true);
-			msg.setVisible(true);
 
 			ex.printStackTrace();
 		} catch (MaximumRoomExceededException ex) {
-			MessageDialog msg = new MessageDialog(
+			msgDialog.displayInfoMsg(
 					null,
 					true,
 					DialogText.MAX_ROOM_EXCEEDE_EX_MSG,
 					DialogText.PROBLEM_TITLE);
-			msg.setAlwaysOnTop(true);
-			msg.setVisible(true);
+
 			ex.printStackTrace();
 		} catch (MaxOpponentSizeIsTooLarge ex) {
-			MessageDialog msg = new MessageDialog(
+			msgDialog.displayInfoMsg(
 					null,
 					true,
 					DialogText.MAX_OPPONENT_TOO_LARGE_EX_MSG,
 					DialogText.PROBLEM_TITLE);
-			msg.setAlwaysOnTop(true);
-			msg.setVisible(true);
 			// TODO Handle exceptions
 			ex.printStackTrace();
 		}

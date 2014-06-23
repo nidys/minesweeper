@@ -8,29 +8,33 @@ import java.rmi.RemoteException;
 import org.apache.log4j.Logger;
 
 import client.controllers.base.BaseControllerForDialog;
+import client.internationalization.DialogText;
 import client.utils.ControllerGenerator;
 import client.views.GamesListDialog;
 import client.views.MainWindow;
+import client.views.MessageDialog;
 import client.views.component.GameBoardPanel;
-
 import common.enums.GameMode;
 import common.exceptions.create.InvalidGameNameException;
+import common.exceptions.create.MaxOpponentSizeIsTooLarge;
+import common.exceptions.create.MaximumRoomExceededException;
 import common.exceptions.join.MaximumPlayerExceededException;
 import common.exceptions.join.PlayerWithIdenticalNickAlreadyInGame;
 import common.exceptions.join.UnableToJoinGame;
-
 import common.model.GameDifficultyFactors;
 
 public class JoinRoomBtnController extends BaseControllerForDialog {
 	private static Logger log = Logger.getLogger(JoinRoomBtnController.class);
 	private MainWindow mainView;
 	private GamesListDialog gamesListView;
+	private MessageDialog msgDialog;
 
 	public JoinRoomBtnController(ControllerGenerator listenerGenerator, MainWindow mainView,
-			GamesListDialog gamesListView) {
+			GamesListDialog gamesListView, MessageDialog msgDialog) {
 		super();
 		this.mainView = mainView;
 		this.gamesListView = gamesListView;
+		this.msgDialog = msgDialog;
 		listenerGenerator.setFieldsForDialog(this);
 	}
 
@@ -68,8 +72,38 @@ System.out.println("Joinuje do: " + gameId);
 			
 			//initializeGameBoard(gameDifficultyFactors, playerName, gameMode);
 
-		} catch (RemoteException | MaximumPlayerExceededException | InvalidGameNameException
-				| PlayerWithIdenticalNickAlreadyInGame | UnableToJoinGame ex) {
+		} catch (RemoteException  ex) {
+			// TODO Handle exceptions
+			ex.printStackTrace();
+		} catch (InvalidGameNameException ex) {
+
+			msgDialog.displayInfoMsg(null, true,
+					DialogText.INVALID_GAME_NAME_EX_MSG,
+					DialogText.PROBLEM_TITLE);
+
+			ex.printStackTrace();
+		} catch (MaximumPlayerExceededException ex) {
+			msgDialog.displayInfoMsg(
+					null,
+					true,
+					DialogText.MAX_PLAYER_EXCEEDE_EX_MSG,
+					DialogText.PROBLEM_TITLE);
+
+			ex.printStackTrace();
+		} catch (PlayerWithIdenticalNickAlreadyInGame ex) {
+			msgDialog.displayInfoMsg(
+					null,
+					true,
+					DialogText.PLAYER_WITH_IDENTICAL_NICK_EX_MSG,
+					DialogText.PROBLEM_TITLE);
+			// TODO Handle exceptions
+			ex.printStackTrace();
+		} catch (UnableToJoinGame ex) {
+			msgDialog.displayInfoMsg(
+					null,
+					true,
+					DialogText.UNABLE_TO_JOIN_EX_MSG,
+					DialogText.PROBLEM_TITLE);
 			// TODO Handle exceptions
 			ex.printStackTrace();
 		}

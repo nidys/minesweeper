@@ -30,54 +30,76 @@ public class ClassicLogic extends BaseLogicImpl {
 	}
 
 	@Override
-	public synchronized ShotResult shot(String userNick, int position) throws RemoteException,
-			PositionOutOfRange {
+	public synchronized ShotResult shot(String userNick, int position)
+			throws RemoteException, PositionOutOfRange {
 		info(log, "Got shot for user[%s], pos[%d]", userNick, position);
 		PlayerData pData = players.get(userNick);
 		Board board = pData.board;
 		// PlayerHandler handler = pData.playerHandler;
 
 		if (board.isValueWithinBoardSize(position) == false) {
-			info(log, "Player[%s] shot in not valid field, position[%d]", userNick, position);
+			info(log, "Player[%s] shot in not valid field, position[%d]",
+					userNick, position);
 			throw new PositionOutOfRange();
 		}
 
 		// TODO implement full shot logic
-		List<DiscoveredField> unrevealed = Solver.shot(board.mineField, position);
+		List<DiscoveredField> unrevealed = Solver.shot(board.mineField,
+				position);
 		if (unrevealed == null) {
 			debug(log, "This shoudlnt happened error in client");
 			return null; // TODO add malicious try to shot already shot
 							// position?
 		}
-		
-		
-		
+
 		// Progress should be changed even though the normal is not set
-		if (unrevealed.get(0).getValue() == Field.BOMB.getValue())
-		{
+		if (unrevealed.get(0).getValue() == Field.BOMB.getValue()) {
 			setProgress(userNick, board, 0);
-		}
-		else
-		{
+		} else {
 			setProgress(userNick, board, unrevealed.size());
 		}
-		
+
 		if (isNormal && unrevealed.get(0).getValue() == Field.BOMB.getValue()) {
 			debug(log, "Normal mode, game lost");
 			informOthersAboutPlayerLost(userNick, LostReasonMessage.NORMAL_MODE_LOST);
+			informPlayerAboutLost(userNick, LostReasonMessage.NORMAL_MODE_LOST);
 			removePlayerAndFinishIfLast(userNick);
-			
-			return new ShotResult(unrevealed, IGNORE_VAL, IGNORE_VAL, !GAME_CAN_BE_CONTINUED);
+			return new ShotResult(unrevealed, IGNORE_VAL, IGNORE_VAL,
+					!GAME_CAN_BE_CONTINUED);
 		} else if (isNormal) {
 			debug(log, "Normal mode, successful shot");
 
-			return new ShotResult(unrevealed, IGNORE_VAL, IGNORE_VAL, GAME_CAN_BE_CONTINUED);
+			return new ShotResult(unrevealed, IGNORE_VAL, IGNORE_VAL,
+					GAME_CAN_BE_CONTINUED);
 		} else if (isLifecount) {
 			if (unrevealed.get(0).getValue() == Field.BOMB.getValue()) {
 				pData.lifeAmount--;
-				// TODO implement
+				if (pData.lifeAmount <= 0) {
+					informOthersAboutPlayerLost(userNick, LostReasonMessage.NO_LIFES);
+					informPlayerAboutLost(userNick, LostReasonMessage.NO_LIFES);
+					removePlayerAndFinishIfLast(userNick);
+					return new ShotResult(unrevealed, pData.lifeAmount, IGNORE_VAL, !GAME_CAN_BE_CONTINUED);
+				} else {
+					return new ShotResult(unrevealed, pData.lifeAmount, IGNORE_VAL, GAME_CAN_BE_CONTINUED);
+				}
 			}
-		}	
+		} else if (isTimed) {
+			// TODO to be implementeds
+			if (unrevealed.get(0).getValue() == Field.BOMB.getValue()) {
+
+			}
+
+		} else {
+			if (unrevealed.get(0).getValue() == Field.BOMB.getValue()) {
+				informOthersAboutPlayerLost(userNick, LostReasonMessage.NORMAL_MODE_LOST);
+				informPlayerAboutLost(userNick, LostReasonMessage.NORMAL_MODE_LOST);
+				removePlayerAndFinishIfLast(userNick);
+				return new ShotResult(unrevealed, IGNORE_VAL, IGNORE_VAL, !GAME_CAN_BE_CONTINUED);
+			} else {
+				return new ShotResult(unrevealed, IGNORE_VAL, IGNORE_VAL, GAME_CAN_BE_CONTINUED);
+			}
+
+		}
 
 		error(log, "implement correct shot result response");
 
@@ -85,19 +107,21 @@ public class ClassicLogic extends BaseLogicImpl {
 		return new ShotResult(unrevealed, 10, 10, true);
 	}
 
-	private void setProgress(String userNick, Board board,	int i) throws RemoteException {
-		
+	private void setProgress(String userNick, Board board, int i)
+			throws RemoteException {
+
 		if (i != 0)
 			board.setExposed(board.getExposed() + i);
 		else
 			board.setExposed(0);
-		
+
 		for (String otherPlayer : players.keySet()) {
-			info(log, "For other player[%s] than [%s] set progress[%s]", otherPlayer, userNick, board.getProgress());
-			
+			info(log, "For other player[%s] than [%s] set progress[%s]",
+					otherPlayer, userNick, board.getProgress());
+
 			if (otherPlayer.equals(userNick) == false) {
-				players.get(otherPlayer).playerHandler.setProgress(board.getProgress(),
-						userNick);
+				players.get(otherPlayer).playerHandler.setProgress(
+						board.getProgress(), userNick);
 			}
 		}
 	}
@@ -105,35 +129,35 @@ public class ClassicLogic extends BaseLogicImpl {
 	@Override
 	public synchronized void resetBoard(String userNick) throws RemoteException {
 
-//TODO isNormal shouldn't affect boardReset
-		
-//		if (isNormal) {
-//			return;
-//		}
-		
+		// TODO isNormal shouldn't affect boardReset
+
+		// if (isNormal) {
+		// return;
+		// }
+
 		info(log, "Reset from player[%s]", userNick);
-		
+
 		Board board = players.get(userNick).board;
-		
-		
+
 		if (board.getBoardNum() < boardAmount) {
 			info(log, "Reset from player[%s]", userNick);
 			board.incBoardNum();
-			
+
 			board.setBoard(getCopyOfGeneratedBoard(board.getBoardNum()));
 			for (String otherPlayer : players.keySet()) {
 				if (otherPlayer.equals(userNick) == false) {
-					players.get(otherPlayer).playerHandler.setProgress(board.getProgress(),
-							userNick);
+					players.get(otherPlayer).playerHandler.setProgress(
+							board.getProgress(), userNick);
 				}
 			}
-			
+
 			if (board.getBoardNum() == boardAmount)
 				players.get(userNick).playerHandler.informAboutLasBoard();
-			
+
 		} else if (board.getBoardNum() == boardAmount) {
 			info(log, "Player[%s] used all bards", userNick);
-			informOthersAboutPlayerLost(userNick, LostReasonMessage.NO_BOARDS_LEFT);
+			informOthersAboutPlayerLost(userNick,
+					LostReasonMessage.NO_BOARDS_LEFT);
 			informPlayerAboutLost(userNick, LostReasonMessage.NO_BOARDS_LEFT);
 			removePlayerAndFinishIfLast(userNick);
 		} else {
@@ -142,12 +166,12 @@ public class ClassicLogic extends BaseLogicImpl {
 		}
 	}
 
-	
-
 	@Override
-	public synchronized void leaveBeforeEnd(String userNick) throws RemoteException {
+	public synchronized void leaveBeforeEnd(String userNick)
+			throws RemoteException {
 		debug(log, "Player[%s] leaving game", userNick);
-		informOthersAboutPlayerLost(userNick, LostReasonMessage.PLAYER_LEFT_BEFORE_END);
+		informOthersAboutPlayerLost(userNick,
+				LostReasonMessage.PLAYER_LEFT_BEFORE_END);
 		removePlayerAndFinishIfLast(userNick);
 	}
 

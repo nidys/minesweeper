@@ -2,6 +2,7 @@ package client.views;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +12,6 @@ import javax.swing.JProgressBar;
 
 import client.controllers.BoardFieldBtnController;
 import client.views.component.GameBoardPanel;
-
 import common.model.DiscoveredField;
 
 @SuppressWarnings("serial")
@@ -104,12 +104,12 @@ public class ClassicGamePanel extends GamePanelBase {
 
 	public void hasOpponentWon(String opponentName, int progress) {
 		if (progress == progressMaxValue) {
-			MessageDialog gameResultDialog = new MessageDialog(null, false, common.enums.GameResult.LOSE, opponentName, "You loose and gain XXX points", "You loose.");
-			gameResultDialog.setVisible(true);
+//			MessageDialog gameResultDialog = new MessageDialog(null, false, common.enums.GameResult.LOSE, opponentName, "You loose and gain XXX points", "You loose.");
+//			gameResultDialog.setVisible(true);
 		}
 	}
 
-	public void addBombFieldBtnListener(BoardFieldBtnController listener) {
+	public void addBombFieldBtnListener(MouseListener listener) {
 		gameBoard.addBombFieldBtnListener(listener);
 	}
 
