@@ -33,8 +33,10 @@ public class MessageDialogBtnController extends BaseControllerForDialog{
 		
 		if (btnTxt.equals(ButtonNames.OK)){
 			msgDialog.setVisible(false);
+			msgDialog.clearUi();
 		}else if (btnTxt.equals(ButtonNames.GO_TO_MENU)){
 			msgDialog.setVisible(false);
+			msgDialog.clearUi();
 			mainView.initializeEntryScreen();
 			mainView.setVisible(true);
 		}

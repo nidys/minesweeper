@@ -169,4 +169,11 @@ public class MessageDialog extends DialogBase {
 		
 	}
 
+
+	public void clearUi() {
+		getContentPane().removeAll();
+		getContentPane().repaint();
+		
+	}
+
 }

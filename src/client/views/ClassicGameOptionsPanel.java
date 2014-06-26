@@ -16,6 +16,7 @@ import client.internationalization.DescriptionText;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.ButtonGroup;
 
 public class ClassicGameOptionsPanel extends JPanel {
 
@@ -31,6 +32,7 @@ public class ClassicGameOptionsPanel extends JPanel {
 	private JSpinner lifesAmountSpinner;
 	private JSpinner timeSpinner;
 	private JSpinner boardAmountSpinner;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 
 	public ClassicGameOptionsPanel() {
 		GridBagLayout gridBagLayout = new GridBagLayout();
@@ -43,6 +45,7 @@ public class ClassicGameOptionsPanel extends JPanel {
 
 		
 		chckbxWinWhenSolved = new JCheckBox(DescriptionText.WIN_WHEN_SOLVED);
+		buttonGroup.add(chckbxWinWhenSolved);
 		GridBagConstraints gbc_chckbxWinWhenSolved = new GridBagConstraints();
 		gbc_chckbxWinWhenSolved.anchor = GridBagConstraints.WEST;
 		gbc_chckbxWinWhenSolved.insets = new Insets(0, 0, 5, 5);
@@ -52,10 +55,12 @@ public class ClassicGameOptionsPanel extends JPanel {
 
 		
 		chckbxLifesAmount = new JCheckBox(DescriptionText.LIVES_COUNT);
+		buttonGroup.add(chckbxLifesAmount);
 		chckbxLifesAmount.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				lifesAmountSpinner.setEnabled(!lifesAmountSpinner.isEnabled());
+				
 			}
 		});
 		GridBagConstraints gbc_chckbxLivesCount = new GridBagConstraints();
@@ -76,6 +81,7 @@ public class ClassicGameOptionsPanel extends JPanel {
 
 		
 		chckbxTimed = new JCheckBox(DescriptionText.TIMED);
+		buttonGroup.add(chckbxTimed);
 		chckbxTimed.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -100,6 +106,7 @@ public class ClassicGameOptionsPanel extends JPanel {
 
 
 		chckbxBoardLimit = new JCheckBox(DescriptionText.BOARD_AMOUNT);
+		buttonGroup.add(chckbxBoardLimit);
 		chckbxBoardLimit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

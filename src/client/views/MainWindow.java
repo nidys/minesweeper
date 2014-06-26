@@ -317,13 +317,13 @@ public class MainWindow extends WindowBase {
 		System.out.println("Display lost reason in GameResultDialog");
 		switch (reason.getReasonMsg()) {
 			case NO_BOARDS_LEFT :
-				msgDialog.displayLostReasonMsg(this, true,  GameResult.LOSE, reason.getPlayerNick(), "No boards left, you loose and gain XXX points", "No boards left");
+				msgDialog.displayLostReasonMsg(this, true,  GameResult.LOSE, reason.getPlayerNick(), "No boards left, you loose.", "No boards left");
 				break;
 			case NO_LIFES :
-				msgDialog.displayLostReasonMsg(this, true, common.enums.GameResult.LOSE, reason.getPlayerNick(), "No lifes left, you loose and gain XXX points","No lifes left");
+				msgDialog.displayLostReasonMsg(this, true, common.enums.GameResult.LOSE, reason.getPlayerNick(), "No lifes left, you loose.", "No lifes left");
 				break;
 			case NORMAL_MODE_LOST :
-				msgDialog.displayLostReasonMsg(this, true, common.enums.GameResult.LOSE, reason.getPlayerNick(), "You loose and gain XXX points", "You loose.");
+				msgDialog.displayLostReasonMsg(this, true, common.enums.GameResult.LOSE, reason.getPlayerNick(), "Auch! Thats a bomb! You loose.", "You found a bomb.");
 				break;
 			case PLAYER_LEFT_BEFORE_END :
 				// gameResultDialog = new GameResultDialog(this, true,
